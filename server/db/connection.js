@@ -1,18 +1,22 @@
-// import { MongoClient } from "mongodb";
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const dotenv = require("dotenv")
+dotenv.config()
 
 const uri = process.env.MONGODB_URI || "";
+const client = new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
 
-const client = new MongoClient(uri);
-
-try{
-    await client.connect();
-
-    await client.db("admin").command({ping:1});
-    console.log("You are succescfully connected to MongoDB!");
-}
-catch(err){
-    console.log(err)
-}
-
-let db = client.db("test")
-export default db;
+  let database
+  module.exports = {
+      connectToServer: ()=>{
+        database = client.db("test")
+      },
+      getDb: ()=> {
+        return database
+      }
+  }
