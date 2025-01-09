@@ -1,6 +1,6 @@
 const express = require("express")
 const cors = require("cors")
-const {getAllEvents} = require("./db/controllers/events.controllers")
+const {getAllEvents, addAttendebyEventId} = require("./db/controllers/events.controllers")
 
 const app = express()
 
@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/events', getAllEvents)
-// app.patch("/event:eventId/attende", addAttendeeByID)
+app.patch("/event:eventId/attende", addAttendebyEventId)
 // app.delete("/event:eventId/attende", removeAttendeeByID)
 // app.post("event", createNewEvent)
 // app.delete("/event:eventId", deleteEventById)
