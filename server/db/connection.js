@@ -1,14 +1,9 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { MongoClient } from "mongodb";
+import {dotenv} from "dotenv"
 
 const uri = process.env.MONGODB_URI || "";
 
-const client = new MongoClient(uri,{
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true
-    },
-});
+const client = new MongoClient(uri);
 
 try{
     await client.connect();
