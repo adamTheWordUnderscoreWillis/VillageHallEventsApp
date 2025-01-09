@@ -1,5 +1,4 @@
-import { MongoClient } from "mongodb";
-import {dotenv} from "dotenv"
+// import { MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI || "";
 

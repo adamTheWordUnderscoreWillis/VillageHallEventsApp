@@ -1,8 +1,9 @@
-import app from "./app.js"
-import dotenv from "dotenv"
 
+const app = require("./app.js")
 
-const {PORT=9000} = process.env
+const {PORT} = process.env
+
+console.log(process.env)
 
 app.listen(PORT,()=>{
     console.log(`Server is listening on http//localhost:${PORT}`)
