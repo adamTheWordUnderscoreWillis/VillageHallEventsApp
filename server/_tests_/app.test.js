@@ -60,7 +60,9 @@ describe('LittleTidfordApp Unit Tests', () => {
                 "edge_color_set": true
               },
               "currancy": "GBP",
-              "created": "2022-04-09T10:16:13Z"
+              "created": "2022-04-09T10:16:13Z",
+              "price": 10,
+              "attendees": {},
             },
             {
               "name": {
@@ -103,7 +105,9 @@ describe('LittleTidfordApp Unit Tests', () => {
                 "edge_color_set": true
               },
               "currancy": "GBP",
-              "created": "2024-12-16T09:15:22Z"
+              "created": "2024-12-16T09:15:22Z",
+              "price": 10,
+              "attendees": {},
             },
             {
               "name": {
@@ -146,7 +150,9 @@ describe('LittleTidfordApp Unit Tests', () => {
                 "edge_color_set": true
               },
               "currancy": "GBP",
-              "created": "2024-09-23T13:55:33Z"
+              "created": "2024-09-23T13:55:33Z",
+              "price": 10,
+              "attendees": {},
             },
             {
               "name": {
@@ -182,7 +188,9 @@ describe('LittleTidfordApp Unit Tests', () => {
                 "edge_color_set": true
               },
               "currancy": "GBP",
-              "created": "2024-12-10T21:21:05Z"
+              "created": "2024-12-10T21:21:05Z",
+              "price": 2,
+              "attendees": {},
             },
             {
               "name": {
@@ -225,7 +233,9 @@ describe('LittleTidfordApp Unit Tests', () => {
                 "edge_color_set": true
               },
               "currancy": "GBP",
-              "created": "2024-09-16T02:16:57Z"
+              "created": "2024-09-16T02:16:57Z",
+              "price": 10,
+              "attendees": {},
             },
             {
               "name": {
@@ -268,7 +278,9 @@ describe('LittleTidfordApp Unit Tests', () => {
                 "edge_color_set": true
               },
               "currancy": "GBP",
-              "created": "2024-12-15T17:51:03Z"
+              "created": "2024-12-15T17:51:03Z",
+              "price": 10,
+              "attendees": {},
             },
             {
               "name": {
@@ -311,7 +323,9 @@ describe('LittleTidfordApp Unit Tests', () => {
                 "edge_color_set": true
               },
               "currancy": "GBP",
-              "created": "2024-12-08T18:53:01Z"
+              "created": "2024-12-08T18:53:01Z",
+              "price": 10,
+              "attendees": {},
             },
             {
               "name": {
@@ -354,7 +368,9 @@ describe('LittleTidfordApp Unit Tests', () => {
                 "edge_color_set": true
               },
               "currancy": "GBP",
-              "created": "2024-12-01T13:14:34Z"
+              "created": "2024-12-01T13:14:34Z",
+              "price": 10.5,
+              "attendees": {},
             },
             {
               "name": {
@@ -397,7 +413,9 @@ describe('LittleTidfordApp Unit Tests', () => {
                 "edge_color_set": true
               },
               "currancy": "GBP",
-              "created": "2024-11-22T15:55:50Z"
+              "created": "2024-11-22T15:55:50Z",
+              "price": 10,
+              "attendees": {},
             }
           ]
         }

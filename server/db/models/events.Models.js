@@ -13,10 +13,10 @@ exports.fetchAllEvents = async ()=>{
                 logo: event["logo"],
                 currancy: event["currency"],
                 created: event["created"],
-                
+                price: event["price"],
+                attendees: event["attendees"]
             }
         })
-        console.log(formattedData)
         return formattedData
     }
     else{
