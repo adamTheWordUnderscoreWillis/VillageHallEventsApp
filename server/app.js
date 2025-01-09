@@ -1,9 +1,6 @@
 const express = require("express")
 const cors = require("cors")
 const {getAllEvents} = require("./db/controllers/events.controllers")
-const dotenv= require("dotenv")
-dotenv.config();
-
 
 const app = express()
 

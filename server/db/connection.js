@@ -16,7 +16,13 @@ const client = new MongoClient(uri, {
       connectToServer: ()=>{
         database = client.db("test")
       },
+      connectToTestServer: ()=>{
+        database = client.db("test")
+      },
       getDb: ()=> {
         return database
+      },
+      disconectFromServer: ()=>{
+        client.close()
       }
   }
