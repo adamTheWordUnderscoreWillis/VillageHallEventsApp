@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb")
 const database = require("../connection.js")
 exports.fetchAllEvents = async ()=>{
     let db = database.getDb()
@@ -22,4 +23,18 @@ exports.fetchAllEvents = async ()=>{
     else{
         throw new Error("Data was not found")
     }
+}
+
+exports.insertNewAttendee = async (eventId, body)=>{
+    try{
+        let db = database.getDb()
+        let query = {_id: eventId}
+        let update = {$set: {attendee: body}}
+        let data = await db.collection("events").updateOne(query, update)
+
+    }
+    catch(err){
+        console.log(err)
+    }
+
 }

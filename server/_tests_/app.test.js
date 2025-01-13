@@ -426,13 +426,13 @@ describe('LittleTidfordApp Unit Tests', () => {
       })
     })
   })
-  describe('Add attendee to event', ()=>{
+  describe.only('Add attendee to event', ()=>{
     test ("200: Returns Okay Status Code", ()=>{
       const newAttendee = {
         "user@email.com": "user"
       }
       return request(app)
-      .patch("/event:677d06d3724343657a79816d/attende")
+      .patch("/event/677d06d3724343657a79816d/attendee")
       .send(newAttendee)
       .expect(200)
     })
@@ -489,7 +489,7 @@ describe('LittleTidfordApp Unit Tests', () => {
       }
 
       return request(app)
-      .patch("/event:677d06d3724343657a79816d/attende")
+      .patch("/event/677d06d3724343657a79816d/attendee")
       .send(newAttendee)
       .expect(200)
       .then((body)=>{
