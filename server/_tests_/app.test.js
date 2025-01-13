@@ -478,10 +478,21 @@ describe('LittleTidfordApp Unit Tests', () => {
           "attendees": {},
         }
       }
+
       return request(app)
       .get("/events/677d06d3724343657a79816d")
       .then(({body})=>{
         expect(body).toEqual(desiredEvent)
+      })
+    })
+    test ("400: Id is an improper hex string", ()=>{
+      return request(app).get("/events/NotAnId").then(({body})=>{
+        expect(body.msg).toEqual("Database Error: We cannot find the thing you seek...")
+      })
+    })
+    test ("400: Id is unique hex but doesn't exist in database", ()=>{
+      return request(app).get("/events/999d06d3724343657a79816b").then(({body})=>{
+        expect(body.msg).toEqual("We could not find any data for that event")
       })
     })
   })
