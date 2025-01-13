@@ -25,16 +25,55 @@ exports.fetchAllEvents = async ()=>{
     }
 }
 
+exports.fetchEventById = async (eventId)=>{
+    let db = database.getDb()
+    let data = await db.collection("events").findOne({_id: ObjectId.createFromHexString(eventId)})
+        if(data !== null && Object.keys(data).length >0){
+            const formattedData = [data].map((event)=>{
+                return {
+                    name: event["name"],
+                    id: event["_id"],
+                    description: event["description"],
+                    start: event["start"],
+                    end: event["end"],
+                    logo: event["logo"],
+                    currancy: event["currency"],
+                    created: event["created"],
+                    price: event["price"],
+                    attendees: event["attendees"]
+                }
+            })
+            return formattedData
+        }
+
+        else{
+            throw new Error("We could not find any data for that event", {status: 404, msg: "We could not find any data for that event"})
+        }
+}
+
 exports.insertNewAttendee = async (eventId, body)=>{
-    try{
         let db = database.getDb()
-        let query = {_id: eventId}
-        let update = {$set: {attendee: body}}
-        let data = await db.collection("events").updateOne(query, update)
+        let query = {_id: ObjectId.createFromHexString(eventId)}
+        let data = await db.collection("events").findOne(query)
+        if(data !== null && Object.keys(data).length >0){  
+            const attendeeKey = Object.keys(body)
+            data.attendees[attendeeKey[0]] = body[attendeeKey[0]]
 
-    }
-    catch(err){
-        console.log(err)
-    }
+            let update = {$set: {attendees: data.attendees}}
+            try{
+                let updateString = await db.collection("events").updateOne(query, update)
+            }
+            catch(err){
+                next(err)
+            }
 
+
+        }
+        else{
+            throw new Error("We could not find any data for that event", {status: 404, msg: "We could not find any data for that event"})
+        }
+        
+        
+
+    
 }
