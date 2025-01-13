@@ -24,6 +24,7 @@ exports.fetchAllEvents = async ()=>{
         throw new Error("Data was not found")
     }
 }
+
 exports.fetchEventById = async (eventId)=>{
     let db = database.getDb()
     let data = await db.collection("events").findOne({_id: ObjectId.createFromHexString(eventId)})
@@ -48,4 +49,31 @@ exports.fetchEventById = async (eventId)=>{
         else{
             throw new Error("We could not find any data for that event", {status: 404, msg: "We could not find any data for that event"})
         }
+}
+
+exports.insertNewAttendee = async (eventId, body)=>{
+        let db = database.getDb()
+        let query = {_id: ObjectId.createFromHexString(eventId)}
+        let data = await db.collection("events").findOne(query)
+        if(data !== null && Object.keys(data).length >0){  
+            const attendeeKey = Object.keys(body)
+            data.attendees[attendeeKey[0]] = body[attendeeKey[0]]
+
+            let update = {$set: {attendees: data.attendees}}
+            try{
+                let updateString = await db.collection("events").updateOne(query, update)
+            }
+            catch(err){
+                next(err)
+            }
+
+
+        }
+        else{
+            throw new Error("We could not find any data for that event", {status: 404, msg: "We could not find any data for that event"})
+        }
+        
+        
+
+    
 }

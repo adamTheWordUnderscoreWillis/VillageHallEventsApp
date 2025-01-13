@@ -8,7 +8,6 @@ exports.handleBsonErrors = (err,req,res,next)=>{
 }
 exports.handleCustomErrors = (err,req,res,next)=>{
     if(err.message){
-        console.log( "It's im the error handler, ", err.message)
        return res.status(404).send({msg: err.message})
     }
     else next(err);
