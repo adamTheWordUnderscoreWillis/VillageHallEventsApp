@@ -582,9 +582,79 @@ describe('LittleTidfordApp Unit Tests', () => {
       .patch("/event/677d06d3724343657a79816d/attendee")
       .send(newAttendee)
       .expect(201)
-      .then(({body})=>{
-        expect(body.msg).toBe("User: user has been added to event 677d06d3724343657a79816d")
+      .then(()=>{
+        return request(app)
+        .get("/events/677d06d3724343657a79816d")
       })
+      .then(({body})=>{
+        expect(body).toEqual(updatedAttendeesEvent)
+      })
+    })
+  })
+  describe('Delete Attendee from event', ()=>{
+    test ("204: Returns No Content Status Code", ()=>{
+      const attendeeToDelete = {
+        "user@email.com": "user"
+      }
+      return request(app)
+      .patch("/event/677d06d3724343657a79816d/removeAttendee")
+      .send(attendeeToDelete)
+      .expect(204)
+    })
+    test ("204: Removes attendee from events attendee object", ()=>{
+      const attendeeToDelete = {
+        "user@email.com": "user"
+      }
+      const updatedAttendeesEvent ={ event: {
+          "name": {
+            "text": "Riso Club - Cut & Paste a Limited Edition Print",
+            "html": "Riso Club - Cut &amp; Paste a Limited Edition Print"
+          },
+          "id": "677d06d3724343657a79816d",
+          "description": {
+            "text": "Risograph printing is  often described as digital screen printing. Think screen printing but with the convenience of a photocopier.",
+            "html": "Risograph printing is  often described as digital screen printing. Think screen printing but with the convenience of a photocopier."
+          },
+          "start": {
+            "timezone": "Europe/London",
+            "local": "2022-06-04T10:00:00",
+            "utc": "2022-06-04T09:00:00Z"
+          },
+          "end": {
+            "timezone": "Europe/London",
+            "local": "2022-06-04T14:00:00",
+            "utc": "2022-06-04T13:00:00Z"
+          },
+          "logo": {
+            "crop_mask": {
+              "top_left": {
+                "x": 0,
+                "y": 120
+              },
+              "width": 1920,
+              "height": 960
+            },
+            "original": {
+              "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F263741449%2F265578049482%2F1%2Foriginal.20220309-091348?auto=format%2Ccompress&q=75&sharp=10&s=cc685bb6d3ff0126b6b67d58d39c8046",
+              "width": 1920,
+              "height": 1080
+            },
+            "id": "263741449",
+            "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F263741449%2F265578049482%2F1%2Foriginal.20220309-091348?h=200&w=450&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C120%2C1920%2C960&s=bed03692a0ccc3ddb71d39d75b389787",
+            "aspect_ratio": "2",
+            "edge_color": "#ffffff",
+            "edge_color_set": true
+          },
+          "currancy": "GBP",
+          "created": "2022-04-09T10:16:13Z",
+          "price": 10,
+          "attendees": {},
+        }
+      }
+      return request(app)
+      .patch("/event/677d06d3724343657a79816d/attendee")
+      .send(attendeeToDelete)
+      .expect(201)
       .then(()=>{
         return request(app)
         .get("/events/677d06d3724343657a79816d")

@@ -122,3 +122,29 @@ exports.removeEventById = async (eventId, authorization)=>{
             }
         }
 }
+exports.deleteAttendee = async (eventId ,body)=>{
+    let db = database.getDb()
+        let query = {_id: ObjectId.createFromHexString(eventId)}
+        let data = await db.collection("events").findOne(query)
+        if(data !== null && Object.keys(data).length >0){  
+            const attendeeKey = Object.keys(body)
+            delete data.attendees[attendeeKey[0]]
+
+            let deleteStatement = {$unset: {attendees: ""}}
+            let update = {$set: {attendees: data.attendees}}
+            try{
+                let deleteString = await db.collection("events").updateOne(query, deleteStatement)
+
+                let updateString = await db.collection("events").updateOne(query, update)
+                return data.attendees
+            }
+            catch(err){
+                next(err)
+            }
+
+
+        }
+        else{
+            throw new Error("We could not find any data for that event", {status: 404, msg: "We could not find any data for that event"})
+        }
+}
