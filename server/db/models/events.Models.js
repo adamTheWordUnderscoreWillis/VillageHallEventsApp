@@ -12,7 +12,7 @@ exports.fetchAllEvents = async ()=>{
                 start: event["start"],
                 end: event["end"],
                 logo: event["logo"],
-                currancy: event["currency"],
+                currency: event["currency"],
                 created: event["created"],
                 price: event["price"],
                 attendees: event["attendees"]
@@ -37,7 +37,7 @@ exports.fetchEventById = async (eventId)=>{
                     start: event["start"],
                     end: event["end"],
                     logo: event["logo"],
-                    currancy: event["currency"],
+                    currency: event["currency"],
                     created: event["created"],
                     price: event["price"],
                     attendees: event["attendees"]
@@ -76,4 +76,27 @@ exports.insertNewAttendee = async (eventId, body)=>{
         
 
     
+}
+exports.insertNewEvent = async(newEvent)=>{
+    const event =  {
+        name: newEvent.name,
+        description: newEvent.description,
+        start: newEvent.start,
+        end: newEvent.end,
+        logo: newEvent.logo,
+        currency: newEvent.currency,
+        price: newEvent.price,
+        attendees: newEvent.attendees,
+        created: new Date().toJSON()
+    }
+    try{
+        let db = database.getDb()
+        let data = await db.collection("events").insertOne(event)
+        return data
+    }
+    catch(err){
+        console.log(err)
+    }
+    
+
 }

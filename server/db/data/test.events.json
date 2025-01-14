@@ -1,0 +1,749 @@
+[{
+  "_id": {
+    "oid": "677d06d3724343657a79816d"
+  },
+  "name": {
+    "text": "Riso Club - Cut & Paste a Limited Edition Print",
+    "html": "Riso Club - Cut &amp; Paste a Limited Edition Print"
+  },
+  "description": {
+    "text": "Risograph printing is  often described as digital screen printing. Think screen printing but with the convenience of a photocopier.",
+    "html": "Risograph printing is  often described as digital screen printing. Think screen printing but with the convenience of a photocopier."
+  },
+  "url": "https://www.eventbrite.co.uk/e/riso-club-cut-paste-a-limited-edition-print-tickets-317952553647",
+  "start": {
+    "timezone": "Europe/London",
+    "local": "2022-06-04T10:00:00",
+    "utc": "2022-06-04T09:00:00Z"
+  },
+  "end": {
+    "timezone": "Europe/London",
+    "local": "2022-06-04T14:00:00",
+    "utc": "2022-06-04T13:00:00Z"
+  },
+  "organization_id": "265578049482",
+  "created": "2022-04-09T10:16:13Z",
+  "changed": "2022-06-09T10:57:05Z",
+  "published": "2022-04-09T10:16:35Z",
+  "capacity": null,
+  "capacity_is_custom": null,
+  "price": 10,
+  "status": "completed",
+  "currency": "GBP",
+  "listed": true,
+  "shareable": true,
+  "online_event": false,
+  "tx_time_limit": 480,
+  "hide_start_date": false,
+  "hide_end_date": false,
+  "locale": "en_GB",
+  "is_locked": false,
+  "privacy_setting": "unlocked",
+  "is_series": false,
+  "is_series_parent": false,
+  "inventory_type": "limited",
+  "is_reserved_seating": false,
+  "show_pick_a_seat": false,
+  "show_seatmap_thumbnail": false,
+  "show_colors_in_seatmap_thumbnail": false,
+  "source": "copy_and_migrate",
+  "is_free": false,
+  "version": null,
+  "summary": "Risograph printing is  often described as digital screen printing. Think screen printing but with the convenience of a photocopier.",
+  "facebook_event_id": null,
+  "logo_id": "263741449",
+  "organizer_id": "17626618630",
+  "venue_id": "92114059",
+  "category_id": "119",
+  "subcategory_id": null,
+  "format_id": "9",
+  "id": "317952553647",
+  "resource_uri": "https://www.eventbriteapi.com/v3/events/317952553647/",
+  "is_externally_ticketed": false,
+  "logo": {
+    "crop_mask": {
+      "top_left": {
+        "x": 0,
+        "y": 120
+      },
+      "width": 1920,
+      "height": 960
+    },
+    "original": {
+      "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F263741449%2F265578049482%2F1%2Foriginal.20220309-091348?auto=format%2Ccompress&q=75&sharp=10&s=cc685bb6d3ff0126b6b67d58d39c8046",
+      "width": 1920,
+      "height": 1080
+    },
+    "id": "263741449",
+    "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F263741449%2F265578049482%2F1%2Foriginal.20220309-091348?h=200&w=450&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C120%2C1920%2C960&s=bed03692a0ccc3ddb71d39d75b389787",
+    "aspect_ratio": "2",
+    "edge_color": "#ffffff",
+    "edge_color_set": true
+  },
+  "attendees": {}
+},
+{
+  "_id": {
+    "oid": "677d06d3724343657a798172"
+  },
+  "name": {
+    "text": "An Introduction to Screen Printing",
+    "html": "An Introduction to Screen Printing"
+  },
+  "description": {
+    "text": "Learn the basic principles and different techniques of screen printing",
+    "html": "Learn the basic principles and different techniques of screen printing"
+  },
+  "url": "https://www.eventbrite.co.uk/e/an-introduction-to-screen-printing-tickets-1115263215299",
+  "start": {
+    "timezone": "Europe/London",
+    "local": "2025-04-12T10:30:00",
+    "utc": "2025-04-12T09:30:00Z"
+  },
+  "end": {
+    "timezone": "Europe/London",
+    "local": "2025-04-12T13:30:00",
+    "utc": "2025-04-12T12:30:00Z"
+  },
+  "organization_id": "265578049482",
+  "created": "2024-12-16T09:15:22Z",
+  "changed": "2024-12-17T08:08:13Z",
+  "published": "2024-12-17T04:50:41Z",
+  "capacity": null,
+  "capacity_is_custom": null,
+  "price": 10,
+  "attendees": {},
+  "status": "live",
+  "currency": "GBP",
+  "listed": true,
+  "shareable": true,
+  "online_event": false,
+  "tx_time_limit": 1200,
+  "hide_start_date": false,
+  "hide_end_date": false,
+  "locale": "en_US",
+  "is_locked": false,
+  "privacy_setting": "unlocked",
+  "is_series": false,
+  "is_series_parent": false,
+  "inventory_type": "limited",
+  "is_reserved_seating": false,
+  "show_pick_a_seat": false,
+  "show_seatmap_thumbnail": false,
+  "show_colors_in_seatmap_thumbnail": false,
+  "source": "coyote",
+  "is_free": false,
+  "version": null,
+  "summary": "Learn the basic principles and different techniques of screen printing",
+  "facebook_event_id": null,
+  "logo_id": "918018403",
+  "organizer_id": "17626618630",
+  "venue_id": "92114059",
+  "category_id": "105",
+  "subcategory_id": "5007",
+  "format_id": "9",
+  "id": "1115263215299",
+  "resource_uri": "https://www.eventbriteapi.com/v3/events/1115263215299/",
+  "is_externally_ticketed": false,
+  "logo": {
+    "crop_mask": {
+      "top_left": {
+        "x": 0,
+        "y": 0
+      },
+      "width": 940,
+      "height": 470
+    },
+    "original": {
+      "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F918018403%2F265578049482%2F1%2Foriginal.20241216-091457?auto=format%2Ccompress&q=75&sharp=10&s=a65d439183e35dc60578ecb04b7731e6",
+      "width": 940,
+      "height": 470
+    },
+    "id": "918018403",
+    "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F918018403%2F265578049482%2F1%2Foriginal.20241216-091457?h=200&w=450&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C940%2C470&s=c08ea8da2adf41e13591e587ec30b7d0",
+    "aspect_ratio": "2",
+    "edge_color": "#7d7575",
+    "edge_color_set": true
+  }
+},
+{
+  "_id": {
+    "oid": "677d06d3724343657a79816a"
+  },
+  "name": {
+    "text": "Italian Street Foods Making Workshop",
+    "html": "Italian Street Foods Making Workshop"
+  },
+  "description": {
+    "text": "Join me for this virtual trip to Italy from North to South through regional dishes of the italian tradition.",
+    "html": "Join me for this virtual trip to Italy from North to South through regional dishes of the italian tradition."
+  },
+  "url": "https://www.eventbrite.co.uk/e/italian-street-foods-making-workshop-tickets-1026856795317",
+  "start": {
+    "timezone": "Europe/London",
+    "local": "2024-11-17T11:00:00",
+    "utc": "2024-11-17T11:00:00Z"
+  },
+  "end": {
+    "timezone": "Europe/London",
+    "local": "2024-11-17T14:00:00",
+    "utc": "2024-11-17T14:00:00Z"
+  },
+  "organization_id": "2191253548793",
+  "created": "2024-09-23T13:55:33Z",
+  "changed": "2024-11-20T10:41:07Z",
+  "published": "2024-09-23T14:29:36Z",
+  "capacity": null,
+  "capacity_is_custom": null,
+  "price": 10,
+  "attendees": {},
+  "status": "completed",
+  "currency": "GBP",
+  "listed": true,
+  "shareable": true,
+  "online_event": false,
+  "tx_time_limit": 1200,
+  "hide_start_date": false,
+  "hide_end_date": false,
+  "locale": "en_GB",
+  "is_locked": false,
+  "privacy_setting": "unlocked",
+  "is_series": false,
+  "is_series_parent": false,
+  "inventory_type": "limited",
+  "is_reserved_seating": false,
+  "show_pick_a_seat": false,
+  "show_seatmap_thumbnail": false,
+  "show_colors_in_seatmap_thumbnail": false,
+  "source": "auto_create",
+  "is_free": false,
+  "version": null,
+  "summary": "Join me for this virtual trip to Italy from North to South through regional dishes of the italian tradition.",
+  "facebook_event_id": null,
+  "logo_id": "856961009",
+  "organizer_id": "86598534913",
+  "venue_id": "233912859",
+  "category_id": "110",
+  "subcategory_id": "10003",
+  "format_id": "9",
+  "id": "1026856795317",
+  "resource_uri": "https://www.eventbriteapi.com/v3/events/1026856795317/",
+  "is_externally_ticketed": false,
+  "logo": {
+    "crop_mask": {
+      "top_left": {
+        "x": 0,
+        "y": 363
+      },
+      "width": 2000,
+      "height": 1000
+    },
+    "original": {
+      "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F856961009%2F650895938373%2F1%2Foriginal.20240923-141246?auto=format%2Ccompress&q=75&sharp=10&s=0ecd17a53a16d36d65af296e02b287f8",
+      "width": 2000,
+      "height": 1500
+    },
+    "id": "856961009",
+    "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F856961009%2F650895938373%2F1%2Foriginal.20240923-141246?h=200&w=450&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C363%2C2000%2C1000&s=a59d54d525b90b25f5e3ea7d7fd450fc",
+    "aspect_ratio": "2",
+    "edge_color": "#a4998a",
+    "edge_color_set": true
+  }
+},
+{
+  "_id": {
+    "oid": "677d06d3724343657a79816c"
+  },
+  "name": {
+    "text": "Basic Bread Making Workshop",
+    "html": "Basic Bread Making Workshop"
+  },
+  "description": {
+    "text": "Come learn how to make delicious bread from scratch at our Basic Bread Making Workshop!",
+    "html": "Come learn how to make delicious bread from scratch at our Basic Bread Making Workshop!"
+  },
+  "url": "https://www.eventbrite.co.uk/e/basic-bread-making-workshop-tickets-1110762784389",
+  "start": {
+    "timezone": "Europe/London",
+    "local": "2025-03-09T11:00:00",
+    "utc": "2025-03-09T11:00:00Z"
+  },
+  "end": {
+    "timezone": "Europe/London",
+    "local": "2025-03-09T14:00:00",
+    "utc": "2025-03-09T14:00:00Z"
+  },
+  "organization_id": "2191253548793",
+  "created": "2024-12-10T21:21:05Z",
+  "changed": "2024-12-20T14:42:07Z",
+  "published": "2024-12-10T21:29:53Z",
+  "capacity": null,
+  "capacity_is_custom": null,
+  "price": 2,
+  "attendees": {},
+  "status": "live",
+  "currency": "GBP",
+  "listed": true,
+  "shareable": true,
+  "online_event": false,
+  "tx_time_limit": 1200,
+  "hide_start_date": false,
+  "hide_end_date": false,
+  "locale": "en_US",
+  "is_locked": false,
+  "privacy_setting": "unlocked",
+  "is_series": false,
+  "is_series_parent": false,
+  "inventory_type": "limited",
+  "is_reserved_seating": false,
+  "show_pick_a_seat": false,
+  "show_seatmap_thumbnail": false,
+  "show_colors_in_seatmap_thumbnail": false,
+  "source": "coyote",
+  "is_free": false,
+  "version": null,
+  "summary": "Come learn how to make delicious bread from scratch at our Basic Bread Making Workshop!",
+  "facebook_event_id": null,
+  "logo_id": "915190323",
+  "organizer_id": "86598534913",
+  "venue_id": "233912859",
+  "category_id": "110",
+  "subcategory_id": "10003",
+  "format_id": "9",
+  "id": "1110762784389",
+  "resource_uri": "https://www.eventbriteapi.com/v3/events/1110762784389/",
+  "is_externally_ticketed": false,
+  "logo": {
+    "crop_mask": null,
+    "original": {
+      "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F915190323%2F650895938373%2F1%2Foriginal.20241210-211708?auto=format%2Ccompress&q=75&sharp=10&s=6a952b8686794e468965a53944a2651f",
+      "width": 1500,
+      "height": 2000
+    },
+    "id": "915190323",
+    "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F915190323%2F650895938373%2F1%2Foriginal.20241210-211708?crop=focalpoint&fit=crop&h=200&w=450&auto=format%2Ccompress&q=75&sharp=10&fp-x=0.50948682882&fp-y=0.718754495025&s=9d67ea1a4de9e2b4e49cb1bf345d234a",
+    "aspect_ratio": "0.75",
+    "edge_color": "#70543c",
+    "edge_color_set": true
+  }
+},
+{
+  "_id": {
+    "oid": "677d06d3724343657a79816e"
+  },
+  "name": {
+    "text": "Colchester Makerspace Christmas Market Briefing (Members Only)",
+    "html": "Colchester Makerspace Christmas Market Briefing (Members Only)"
+  },
+  "description": {
+    "text": "Your first stall? Feeling a bit nervous? Want some tips and advice on where to start?",
+    "html": "Your first stall? Feeling a bit nervous? Want some tips and advice on where to start?"
+  },
+  "url": "https://www.eventbrite.co.uk/e/colchester-makerspace-christmas-market-briefing-members-only-tickets-1020283564607",
+  "start": {
+    "timezone": "Europe/London",
+    "local": "2024-09-30T18:30:00",
+    "utc": "2024-09-30T17:30:00Z"
+  },
+  "end": {
+    "timezone": "Europe/London",
+    "local": "2024-09-30T19:30:00",
+    "utc": "2024-09-30T18:30:00Z"
+  },
+  "organization_id": "265578049482",
+  "created": "2024-09-16T02:16:57Z",
+  "changed": "2024-10-01T08:17:29Z",
+  "published": "2024-09-16T02:18:46Z",
+  "capacity": null,
+  "capacity_is_custom": null,
+  "price": 10,
+  "attendees": {},
+  "status": "completed",
+  "currency": "GBP",
+  "listed": true,
+  "shareable": false,
+  "online_event": false,
+  "tx_time_limit": 1200,
+  "hide_start_date": false,
+  "hide_end_date": false,
+  "locale": "en_US",
+  "is_locked": false,
+  "privacy_setting": "unlocked",
+  "is_series": false,
+  "is_series_parent": false,
+  "inventory_type": "limited",
+  "is_reserved_seating": false,
+  "show_pick_a_seat": false,
+  "show_seatmap_thumbnail": false,
+  "show_colors_in_seatmap_thumbnail": false,
+  "source": "coyote",
+  "is_free": true,
+  "version": null,
+  "summary": "Your first stall? Feeling a bit nervous? Want some tips and advice on where to start?",
+  "facebook_event_id": null,
+  "logo_id": "850901899",
+  "organizer_id": "17626618630",
+  "venue_id": "92114059",
+  "category_id": null,
+  "subcategory_id": null,
+  "format_id": null,
+  "id": "1020283564607",
+  "resource_uri": "https://www.eventbriteapi.com/v3/events/1020283564607/",
+  "is_externally_ticketed": false,
+  "logo": {
+    "crop_mask": {
+      "top_left": {
+        "x": 0,
+        "y": 247
+      },
+      "width": 1080,
+      "height": 540
+    },
+    "original": {
+      "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F850901899%2F265578049482%2F1%2Foriginal.20240916-021646?auto=format%2Ccompress&q=75&sharp=10&s=765e167690622ecc8247e6b0e20d6a4c",
+      "width": 1080,
+      "height": 1080
+    },
+    "id": "850901899",
+    "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F850901899%2F265578049482%2F1%2Foriginal.20240916-021646?h=200&w=450&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C247%2C1080%2C540&s=49841fdc3a42ec711960a85b1e1ae15a",
+    "aspect_ratio": "2",
+    "edge_color": "#63635f",
+    "edge_color_set": true
+  }
+},
+{
+  "_id": {
+    "oid": "677d06d3724343657a798170"
+  },
+  "name": {
+    "text": "An Introduction to Linocut",
+    "html": "An Introduction to Linocut"
+  },
+  "description": {
+    "text": "Enjoy the exquisite craft of Linocut, a traditional printmaking technique and a variant of woodcut.",
+    "html": "Enjoy the exquisite craft of Linocut, a traditional printmaking technique and a variant of woodcut."
+  },
+  "url": "https://www.eventbrite.co.uk/e/an-introduction-to-linocut-tickets-1114882807489",
+  "start": {
+    "timezone": "Europe/London",
+    "local": "2025-02-13T18:30:00",
+    "utc": "2025-02-13T18:30:00Z"
+  },
+  "end": {
+    "timezone": "Europe/London",
+    "local": "2025-02-13T21:30:00",
+    "utc": "2025-02-13T21:30:00Z"
+  },
+  "organization_id": "265578049482",
+  "created": "2024-12-15T17:51:03Z",
+  "changed": "2024-12-28T12:42:35Z",
+  "published": "2024-12-15T17:54:22Z",
+  "capacity": null,
+  "capacity_is_custom": null,
+  "price": 10,
+  "attendees": {},
+  "status": "live",
+  "currency": "GBP",
+  "listed": true,
+  "shareable": true,
+  "online_event": false,
+  "tx_time_limit": 1200,
+  "hide_start_date": false,
+  "hide_end_date": false,
+  "locale": "en_US",
+  "is_locked": false,
+  "privacy_setting": "unlocked",
+  "is_series": false,
+  "is_series_parent": false,
+  "inventory_type": "limited",
+  "is_reserved_seating": false,
+  "show_pick_a_seat": false,
+  "show_seatmap_thumbnail": false,
+  "show_colors_in_seatmap_thumbnail": false,
+  "source": "coyote",
+  "is_free": false,
+  "version": null,
+  "summary": "Enjoy the exquisite craft of Linocut, a traditional printmaking technique and a variant of woodcut.",
+  "facebook_event_id": "1031110008783206",
+  "logo_id": "917741023",
+  "organizer_id": "17626618630",
+  "venue_id": "92114059",
+  "category_id": "105",
+  "subcategory_id": "5007",
+  "format_id": "9",
+  "id": "1114882807489",
+  "resource_uri": "https://www.eventbriteapi.com/v3/events/1114882807489/",
+  "is_externally_ticketed": false,
+  "logo": {
+    "crop_mask": {
+      "top_left": {
+        "x": 0,
+        "y": 0
+      },
+      "width": 940,
+      "height": 470
+    },
+    "original": {
+      "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F917741023%2F265578049482%2F1%2Foriginal.20241215-175051?auto=format%2Ccompress&q=75&sharp=10&s=ed4a1e18c3be11a5a0e4e82a4c63a420",
+      "width": 940,
+      "height": 470
+    },
+    "id": "917741023",
+    "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F917741023%2F265578049482%2F1%2Foriginal.20241215-175051?h=200&w=450&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C940%2C470&s=cdcba10fdc78a0a5c25cb58ab137bde0",
+    "aspect_ratio": "2",
+    "edge_color": "#785e55",
+    "edge_color_set": true
+  }
+},
+{
+  "_id": {
+    "oid": "677d06d3724343657a798171"
+  },
+  "name": {
+    "text": "Learn the Art of Jigsaw Lino Printing",
+    "html": "Learn the Art of Jigsaw Lino Printing"
+  },
+  "description": {
+    "text": "Imagine creating stunning prints by piecing together a puzzle of lino.",
+    "html": "Imagine creating stunning prints by piecing together a puzzle of lino."
+  },
+  "url": "https://www.eventbrite.co.uk/e/learn-the-art-of-jigsaw-lino-printing-tickets-1108620587019",
+  "start": {
+    "timezone": "Europe/London",
+    "local": "2025-03-16T10:30:00",
+    "utc": "2025-03-16T10:30:00Z"
+  },
+  "end": {
+    "timezone": "Europe/London",
+    "local": "2025-03-16T14:30:00",
+    "utc": "2025-03-16T14:30:00Z"
+  },
+  "organization_id": "265578049482",
+  "created": "2024-12-08T18:53:01Z",
+  "changed": "2024-12-16T09:02:55Z",
+  "published": "2024-12-08T20:05:54Z",
+  "capacity": null,
+  "capacity_is_custom": null,
+  "price": 10,
+  "attendees": {},
+  "status": "live",
+  "currency": "GBP",
+  "listed": true,
+  "shareable": true,
+  "online_event": false,
+  "tx_time_limit": 480,
+  "hide_start_date": false,
+  "hide_end_date": false,
+  "locale": "en_US",
+  "is_locked": false,
+  "privacy_setting": "unlocked",
+  "is_series": false,
+  "is_series_parent": false,
+  "inventory_type": "limited",
+  "is_reserved_seating": false,
+  "show_pick_a_seat": false,
+  "show_seatmap_thumbnail": false,
+  "show_colors_in_seatmap_thumbnail": false,
+  "source": "coyote",
+  "is_free": false,
+  "version": null,
+  "summary": "Imagine creating stunning prints by piecing together a puzzle of lino.",
+  "facebook_event_id": "1117380230094376",
+  "logo_id": "913758563",
+  "organizer_id": "17626618630",
+  "venue_id": "92114059",
+  "category_id": "105",
+  "subcategory_id": "5007",
+  "format_id": "9",
+  "id": "1108620587019",
+  "resource_uri": "https://www.eventbriteapi.com/v3/events/1108620587019/",
+  "is_externally_ticketed": false,
+  "logo": {
+    "crop_mask": {
+      "top_left": {
+        "x": 0,
+        "y": 340
+      },
+      "width": 1080,
+      "height": 540
+    },
+    "original": {
+      "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F913758563%2F265578049482%2F1%2Foriginal.20241208-200148?auto=format%2Ccompress&q=75&sharp=10&s=856510db29b30f48f6d95ca273ecd2e4",
+      "width": 1080,
+      "height": 1349
+    },
+    "id": "913758563",
+    "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F913758563%2F265578049482%2F1%2Foriginal.20241208-200148?h=200&w=450&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C340%2C1080%2C540&s=c111f9d9818bc44072fbc39e22c384be",
+    "aspect_ratio": "2",
+    "edge_color": "#8f8b83",
+    "edge_color_set": true
+  }
+},
+{
+  "_id": {
+    "oid": "677d06d3724343657a79816f"
+  },
+  "name": {
+    "text": "Teapot Masterclass",
+    "html": "Teapot Masterclass"
+  },
+  "description": {
+    "text": "Explore the art of teapot creation with Neville Tatham.",
+    "html": "Explore the art of teapot creation with Neville Tatham."
+  },
+  "url": "https://www.eventbrite.co.uk/e/teapot-masterclass-tickets-1100300762199",
+  "start": {
+    "timezone": "Europe/London",
+    "local": "2025-02-03T18:30:00",
+    "utc": "2025-02-03T18:30:00Z"
+  },
+  "end": {
+    "timezone": "Europe/London",
+    "local": "2025-02-03T20:30:00",
+    "utc": "2025-02-03T20:30:00Z"
+  },
+  "organization_id": "265578049482",
+  "created": "2024-12-01T13:14:34Z",
+  "changed": "2024-12-08T22:35:57Z",
+  "published": "2024-12-01T13:31:44Z",
+  "capacity": null,
+  "capacity_is_custom": null,
+  "price": 10.5,
+  "attendees": {},
+  "status": "live",
+  "currency": "GBP",
+  "listed": true,
+  "shareable": true,
+  "online_event": false,
+  "tx_time_limit": 480,
+  "hide_start_date": false,
+  "hide_end_date": false,
+  "locale": "en_US",
+  "is_locked": false,
+  "privacy_setting": "unlocked",
+  "is_series": false,
+  "is_series_parent": false,
+  "inventory_type": "limited",
+  "is_reserved_seating": false,
+  "show_pick_a_seat": false,
+  "show_seatmap_thumbnail": false,
+  "show_colors_in_seatmap_thumbnail": false,
+  "source": "coyote",
+  "is_free": false,
+  "version": null,
+  "summary": "Explore the art of teapot creation with Neville Tatham.",
+  "facebook_event_id": "1080760220196976",
+  "logo_id": "909291443",
+  "organizer_id": "17626618630",
+  "venue_id": "92114059",
+  "category_id": "119",
+  "subcategory_id": "19999",
+  "format_id": "9",
+  "id": "1100300762199",
+  "resource_uri": "https://www.eventbriteapi.com/v3/events/1100300762199/",
+  "is_externally_ticketed": false,
+  "logo": {
+    "crop_mask": {
+      "top_left": {
+        "x": 0,
+        "y": 659
+      },
+      "width": 1440,
+      "height": 720
+    },
+    "original": {
+      "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F909291443%2F265578049482%2F1%2Foriginal.20241201-125701?auto=format%2Ccompress&q=75&sharp=10&s=0f82c96189b7568fb72b09f44eca7ac5",
+      "width": 1440,
+      "height": 1799
+    },
+    "id": "909291443",
+    "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F909291443%2F265578049482%2F1%2Foriginal.20241201-125701?h=200&w=450&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C659%2C1440%2C720&s=d1cd89b2ef9f24dcf4276c3aa7d32e3c",
+    "aspect_ratio": "2",
+    "edge_color": "#9a7a50",
+    "edge_color_set": true
+  }
+},
+{
+  "_id": {
+    "oid": "677d06d3724343657a79816b"
+  },
+  "name": {
+    "text": "Focaccia Making workshop",
+    "html": "Focaccia Making workshop"
+  },
+  "description": {
+    "text": "Join us for a hands-on Focaccia Making workshop where you'll learn to bake delicious Italian bread from scratch!",
+    "html": "Join us for a hands-on Focaccia Making workshop where you'll learn to bake delicious Italian bread from scratch!"
+  },
+  "url": "https://www.eventbrite.co.uk/e/focaccia-making-workshop-tickets-1092494643889",
+  "start": {
+    "timezone": "Europe/London",
+    "local": "2025-02-02T11:00:00",
+    "utc": "2025-02-02T11:00:00Z"
+  },
+  "end": {
+    "timezone": "Europe/London",
+    "local": "2025-02-02T14:00:00",
+    "utc": "2025-02-02T14:00:00Z"
+  },
+  "organization_id": "2191253548793",
+  "created": "2024-11-22T15:55:50Z",
+  "changed": "2025-01-04T20:27:59Z",
+  "published": "2024-11-22T16:04:24Z",
+  "capacity": null,
+  "capacity_is_custom": null,
+  "price": 10,
+  "attendees": {},
+  "status": "live",
+  "currency": "GBP",
+  "listed": true,
+  "shareable": true,
+  "online_event": false,
+  "tx_time_limit": 1200,
+  "hide_start_date": false,
+  "hide_end_date": false,
+  "locale": "en_US",
+  "is_locked": false,
+  "privacy_setting": "unlocked",
+  "is_series": false,
+  "is_series_parent": false,
+  "inventory_type": "limited",
+  "is_reserved_seating": false,
+  "show_pick_a_seat": false,
+  "show_seatmap_thumbnail": false,
+  "show_colors_in_seatmap_thumbnail": false,
+  "source": "coyote",
+  "is_free": false,
+  "version": null,
+  "summary": "Join us for a hands-on Focaccia Making workshop where you'll learn to bake delicious Italian bread from scratch!",
+  "facebook_event_id": null,
+  "logo_id": "904634603",
+  "organizer_id": "86598534913",
+  "venue_id": "233912859",
+  "category_id": "110",
+  "subcategory_id": null,
+  "format_id": "9",
+  "id": "1092494643889",
+  "resource_uri": "https://www.eventbriteapi.com/v3/events/1092494643889/",
+  "is_externally_ticketed": false,
+  "logo": {
+    "crop_mask": {
+      "top_left": {
+        "x": 0,
+        "y": 1079
+      },
+      "width": 3000,
+      "height": 1500
+    },
+    "original": {
+      "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F904634603%2F650895938373%2F1%2Foriginal.20241122-155250?auto=format%2Ccompress&q=75&sharp=10&s=8eb81e331f992a55d273692798c187bd",
+      "width": 3001,
+      "height": 4001
+    },
+    "id": "904634603",
+    "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F904634603%2F650895938373%2F1%2Foriginal.20241122-155250?h=200&w=450&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C1079%2C3000%2C1500&s=0072f7958000510fe557ba387aa9310c",
+    "aspect_ratio": "2",
+    "edge_color": "#838289",
+    "edge_color_set": true
+  }
+}]
