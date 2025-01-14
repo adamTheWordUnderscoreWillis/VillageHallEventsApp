@@ -1,13 +1,33 @@
 const app = require("../app")
 const request = require("supertest")
 const testDatabase = require("../db/connection")
+const seedTestData = require("../db/data/test.events.json")
+const { ObjectId } = require("mongodb")
 
 describe('LittleTidfordApp Unit Tests', () => {
-
   beforeAll(async () => {
     testDatabase.connectToTestServer()
     db = testDatabase.getDb()
   })
+  beforeEach(async ()=>{
+    await db.collection("events").deleteMany({})
+    const formattedSeedData = seedTestData.map((event)=>{
+      return {
+        _id: ObjectId.createFromHexString(event._id.oid),
+        name: event.name,
+        description: event["description"],
+        start: event["start"],
+        end: event["end"],
+        logo: event["logo"],
+        currency: event["currency"],
+        created: event["created"],
+        price: event["price"],
+        attendees: event["attendees"]
+      }
+    })
+    await db.collection("events").insertMany(formattedSeedData)
+  })
+  
   afterAll(async ()=>{
     testDatabase.disconectFromServer()
   })
@@ -496,7 +516,7 @@ describe('LittleTidfordApp Unit Tests', () => {
       })
     })
   })
-  xdescribe('Add attendee to event', ()=>{
+  describe('Add attendee to event', ()=>{
     test ("201: Returns Created Status Code", ()=>{
       const newAttendee = {
         "user@email.com": "user"
@@ -550,7 +570,7 @@ describe('LittleTidfordApp Unit Tests', () => {
           "edge_color": "#ffffff",
           "edge_color_set": true
         },
-        "currancy": "GBP",
+        "currency": "GBP",
         "created": "2022-04-09T10:16:13Z",
         "price": 10,
         "attendees": {
