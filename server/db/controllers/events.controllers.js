@@ -23,11 +23,11 @@ exports.getEventById = async (req,res,next) =>{
     }
 }
 exports.createNewEvent = async(req,res,next)=>{
-    
+    const {authorization} = req.headers
+    const newEvent = req.body
     try{
-        const event = await insertNewEvent(req.body)
-        console.log(event)
-        await res.status(201).send({msg: `${req.body.name.text} event added to database`, id: event.insertedId })
+        const event = await insertNewEvent(newEvent, authorization)
+        await res.status(201).send({msg: `${newEvent.name.text} event added to database`, id: event.insertedId })
     }
     catch(err){
         console.log("The error, ", err)

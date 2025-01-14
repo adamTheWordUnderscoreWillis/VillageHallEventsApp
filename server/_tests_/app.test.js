@@ -636,8 +636,12 @@ describe('LittleTidfordApp Unit Tests', () => {
         "price": 50,
         "attendees": {},
       }
+      const user = {
+            authorization: process.env.STAFF_MEMBER
+        }
       return request(app)
       .post("/events/newEvent")
+      .set(user)
       .send(newEvent)
       .expect(201)
     })
@@ -730,9 +734,13 @@ describe('LittleTidfordApp Unit Tests', () => {
         "price": 50,
         "attendees": {},
       }
+      const user = {
+        authorization: process.env.STAFF_MEMBER
+    }
       return request(app)
       .post("/events/newEvent")
       .send(newEvent)
+      .set(user)
       .then(({body})=>{
         expect(body.msg).toBe("Test Event event added to database")
         return body.id
