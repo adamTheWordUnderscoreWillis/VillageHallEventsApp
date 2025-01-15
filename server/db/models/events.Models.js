@@ -122,3 +122,29 @@ exports.removeEventById = async (eventId, authorization)=>{
             }
         }
 }
+exports.deleteAttendee = async (eventId ,body)=>{
+    let db = database.getDb()
+        let query = {_id: ObjectId.createFromHexString(eventId)}
+        let data = await db.collection("events").findOne(query)
+        if(data !== null && Object.keys(data).length >0){  
+            const attendeeKey = Object.keys(body)
+            delete data.attendees[attendeeKey[0]]
+            let deleteStatement = {$unset: {attendees: ""}}
+            let update = {$set: {attendees: data.attendees}}
+            let deleteString = await db.collection("events").updateOne(query, deleteStatement)
+            let updateString = await db.collection("events").updateOne(query, update)
+
+            if(deleteString.modifiedCount <1){
+                throw new Error("Could not find attendees data", {status: 404, msg: "Could not find attendees data"})
+            }
+            else if(updateString.modifiedCount < 1){
+                throw new Error("User was not signed up to event", {status: 404, msg: "User was not signed up to event"})
+            }
+            else{
+                return {msg: `${body[attendeeKey[0]]} has been removed from event ${eventId}`}
+            }
+        }
+        else{
+            throw new Error("We could not find any data for that event", {status: 404, msg: "We could not find any data for that event"})
+        }
+}

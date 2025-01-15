@@ -1,6 +1,6 @@
 const express = require("express")
 const cors = require("cors")
-const {getAllEvents, getEventById, addAttendebyEventId, createNewEvent, deleteEventById} = require("./db/controllers/events.controllers");
+const {getAllEvents, getEventById, addAttendebyEventId, createNewEvent, deleteEventById, removeAttendeeByID} = require("./db/controllers/events.controllers");
 const { handleBsonErrors, handle404Errors, handleCustomErrors, handleServerErrors } = require("./db/controllers/errorhandling");
 
 const app = express()
@@ -9,11 +9,13 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/events', getAllEvents)
-app.patch("/event/:eventId/attendee", addAttendebyEventId)
 app.get('/events/:eventId', getEventById)
-// app.delete("/event:eventId/attende", removeAttendeeByID)
+
+app.get('/events/:eventId', getEventById)
 app.post("/events/newEvent", createNewEvent)
 app.delete("/events/:eventId/deleteEvent", deleteEventById)
+app.patch("/events/:eventId/attendee", addAttendebyEventId)
+app.patch("/events/:eventId/removeAttendee", removeAttendeeByID)
 
 app.use(handleBsonErrors);
 app.use(handleCustomErrors);
