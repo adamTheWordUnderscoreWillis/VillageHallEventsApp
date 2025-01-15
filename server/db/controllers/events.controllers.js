@@ -33,3 +33,7 @@ exports.createNewEvent = async(req,res,next)=>{
         next(err)
     }
 }
+exports.deleteEventById = async (req,res,next)=>{
+    console.log("Are we there yet")
+    await res.status(204).send({msg: "event deleted"})
+}

@@ -811,4 +811,9 @@ describe('LittleTidfordApp Unit Tests', () => {
       })
     })
     })
+  describe.only('Delete an Event', ()=>{
+    test("204: Returns a no content status code", ()=>{
+      return request(app).delete("/events/677d06d3724343657a79816d/deleteEvent").expect(204)
+    })
+  })
   })
