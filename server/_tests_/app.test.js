@@ -852,5 +852,17 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body.msg).toEqual("This account is not allowed to delete events")
       })
     })
+    test("400: Returns error if Object Id doesn't exist", ()=>{
+    
+      const user = {
+        authorization: process.env.STAFF_MEMBER
+    }
+      return request(app)
+      .delete("/events/677756d3724343657a79816d/deleteEvent")
+      .set(user)
+      .then(({body})=>{
+        expect(body.msg).toEqual("The event you tried to delete doesn't exist")
+      })
+    })
   })
 })
