@@ -582,6 +582,9 @@ describe('LittleTidfordApp Unit Tests', () => {
       .patch("/event/677d06d3724343657a79816d/attendee")
       .send(newAttendee)
       .expect(201)
+      .then(({body})=>{
+        expect(body.msg).toBe("User: user has been added to event 677d06d3724343657a79816d")
+      })
       .then(()=>{
         return request(app)
         .get("/events/677d06d3724343657a79816d")
@@ -590,8 +593,30 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body).toEqual(updatedAttendeesEvent)
       })
     })
+    test("400: Returns error if Object Id doesn't exist", ()=>{
+      const newAttendee = {
+        "user@email.com": "user"
+      }
+      return request(app)
+      .patch("/events/677756d3724343657a79816d/attendee")
+      .send(newAttendee)
+      .then(({body})=>{
+        expect(body.msg).toEqual("I'm afraid that does not exist")
+      })
+    })
+    test("400: Returns error if Object is not hexcode", ()=>{
+      const newAttendee = {
+        "user@email.com": "user"
+      }
+      return request(app)
+      .patch("/events/notHexId/attendee")
+      .send(newAttendee)
+      .then(({body})=>{
+        expect(body.msg).toEqual("I'm afraid that does not exist")
+      })
+    })
   })
-  describe('Create an Event', ()=>{
+  describe('Create a new Event', ()=>{
     test("201: Returns Created Status Code", ()=>{
       const newEvent = {
         "name": {
@@ -746,12 +771,10 @@ describe('LittleTidfordApp Unit Tests', () => {
         return body.id
       })
       .then((id)=>{
-        console.log("First then block")
         return request(app)
         .get(`/events/${id}`)
       })
       .then(({body})=>{
-        console.log("Second then block")
         expect(body.event).toEqual(expectedEvent)
       })
     })
@@ -812,7 +835,7 @@ describe('LittleTidfordApp Unit Tests', () => {
       })
     })
   })
-  describe('Delete an Event', ()=>{
+  describe('Delete an Event by Id', ()=>{
     test("204: Returns a no content status code", ()=>{
       const user = {
         authorization: process.env.STAFF_MEMBER
@@ -862,6 +885,18 @@ describe('LittleTidfordApp Unit Tests', () => {
       .set(user)
       .then(({body})=>{
         expect(body.msg).toEqual("The event you tried to delete doesn't exist")
+      })
+    })
+    test("400: Returns error if Object is not hexcode", ()=>{
+    
+      const user = {
+        authorization: process.env.STAFF_MEMBER
+    }
+      return request(app)
+      .delete("/events/notHexId/deleteEvent")
+      .set(user)
+      .then(({body})=>{
+        expect(body.msg).toEqual("Database Error: We cannot find the thing you seek...")
       })
     })
   })

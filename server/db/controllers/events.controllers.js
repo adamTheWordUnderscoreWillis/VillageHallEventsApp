@@ -8,8 +8,14 @@ exports.addAttendebyEventId = async (req,res, next) =>{
     const { eventId} = req.params
     const {body} = req
     
- const response = await insertNewAttendee(eventId, body)
-    await res.status(201).send({msg:"It's okay"})
+    try{
+        await insertNewAttendee(eventId, body)
+        userKey = Object.keys(body)[0]
+        await res.status(201).send({msg:`User: ${body[userKey]} has been added to event ${eventId}`})
+    }
+    catch(err){
+        next(err)
+    }
 }
 
 exports.getEventById = async (req,res,next) =>{
@@ -41,7 +47,6 @@ exports.deleteEventById = async (req,res,next)=>{
         await res.status(204).send()
     }
     catch(err){
-        console.log("What's happening")
         next(err)
     }
 }

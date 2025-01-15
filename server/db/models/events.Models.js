@@ -60,14 +60,13 @@ exports.insertNewAttendee = async (eventId, body)=>{
             data.attendees[attendeeKey[0]] = body[attendeeKey[0]]
 
             let update = {$set: {attendees: data.attendees}}
-            try{
-                let updateString = await db.collection("events").updateOne(query, update)
-            }
-            catch(err){
-                next(err)
-            }
-
-
+                let updateResponse = await db.collection("events").updateOne(query, update)
+                if(updateResponse.modifiedCount < 1){
+                    throw new Error(`We were not able to update the attendees data`, {status: 404, msg: `We were not able to update the attendees data`})
+                }
+                else{
+                    return updateResponse
+                }
         }
         else{
             throw new Error("We could not find any data for that event", {status: 404, msg: "We could not find any data for that event"})
