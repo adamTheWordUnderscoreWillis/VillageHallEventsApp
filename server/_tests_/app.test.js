@@ -582,6 +582,9 @@ describe('LittleTidfordApp Unit Tests', () => {
       .patch("/event/677d06d3724343657a79816d/attendee")
       .send(newAttendee)
       .expect(201)
+      .then(({body})=>{
+        expect(body.msg).toBe("User: user has been added to event 677d06d3724343657a79816d")
+      })
       .then(()=>{
         return request(app)
         .get("/events/677d06d3724343657a79816d")
@@ -590,8 +593,30 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body).toEqual(updatedAttendeesEvent)
       })
     })
+    test("400: Returns error if Object Id doesn't exist", ()=>{
+      const newAttendee = {
+        "user@email.com": "user"
+      }
+      return request(app)
+      .patch("/events/677756d3724343657a79816d/attendee")
+      .send(newAttendee)
+      .then(({body})=>{
+        expect(body.msg).toEqual("I'm afraid that does not exist")
+      })
+    })
+    test("400: Returns error if Object is not hexcode", ()=>{
+      const newAttendee = {
+        "user@email.com": "user"
+      }
+      return request(app)
+      .patch("/events/notHexId/attendee")
+      .send(newAttendee)
+      .then(({body})=>{
+        expect(body.msg).toEqual("I'm afraid that does not exist")
+      })
+    })
   })
-  describe('Create an Event', ()=>{
+  describe('Create a new Event', ()=>{
     test("201: Returns Created Status Code", ()=>{
       const newEvent = {
         "name": {
@@ -750,7 +775,6 @@ describe('LittleTidfordApp Unit Tests', () => {
         .get(`/events/${id}`)
       })
       .then(({body})=>{
-        
         expect(body.event).toEqual(expectedEvent)
       })
     })
@@ -810,5 +834,70 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body.msg).toEqual("This account is not allowed to create events")
       })
     })
+  })
+  describe('Delete an Event by Id', ()=>{
+    test("204: Returns a no content status code", ()=>{
+      const user = {
+        authorization: process.env.STAFF_MEMBER
+      }
+
+      return request(app)
+      .delete("/events/677d06d3724343657a79816d/deleteEvent")
+      .set(user)
+      .expect(204)
+    })
+    test("204: Deletes event with correct ID",()=>{
+      const user = {
+        authorization: process.env.STAFF_MEMBER
+      }
+
+      return request(app)
+      .delete("/events/677d06d3724343657a79816d/deleteEvent")
+      .set(user).then(({body})=>{
+        expect(body).toEqual({})
+      })
+      .then(()=>{
+        return request(app).get("/events/677d06d3724343657a79816d")
+      })
+      .then(({body})=>{
+        expect(body.msg).toEqual("We could not find any data for that event")
+      })
+    })
+    test("400: Blocks unauthorized user from deleting events", ()=>{
+    
+      const user = {
+        authorization: "notStaff@email.net"
+    }
+      return request(app)
+      .delete("/events/677d06d3724343657a79816d/deleteEvent")
+      .set(user)
+      .then(({body})=>{
+        expect(body.msg).toEqual("This account is not allowed to delete events")
+      })
+    })
+    test("400: Returns error if Object Id doesn't exist", ()=>{
+    
+      const user = {
+        authorization: process.env.STAFF_MEMBER
+    }
+      return request(app)
+      .delete("/events/677756d3724343657a79816d/deleteEvent")
+      .set(user)
+      .then(({body})=>{
+        expect(body.msg).toEqual("The event you tried to delete doesn't exist")
+      })
+    })
+    test("400: Returns error if Object is not hexcode", ()=>{
+    
+      const user = {
+        authorization: process.env.STAFF_MEMBER
+    }
+      return request(app)
+      .delete("/events/notHexId/deleteEvent")
+      .set(user)
+      .then(({body})=>{
+        expect(body.msg).toEqual("Database Error: We cannot find the thing you seek...")
+      })
     })
   })
+})
