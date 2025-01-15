@@ -840,5 +840,17 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body.msg).toEqual("We could not find any data for that event")
       })
     })
+    test("400: Blocks unauthorized user from deleting events", ()=>{
+    
+      const user = {
+        authorization: "notStaff@email.net"
+    }
+      return request(app)
+      .delete("/events/677d06d3724343657a79816d/deleteEvent")
+      .set(user)
+      .then(({body})=>{
+        expect(body.msg).toEqual("This account is not allowed to delete events")
+      })
+    })
   })
 })
