@@ -590,7 +590,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body).toEqual(updatedAttendeesEvent)
       })
     })
-    test("400: Returns error if Object Id doesn't exist", ()=>{
+    test("400: Returns error if Event Id Id doesn't exist", ()=>{
       const newAttendee = {
         "user@email.com": "user"
       }
@@ -601,7 +601,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body.msg).toEqual("We could not find any data for that event")
       })
     })
-    test("400: Returns error if Object is not hexcode", ()=>{
+    test("400: Returns error if Event Id is not hexcode", ()=>{
       const newAttendee = {
         "user@email.com": "user"
       }
@@ -632,6 +632,10 @@ describe('LittleTidfordApp Unit Tests', () => {
       const attendeeToDelete = {
         "user@email.com": "user"
       }
+      const secondAttendee = {
+        "doNotDeleteUser@mail.com": "remaining user"
+      }
+
       const updatedAttendeesEvent ={ event: {
           "name": {
             "text": "Riso Club - Cut & Paste a Limited Edition Print",
@@ -675,12 +679,19 @@ describe('LittleTidfordApp Unit Tests', () => {
           "currency": "GBP",
           "created": "2022-04-09T10:16:13Z",
           "price": 10,
-          "attendees": {},
+          "attendees": {
+            "doNotDeleteUser@mail.com": "remaining user"
+          },
         }
       }
       return request(app)
       .patch("/events/677d06d3724343657a79816d/attendee")
       .send(attendeeToDelete)
+      .then(()=>{
+        return request(app)
+      .patch("/events/677d06d3724343657a79816d/attendee")
+      .send(secondAttendee)
+      })
       .then(()=>{
         return request(app)
         .patch("/events/677d06d3724343657a79816d/RemoveAttendee")
@@ -696,7 +707,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body).toEqual(updatedAttendeesEvent)
       })
     })
-    xtest("400: Returns error if Object Id doesn't exist", ()=>{
+    test("400: Returns error if Event Id doesn't exist", ()=>{
       const newAttendee = {
         "user@email.com": "user"
       }
@@ -704,10 +715,10 @@ describe('LittleTidfordApp Unit Tests', () => {
       .patch("/events/677756d3724343657a79816d/removeAttendee")
       .send(newAttendee)
       .then(({body})=>{
-        expect(body.msg).toEqual("I'm afraid that does not exist")
+        expect(body.msg).toEqual("We could not find any data for that event")
       })
     })
-    xtest("400: Returns error if Object is not hexcode", ()=>{
+    test("400: Returns error if Event Id is not hexcode", ()=>{
       const newAttendee = {
         "user@email.com": "user"
       }
@@ -715,7 +726,7 @@ describe('LittleTidfordApp Unit Tests', () => {
       .patch("/events/notHexId/removeAttendee")
       .send(newAttendee)
       .then(({body})=>{
-        expect(body.msg).toEqual("I'm afraid that does not exist")
+        expect(body.msg).toEqual("Database Error: We cannot find the thing you seek...")
       })
     })
   })
@@ -978,7 +989,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body.msg).toEqual("This account is not allowed to delete events")
       })
     })
-    test("400: Returns error if Object Id doesn't exist", ()=>{
+    test("400: Returns error if Event Id doesn't exist", ()=>{
     
       const user = {
         authorization: process.env.STAFF_MEMBER
@@ -990,7 +1001,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body.msg).toEqual("The event you tried to delete doesn't exist")
       })
     })
-    test("400: Returns error if Object is not hexcode", ()=>{
+    test("400: Returns error if Event Id is not hexcode", ()=>{
     
       const user = {
         authorization: process.env.STAFF_MEMBER
