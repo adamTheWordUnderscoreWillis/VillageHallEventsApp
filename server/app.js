@@ -11,11 +11,11 @@ app.use(express.json());
 app.get('/events', getAllEvents)
 app.get('/events/:eventId', getEventById)
 
-app.patch("/event/:eventId/attendee", addAttendebyEventId)
 app.get('/events/:eventId', getEventById)
-// app.delete("/event:eventId/attende", removeAttendeeByID)
 app.post("/events/newEvent", createNewEvent)
 app.delete("/events/:eventId/deleteEvent", deleteEventById)
+app.patch("/events/:eventId/attendee", addAttendebyEventId)
+app.patch("/events/:eventId/removeAttendee", removeAttendeeByID)
 
 app.use(handleBsonErrors);
 app.use(handleCustomErrors);

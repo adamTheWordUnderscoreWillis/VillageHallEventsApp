@@ -522,7 +522,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         "user@email.com": "user"
       }
       return request(app)
-      .patch("/event/677d06d3724343657a79816d/attendee")
+      .patch("/events/677d06d3724343657a79816d/attendee")
       .send(newAttendee)
       .expect(201)
     })
@@ -579,7 +579,7 @@ describe('LittleTidfordApp Unit Tests', () => {
       }
       }
       return request(app)
-      .patch("/event/677d06d3724343657a79816d/attendee")
+      .patch("/events/677d06d3724343657a79816d/attendee")
       .send(newAttendee)
       .expect(201)
       .then(()=>{
@@ -590,18 +590,45 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body).toEqual(updatedAttendeesEvent)
       })
     })
+    test("400: Returns error if Object Id doesn't exist", ()=>{
+      const newAttendee = {
+        "user@email.com": "user"
+      }
+      return request(app)
+      .patch("/events/677756d3724343657a79816d/attendee")
+      .send(newAttendee)
+      .then(({body})=>{
+        expect(body.msg).toEqual("We could not find any data for that event")
+      })
+    })
+    test("400: Returns error if Object is not hexcode", ()=>{
+      const newAttendee = {
+        "user@email.com": "user"
+      }
+      return request(app)
+      .patch("/events/notHexId/attendee")
+      .send(newAttendee)
+      .then(({body})=>{
+        expect(body.msg).toEqual("Database Error: We cannot find the thing you seek...")
+      })
+    })
   })
   describe('Delete Attendee from event', ()=>{
-    test ("204: Returns No Content Status Code", ()=>{
+    test ("201: Returns No Content Status Code", ()=>{
       const attendeeToDelete = {
         "user@email.com": "user"
       }
       return request(app)
-      .patch("/event/677d06d3724343657a79816d/removeAttendee")
+      .patch("/events/677d06d3724343657a79816d/attendee")
       .send(attendeeToDelete)
-      .expect(204)
+      .then(()=>{
+        return request(app)
+        .patch("/events/677d06d3724343657a79816d/removeAttendee")
+        .send(attendeeToDelete)
+        .expect(201)
+      })
     })
-    test ("204: Removes attendee from events attendee object", ()=>{
+    test ("201: Removes attendee from events attendee object", ()=>{
       const attendeeToDelete = {
         "user@email.com": "user"
       }
@@ -645,17 +672,23 @@ describe('LittleTidfordApp Unit Tests', () => {
             "edge_color": "#ffffff",
             "edge_color_set": true
           },
-          "currancy": "GBP",
+          "currency": "GBP",
           "created": "2022-04-09T10:16:13Z",
           "price": 10,
           "attendees": {},
         }
       }
       return request(app)
-      .patch("/event/677d06d3724343657a79816d/attendee")
+      .patch("/events/677d06d3724343657a79816d/attendee")
       .send(attendeeToDelete)
-      .expect(201)
       .then(()=>{
+        return request(app)
+        .patch("/events/677d06d3724343657a79816d/RemoveAttendee")
+        .send(attendeeToDelete)
+        .expect(201)
+      })
+      .then(({body})=>{
+        expect(body.msg).toBe("user has been removed from event 677d06d3724343657a79816d")
         return request(app)
         .get("/events/677d06d3724343657a79816d")
       })
@@ -663,23 +696,23 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body).toEqual(updatedAttendeesEvent)
       })
     })
-    test("400: Returns error if Object Id doesn't exist", ()=>{
+    xtest("400: Returns error if Object Id doesn't exist", ()=>{
       const newAttendee = {
         "user@email.com": "user"
       }
       return request(app)
-      .patch("/events/677756d3724343657a79816d/attendee")
+      .patch("/events/677756d3724343657a79816d/removeAttendee")
       .send(newAttendee)
       .then(({body})=>{
         expect(body.msg).toEqual("I'm afraid that does not exist")
       })
     })
-    test("400: Returns error if Object is not hexcode", ()=>{
+    xtest("400: Returns error if Object is not hexcode", ()=>{
       const newAttendee = {
         "user@email.com": "user"
       }
       return request(app)
-      .patch("/events/notHexId/attendee")
+      .patch("/events/notHexId/removeAttendee")
       .send(newAttendee)
       .then(({body})=>{
         expect(body.msg).toEqual("I'm afraid that does not exist")

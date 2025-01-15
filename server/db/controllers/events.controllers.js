@@ -4,19 +4,7 @@ exports.getAllEvents = async (req,res) =>{
     const events = await fetchAllEvents()
     await res.status(200).send({events:events})
 }
-exports.addAttendebyEventId = async (req,res, next) =>{
-    const { eventId} = req.params
-    const {body} = req
-    
-    try{
-        await insertNewAttendee(eventId, body)
-        userKey = Object.keys(body)[0]
-        await res.status(201).send({msg:`User: ${body[userKey]} has been added to event ${eventId}`})
-    }
-    catch(err){
-        next(err)
-    }
-}
+
 
 exports.getEventById = async (req,res,next) =>{
     const {eventId}= req.params
@@ -50,19 +38,30 @@ exports.deleteEventById = async (req,res,next)=>{
         next(err)
     }
 }
-
 exports.addAttendebyEventId = async (req,res, next) =>{
     const { eventId} = req.params
     const {body} = req
     
- const response = await insertNewAttendee(eventId, body)
-    await res.status(201).send({msg:"It's okay"})
+    try{
+        await insertNewAttendee(eventId, body)
+        userKey = Object.keys(body)[0]
+        await res.status(201).send({msg:`User: ${body[userKey]} has been added to event ${eventId}`})
+    }
+    catch(err){
+        next(err)
+    }
 }
 exports.removeAttendeeByID = async (req,res, next)=>{
     const { eventId} = req.params
     const {body} = req
     
- const response = await deleteAttendee(eventId, body)
- console.log(response)
-    await res.status(204).send({msg:"It's okay"})
+    try{
+        const response = await deleteAttendee(eventId, body)
+        await res.status(201).send(response)
+
+    }
+    catch(err){
+        console.log(err)
+        next(err)
+    }
 }
