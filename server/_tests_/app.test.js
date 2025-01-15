@@ -746,11 +746,12 @@ describe('LittleTidfordApp Unit Tests', () => {
         return body.id
       })
       .then((id)=>{
+        console.log("First then block")
         return request(app)
         .get(`/events/${id}`)
       })
       .then(({body})=>{
-        
+        console.log("Second then block")
         expect(body.event).toEqual(expectedEvent)
       })
     })
@@ -810,10 +811,34 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body.msg).toEqual("This account is not allowed to create events")
       })
     })
-    })
-  describe.only('Delete an Event', ()=>{
+  })
+  describe('Delete an Event', ()=>{
     test("204: Returns a no content status code", ()=>{
-      return request(app).delete("/events/677d06d3724343657a79816d/deleteEvent").expect(204)
+      const user = {
+        authorization: process.env.STAFF_MEMBER
+      }
+
+      return request(app)
+      .delete("/events/677d06d3724343657a79816d/deleteEvent")
+      .set(user)
+      .expect(204)
+    })
+    test("204: Deletes event with correct ID",()=>{
+      const user = {
+        authorization: process.env.STAFF_MEMBER
+      }
+
+      return request(app)
+      .delete("/events/677d06d3724343657a79816d/deleteEvent")
+      .set(user).then(({body})=>{
+        expect(body).toEqual({})
+      })
+      .then(()=>{
+        return request(app).get("/events/677d06d3724343657a79816d")
+      })
+      .then(({body})=>{
+        expect(body.msg).toEqual("We could not find any data for that event")
+      })
     })
   })
-  })
+})

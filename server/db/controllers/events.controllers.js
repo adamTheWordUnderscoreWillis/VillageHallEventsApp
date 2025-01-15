@@ -1,4 +1,4 @@
-const {fetchAllEvents, fetchEventById, insertNewAttendee, insertNewEvent} = require("../models/events.Models.js")
+const {fetchAllEvents, fetchEventById, insertNewAttendee, insertNewEvent, removeEventById} = require("../models/events.Models.js")
 
 exports.getAllEvents = async (req,res) =>{
     const events = await fetchAllEvents()
@@ -34,6 +34,14 @@ exports.createNewEvent = async(req,res,next)=>{
     }
 }
 exports.deleteEventById = async (req,res,next)=>{
-    console.log("Are we there yet")
-    await res.status(204).send({msg: "event deleted"})
+    const {eventId}= req.params
+    const {authorization} = req.headers
+    try{
+        await removeEventById(eventId, authorization)
+        await res.status(204).send()
+    }
+    catch(err){
+        console.log("What's happening")
+        next(err)
+    }
 }
