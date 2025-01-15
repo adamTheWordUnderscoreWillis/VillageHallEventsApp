@@ -30,7 +30,6 @@ exports.createNewEvent = async(req,res,next)=>{
         await res.status(201).send({msg: `${newEvent.name.text} event added to database`, id: event.insertedId })
     }
     catch(err){
-        console.log("The error, ", err)
         next(err)
     }
 }

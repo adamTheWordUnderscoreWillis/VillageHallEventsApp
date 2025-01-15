@@ -754,5 +754,61 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body.event).toEqual(expectedEvent)
       })
     })
+    test("400: Blocks unauthorized user from creating events", ()=>{
+    
+      const newEvent = {
+        "name": {
+          "text": "Test Event",
+          "html": "Test Event"
+        },
+        "description": {
+          "text": "An event used for testing",
+          "html":"An event used for testing"
+        },
+        "start": {
+          "timezone": "Europe/London",
+          "local": "2022-06-04T10:00:00",
+          "utc": "2022-06-04T09:00:00Z"
+        },
+        "end": {
+          "timezone": "Europe/London",
+          "local": "2022-06-04T14:00:00",
+          "utc": "2022-06-04T13:00:00Z"
+        },
+        "logo": {
+          "crop_mask": {
+            "top_left": {
+              "x": 0,
+              "y": 120
+            },
+            "width": 1920,
+            "height": 960
+          },
+          "original": {
+            "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F263741449%2F265578049482%2F1%2Foriginal.20220309-091348?auto=format%2Ccompress&q=75&sharp=10&s=cc685bb6d3ff0126b6b67d58d39c8046",
+            "width": 1920,
+            "height": 1080
+          },
+          "id": "263741449",
+          "url": "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F263741449%2F265578049482%2F1%2Foriginal.20220309-091348?h=200&w=450&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C120%2C1920%2C960&s=bed03692a0ccc3ddb71d39d75b389787",
+          "aspect_ratio": "2",
+          "edge_color": "#ffffff",
+          "edge_color_set": true
+        },
+        "currency": "GBP",
+        "price": 50,
+        "attendees": {},
+      }
+      const user = {
+        authorization: "notStaff@email.net"
+    }
+      return request(app)
+      .post("/events/newEvent")
+      .send(newEvent)
+      .set(user)
+      .then(({body})=>{
+        expect(body.msg).toEqual("This account is not allowed to create events")
+      })
+    })
+    })
   })
-})

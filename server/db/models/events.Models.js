@@ -89,18 +89,22 @@ exports.insertNewEvent = async(newEvent, authorization)=>{
         attendees: newEvent.attendees,
         created: new Date().toJSON()
     }
-    try{
         let db = database.getDb()
         let staff = await db.collection("staff").findOne({email: authorization})
+
         if(!staff){
-            throw new Error("This account is not allowed to create events")
+            throw new Error("This account is not allowed to create events", {status: 400, msg: "This account is not allowed to create events"})
         }
-        let data = await db.collection("events").insertOne(event)
-        return data
-    }
-    catch(err){
-        console.log(err)
-    }
+        else{
+            
+            let data = await db.collection("events").insertOne(event)
+            if(data.acknowledged === true){
+                return data
+            }
+            else{
+                throw new Error("Event could not be added to database", {status: 400, msg: "Event could not be added to database"})
+            }
+        }
     
 
 }
