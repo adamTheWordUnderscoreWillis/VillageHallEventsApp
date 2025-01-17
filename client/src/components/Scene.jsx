@@ -15,8 +15,13 @@ function Scene (){
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
             <NoticeBoard/>
             <Floor/>
-            {/* <Events/> */}
-            <OrbitControls/>
+            <Events/>
+            <OrbitControls
+            minAzimuthAngle={-Math.PI / 5}
+            maxAzimuthAngle={Math.PI / 5}
+            minPolarAngle={Math.PI/ 4}
+            maxPolarAngle={Math.PI - Math.PI / 3}
+            />
             </Suspense>
         </Canvas>
         </>

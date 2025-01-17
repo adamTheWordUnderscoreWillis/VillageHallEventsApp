@@ -18,16 +18,14 @@ function Events() {
        return 0
       }
 
-      const posterImage = events[0].logo.url
-      console.log("This is the Poster Image", posterImage)
+      const posterImage = events[0].logo
       return (
-           <>
-             <Poster image={posterImage}/>
-             {/* {events.map((event)=>{
-                 return (
-                     <p>{event.name.text}</p>
+        <>
+             {events.map((event, index)=>{
+               return (
+                   <Poster yRotation={(Math.random()-0.1)*0.5} xPosition={(index-4)*0.4} yPosition={(Math.random()-0.5)*2.5} zPosition={Math.random()*0.01} image={event.logo}/>
                  )
-             })} */}
+             })}
            </>
          )
   }
