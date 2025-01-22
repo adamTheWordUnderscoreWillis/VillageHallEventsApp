@@ -1,3 +1,4 @@
+import { useMemo } from "react"
 import Scene from "./components/Scene"
 import Events from "./Events"
 

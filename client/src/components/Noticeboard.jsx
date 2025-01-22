@@ -1,9 +1,35 @@
 import { Text } from "@react-three/drei"
 import { Group } from "three"
+function loadingBanner (){
+    return(
+        <group>
+                <mesh position={[0,0,0.1]} rotation={[0,0,0]} >
+                    <planeGeometry args={[4,3,1]}/>
+                    <meshStandardMaterial color={"brown"}/>
+                </mesh>
+                <group position={[0,0,0.3]} rotation={[0,0,(Math.PI*0.1)]}>
+                    <mesh>
+                        <boxGeometry args={[3,0.5,0.1]}/>
+                        <meshStandardMaterial color={"red"}/>
+                    </mesh>
+                    <Text 
+          color="black" 
+          anchorX="centre" 
+          anchorY="middle" 
+          fontSize="0.4" 
+          position={[-0.8,0,0.11]}>
+            LOADING
+          </Text>
 
-function NoticeBoard (){
+                </group>
+        </group>
+    )
+}
+function NoticeBoard ({isLoading}){
     return(
         <>
+        {isLoading?loadingBanner(): null}
+        
             <group>
                 {/* BackBoard */}
                 <mesh >
@@ -14,6 +40,7 @@ function NoticeBoard (){
                     <planeGeometry args={[4,3,1]}/>
                     <meshStandardMaterial color={"brown"}/>
                 </mesh>
+                
                 {/* Wooden Boarder */}
                 <Text 
           color="black" 

@@ -1,10 +1,22 @@
-import { useLoader } from "@react-three/fiber"
+import { useFrame, useLoader } from "@react-three/fiber"
 import { Text } from "@react-three/drei"
 import { BoxGeometry, MeshStandardMaterial, TextureLoader } from "three"
+import { useRef, useState } from "react"
 
+function Poster({yRotation, xPosition,yPosition,zPosition, image, color}){
+    const [isClicked, setIsClicked]= useState(false)
+    const [isfocused, setIsFocused]= useState(false)
+    const posterRef = useRef()
+    useFrame((state, delta)=>{
+        isfocused? posterRef.current.position.z = zPosition+0.1: posterRef.current.position.z= zPosition;
+        isClicked? posterRef.current.position.z = state.camera.position.z -1: posterRef.current.position.z= zPosition;
+        isClicked? posterRef.current.position.x = state.camera.position.x/1.5: posterRef.current.position.x= xPosition;
+        isClicked? posterRef.current.position.y = state.camera.position.y/1.5: posterRef.current.position.y= yPosition;
+        isClicked? posterRef.current.rotation.z = 0: posterRef.current.rotation.z= yRotation;
+        isClicked? posterRef.current.rotation.y = state.camera.rotation.y: posterRef.current.rotation.y= 0;    
+        isClicked? posterRef.current.rotation.x = state.camera.rotation.x: posterRef.current.rotation.x= 0;    
+    })
 
-function Poster({yRotation, xPosition,yPosition,zPosition, image}){
-    const color = Math.random()*255
     const posterMap = useLoader(TextureLoader, image.logo.url)
     const aspectRatio = image.logo.original.height/image.logo.original.width
     let imageHeight = 0
@@ -20,8 +32,28 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image}){
     const date = new Date(image.start.local)
     return(
         <group 
-        position={[xPosition,yPosition,zPosition]}
-        rotation={[0,0,yRotation]} 
+        position={[xPosition ,yPosition,zPosition]}
+        rotation={[0,0,yRotation]}
+        ref={posterRef}
+        onPointerEnter={ (event) => {
+            event.stopPropagation()
+             isClicked? document.body.style.cursor = 'default':  document.body.style.cursor = 'pointer'
+             setIsFocused(true)
+            } }
+        onPointerLeave={
+             () => { 
+                document.body.style.cursor = 'default' 
+                setIsFocused(false)
+
+             } }
+        onClick={(event)=>{
+            event.stopPropagation()
+            
+            setIsClicked(true)
+        }}
+        onPointerMissed={()=>{
+            setIsClicked(false)
+        }}
         >
            <Text 
           color={`hsl(${color}, 100%, 95%)`} 
