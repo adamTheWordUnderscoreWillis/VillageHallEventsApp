@@ -1,7 +1,7 @@
 import { useFrame, useLoader } from "@react-three/fiber"
 import { Text } from "@react-three/drei"
 import { BoxGeometry, MeshStandardMaterial, TextureLoader } from "three"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { addAttendee, removeAttendee } from "./api"
 
 function Poster({yRotation, xPosition,yPosition,zPosition, image, color}){
@@ -10,6 +10,20 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color}){
     const [isGoing, setIsGoing]= useState(false)
     const posterRef = useRef()
     const signUpButtonRef = useRef()
+    const user = "user@email.com"
+
+    useEffect(()=>{
+        const handleIsGoing = async ()=>{
+            console.log(image.attendees)
+            if(image.attendees[user]){
+                await setIsGoing(true)
+            }
+            else{
+                console.log("Didn't work")
+            }
+        }
+        handleIsGoing()
+    },[])
 
     useFrame((state)=>{
         isfocused? posterRef.current.position.z = zPosition+0.1: posterRef.current.position.z= zPosition;

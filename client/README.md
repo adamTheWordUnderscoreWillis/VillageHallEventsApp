@@ -9,9 +9,7 @@ Currently, two official plugins are available:
 
 
 TODO List
-
--- Add titles and information to posters.
--- Handle focus and on click events to allow sign up
+-- Checks if user is attending events
 -- Deal with google auth sign in and sign out
 -- add to google calendar
 -- Allow staff account to create events
