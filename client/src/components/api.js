@@ -11,3 +11,27 @@ export const fetchEvents = ()=> {
         return data
     })
 }
+export const addAttendee = (eventID)=> {
+    console.log(eventID)
+    const attendeeData = {
+        "user@email.com": "user"
+      }
+    return backEnd
+    .patch(`/events/${eventID}/attendee`, attendeeData)
+    .then(({data})=>{
+        console.log("Added Attendee Response", data)
+        return data
+    })
+}
+export const removeAttendee = (eventID)=> {
+    console.log(eventID)
+    const attendeeData = {
+        "user@email.com": "user"
+      }
+    return backEnd
+    .patch(`/events/${eventID}/RemoveAttendee`, attendeeData)
+    .then(({data})=>{
+        console.log("Removed Attendee Response", data)
+        return data
+    })
+}
