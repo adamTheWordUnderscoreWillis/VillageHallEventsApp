@@ -1014,4 +1014,26 @@ describe('LittleTidfordApp Unit Tests', () => {
       })
     })
   })
+  describe.only('Google Authentication', ()=>{
+    test("200: Returns an Okay status code", ()=>{
+      return request(app)
+      .get("/auth")
+      .expect(200)
+    })
+    test("200: Returns OAuthClientCredentials", ()=>{
+      const credentials = {
+            access_token: expect.any(String), 
+            scope: 'https://www.googleapis.com/auth/calendar.readonly',
+            token_type: 'Bearer',
+            expiry_date: expect.any(String)
+        }
+
+        return request(app)
+        .get("/auth")
+        .expect(200)
+        .then(({body})=>{
+          expect(body).toEqual(credentials)
+        })
+    })
+  })
 })

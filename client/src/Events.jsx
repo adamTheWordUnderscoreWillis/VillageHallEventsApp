@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { fetchEvents } from "./components/api"
 import Poster from "./components/poster"
 
-function Events({isLoading, setIsLoading}) {
+function Events({isLoading, setIsLoading, user}) {
    const  [events, setEvents] = useState(null)
    
     useEffect(()=>{
@@ -41,6 +41,7 @@ function Events({isLoading, setIsLoading}) {
                    zPosition={(Math.random()*0.04)+0.1} 
                    image={event}
                    color={posterColours[index]}
+                   user={user}
                    />
                  )
              })}

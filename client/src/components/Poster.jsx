@@ -4,22 +4,17 @@ import { BoxGeometry, MeshStandardMaterial, TextureLoader } from "three"
 import { useEffect, useRef, useState } from "react"
 import { addAttendee, removeAttendee } from "./api"
 
-function Poster({yRotation, xPosition,yPosition,zPosition, image, color}){
+function Poster({yRotation, xPosition,yPosition,zPosition, image, color, user}){
     const [isClicked, setIsClicked]= useState(false)
     const [isfocused, setIsFocused]= useState(false)
     const [isGoing, setIsGoing]= useState(false)
     const posterRef = useRef()
     const signUpButtonRef = useRef()
-    const user = "user@email.com"
 
     useEffect(()=>{
         const handleIsGoing = async ()=>{
-            console.log(image.attendees)
             if(image.attendees[user]){
                 await setIsGoing(true)
-            }
-            else{
-                console.log("Didn't work")
             }
         }
         handleIsGoing()
