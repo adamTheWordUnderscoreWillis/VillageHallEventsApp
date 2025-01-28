@@ -14,12 +14,8 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color}){
 
     useEffect(()=>{
         const handleIsGoing = async ()=>{
-            console.log(image.attendees)
             if(image.attendees[user]){
                 await setIsGoing(true)
-            }
-            else{
-                console.log("Didn't work")
             }
         }
         handleIsGoing()

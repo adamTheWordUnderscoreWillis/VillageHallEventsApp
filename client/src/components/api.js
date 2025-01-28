@@ -4,6 +4,9 @@ const backEnd = axios.create({
     baseURL: "http://localhost:5050",
 });
 
+const google = axios.create({
+    baseURL: 'https://accounts.google.com/o/oauth2/v2',
+});
 export const fetchEvents = ()=> {
     return backEnd
     .get("/events")

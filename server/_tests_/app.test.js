@@ -1014,4 +1014,11 @@ describe('LittleTidfordApp Unit Tests', () => {
       })
     })
   })
+  describe('Authenticates google client', ()=>{
+    test("302: Sends found status code", ()=>{
+      return request(app)
+      .get("/google/authentication")
+      .expect(302)
+    })
+  })
 })
