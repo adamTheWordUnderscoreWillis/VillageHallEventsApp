@@ -1,11 +1,12 @@
 import { Text } from "@react-three/drei"
 import { useEffect, useRef, useState } from "react"
 import { Group } from "three"
-import { useGoogleLogin } from "@react-oauth/google";
+import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import { getUsernfo } from "./api";
 
 function NoticeBoard ({isLoading, isSignedIn, setProfile}){
-    const signInButton = useRef()
+    const signInButtonRef = useRef()
+    const signOutButtonRef = useRef()
     const [user, setUser]=useState({})
 
     const login = useGoogleLogin({
@@ -27,6 +28,12 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile}){
           }
           intialiseUser()
         },[user]);
+
+    const logout = ()=>{
+        console.log("log out")
+        googleLogout();
+        setProfile({})
+    }
 
     function loadingBanner (){
         return(
@@ -63,7 +70,7 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile}){
                     </mesh>
                     <group position={[0,0,0.3]} rotation={[0,0,0]}>
                         <mesh
-                            ref={signInButton}
+                            ref={signInButtonRef}
                             onPointerEnter={ (event) => {
                                 event.stopPropagation()
                                 document.body.style.cursor = 'pointer'
@@ -91,15 +98,13 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile}){
             </group>
         )
     }
+    
     function signOutButton (){
         return(
-            <group position={[-4,-1.5,-2]} rotation={[0,0,0]}>
-                <mesh position={[0,-1,-0.2]} rotation={[0,0,(Math.PI * 0.5)]}>
-                    <boxGeometry args={[3.2,0.1,0.1]}/>
-                    <meshStandardMaterial color={"brown"}/>
-                </mesh>
-                        <mesh
-                            ref={signInButton}
+            <group 
+            position={[1,-1.8,1.5]} 
+            rotation={[0,0,0]}
+            ref={signOutButtonRef}
                             onPointerEnter={ (event) => {
                                 event.stopPropagation()
                                 document.body.style.cursor = 'pointer'
@@ -109,10 +114,17 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile}){
                                     document.body.style.cursor = 'default'
                                     
                                 } }
-                            onClick={()=>{}}
+                            onClick={()=>{logout()}}
+            >
+                <mesh position={[0,-1,-0.2]} rotation={[0,0,(Math.PI * 0.5)]}>
+                    <boxGeometry args={[3.2,0.1,0.1]}/>
+                    <meshStandardMaterial color={"brown"}/>
+                </mesh>
+                        <mesh
+                            
                         >
                             <boxGeometry args={[1,1,0.1]}/>
-                            <meshStandardMaterial color={"brown"}/>
+                            <meshStandardMaterial color={"red"}/>
                         </mesh>
                         <Text 
                             color="black" 

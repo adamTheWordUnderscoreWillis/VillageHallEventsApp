@@ -6,15 +6,18 @@ import { Suspense, useEffect, useState } from "react";
 import { NotEqualStencilFunc } from "three";
 import {OrbitControls, Environment}from '@react-three/drei';
 import NoticeBoard from "./noticeboard";
-function Scene ({user}){
+function Scene (){
     const  [isLoading, setIsLoading] = useState(true)
-    const [profile, setProfile]=useState([])
+    const [profile, setProfile]=useState({})
     const [isSignedIn, setIsSignedIn]=useState(false)
     
     useEffect(()=>{
           if(profile.id){
             console.log("profile: ", profile)
             setIsSignedIn(true)
+          }
+          else{
+            setIsSignedIn(false)
           }
         }, [profile])
     return(
