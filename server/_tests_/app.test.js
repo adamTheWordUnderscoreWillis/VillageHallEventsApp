@@ -1014,5 +1014,37 @@ describe('LittleTidfordApp Unit Tests', () => {
       })
     })
   })
-  
+  describe.only('checkStaffMember', ()=>{
+    test("200: Returns Okay Status Code", ()=>{
+      return request(app).get(`/staff/${process.env.STAFF_MEMBER}`).expect(200)
+    })
+    test("200: Returns true if The email address is a staffmember", ()=>{
+      const responseBody = {
+        queriedEmailAddress: process.env.STAFF_MEMBER,
+        staffCheck: true,
+        msg: `${process.env.STAFF_MEMBER} is a staff member`
+      }
+
+      return request(app)
+      .get(`/staff/${process.env.STAFF_MEMBER}`)
+      .expect(200)
+      .then(({body})=>{
+          expect(body).toEqual(responseBody)
+      })
+    })
+    test("200: Returns false if the email address is not a staffmember", ()=>{
+      const responseBody = {
+        queriedEmailAddress: "notstaffMember@email.com",
+        staffCheck: false,
+        msg: `We could not find user: notstaffMember@email.com in the database`
+      }
+
+      return request(app)
+      .get(`/staff/notstaffMember@email.com`)
+      .expect(200)
+      .then(({body})=>{
+          expect(body).toEqual(responseBody)
+      })
+    })
+  })
 })

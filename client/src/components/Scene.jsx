@@ -10,15 +10,20 @@ function Scene (){
     const  [isLoading, setIsLoading] = useState(true)
     const [profile, setProfile]=useState({})
     const [isSignedIn, setIsSignedIn]=useState(false)
+    const [isStaff, setIsStaff]=useState(false)
+
+    const handleProfile = async()=>{
+        if(profile.id){
+          console.log("profile: ", profile)
+          setIsSignedIn(true)
+        }
+        else{
+          setIsSignedIn(false)
+        }
+    }
     
     useEffect(()=>{
-          if(profile.id){
-            console.log("profile: ", profile)
-            setIsSignedIn(true)
-          }
-          else{
-            setIsSignedIn(false)
-          }
+        handleProfile()
         }, [profile])
     return(
         <>

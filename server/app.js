@@ -4,6 +4,7 @@ const cors = require("cors")
 const {getAllEvents, getEventById, addAttendebyEventId, createNewEvent, deleteEventById, removeAttendeeByID} = require("./db/controllers/events.controllers");
 const { handleBsonErrors, handle404Errors, handleCustomErrors, handleServerErrors } = require("./db/controllers/errorhandling");
 const { getAuthorization } = require("./db/controllers/googleCalendar.controller");
+const { checkStaffMemberbyEmailAddress } = require("./db/controllers/staff.controllers");
 
 const app = express()
 
@@ -22,6 +23,7 @@ app.get('/events', getAllEvents)
 app.get('/events/:eventId', getEventById)
 app.get('/events/:eventId', getEventById)
 app.get('/auth', getAuthorization)
+app.get('/staff/:emailAddress', checkStaffMemberbyEmailAddress)
 app.post("/events/newEvent", createNewEvent)
 app.delete("/events/:eventId/deleteEvent", deleteEventById)
 app.patch("/events/:eventId/attendee", addAttendebyEventId)
