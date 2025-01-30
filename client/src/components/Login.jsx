@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react"
 import Nav from 'react-bootstrap/Nav';
-import { addEvent, AuthorizeToken, gapiLoaded, gisLoaded } from "./googleApi";
-import { useGoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
+import { useGoogleLogin} from "@react-oauth/google";
 import { getUsernfo } from "./api";
 
 export const Login = ({isSignedIn, setIsSignedIn, setProfile, profile}) => {
@@ -28,10 +27,10 @@ export const Login = ({isSignedIn, setIsSignedIn, setProfile, profile}) => {
       intialiseUser()
     },[user]);
 
-     const handleAuthClick = async () =>{
-        await AuthorizeToken()
-        setIsSignedIn(true)
-     }
+    //  const handleAuthClick = async () =>{
+    //     await AuthorizeToken()
+    //     setIsSignedIn(true)
+    //  }
       return (
         <Nav fill variant="pills" defaultActiveKey="/home">
         <Nav.Item>
