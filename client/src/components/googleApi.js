@@ -1,8 +1,9 @@
 const gapi = window.gapi;
 const google = window.google;
 
+
 const CLIENT_ID = '648611715479-ir065jvp0akr5i1tihs609c1s59rdogr.apps.googleusercontent.com';
-const API_KEY = 'AIzaSyChVdiMMKDQyQKM7XsYXjISmIQHml_TS68';
+// const API_KEY = process.env.API_KEY
 const CALENDAR_DOC ='https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
 const SCOPES = `https://www.googleapis.com/auth/calendar`;
 

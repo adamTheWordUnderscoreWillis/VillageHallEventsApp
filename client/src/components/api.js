@@ -35,34 +35,21 @@ export const removeAttendee = (event)=> {
         return data
     })
 }
-export const authorize = async ()=>{
-    const authorization = await backEnd.get("/google/authentication")
-    return authorization
 
-}
-
-export const trySampleRequest = () => {
-    var params = JSON.parse(localStorage.getItem('oauth2-test-params'));
-    if (params && params['access_token']) { 
-      console.log("got token")
-      // User authorized the request. Now, check which scopes were granted.
-      if (params['scope'].includes('https://www.googleapis.com/auth/drive.metadata.readonly')) {
-        // User authorized read-only Drive activity permission.
-        // Calling the APIs, etc.
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET',
-        'https://www.googleapis.com/drive/v3/about?fields=user&' +
-        'access_token=' + params['access_token']);
-        xhr.onreadystatechange = function (e) {
-          if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(xhr.response);
-          } else if (xhr.readyState === 4 && xhr.status === 401) {
-            // Token invalid, so prompt for user permission.
-            console.log("This far")
-            oauth2SignIn();
-          }
-        };
-        xhr.send(null);
-      }
-    }
+export const getUsernfo = (user) => {
+  if (user) {
+    console.log(user.access_token)
+      axios
+          .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+              headers: {
+                  Authorization: `Bearer ${user.access_token}`,
+                  Accept: 'application/json'
+              }
+          })
+          .then((res) => {
+            console.log(res.data)
+              return res.data
+          })
+          .catch((err) => console.log(err));
+  }
 }
