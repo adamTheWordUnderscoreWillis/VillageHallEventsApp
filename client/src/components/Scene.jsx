@@ -6,15 +6,21 @@ import { Suspense, useEffect, useState } from "react";
 import { NotEqualStencilFunc } from "three";
 import {OrbitControls, Environment}from '@react-three/drei';
 import NoticeBoard from "./noticeboard";
-function Scene (){
+import { fetchStaffMember } from "./api";
+function Scene ({setIsStaff}){
     const  [isLoading, setIsLoading] = useState(true)
     const [profile, setProfile]=useState({})
     const [isSignedIn, setIsSignedIn]=useState(false)
-    const [isStaff, setIsStaff]=useState(false)
+    
 
     const handleProfile = async()=>{
-        if(profile.id){
+        if(profile.email){
           console.log("profile: ", profile)
+          const staffResponse = await fetchStaffMember(profile.email)
+          if(staffResponse.staffCheck){
+            setIsStaff(true)
+          }
+          console.log(staffResponse)
           setIsSignedIn(true)
         }
         else{

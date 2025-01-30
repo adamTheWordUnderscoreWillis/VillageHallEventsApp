@@ -11,6 +11,19 @@ export const fetchEvents = ()=> {
         return data
     })
 }
+export const fetchStaffMember = (emailAddress)=> {
+  try{
+    return backEnd
+    .get(`/staff/${emailAddress}`)
+    .then(({data})=>{
+      console.log(data)
+        return data
+    })
+  }
+  catch(err){
+    console.log(err)
+  }
+}
 export const addAttendee = (event, profile)=> {
   console.log({id: event.id, profile})
     const attendeeData = {

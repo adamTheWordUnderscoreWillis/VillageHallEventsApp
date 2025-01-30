@@ -1014,7 +1014,7 @@ describe('LittleTidfordApp Unit Tests', () => {
       })
     })
   })
-  describe.only('checkStaffMember', ()=>{
+  describe('checkStaffMember', ()=>{
     test("200: Returns Okay Status Code", ()=>{
       return request(app).get(`/staff/${process.env.STAFF_MEMBER}`).expect(200)
     })

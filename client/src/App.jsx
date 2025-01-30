@@ -7,18 +7,11 @@ import { getUsernfo } from "./components/api";
 
 
 function App() {
+  const [isStaff, setIsStaff]=useState(false)
   return (
         <>
-          {/* <GoogleLogin
-            onSuccess={credentialResponse => {
-              setUser(credentialResponse)
-            }}
-            onError={(error) => {
-              console.log('Login Failed', error);
-            }}
-          />; */}
-          {/* <Login/> */}
-        <Scene className={"scene"}/>
+        {isStaff?<Login/>:null}
+        <Scene setIsStaff={setIsStaff} className={"scene"}/>
         </>
   )
 }
