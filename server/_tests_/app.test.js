@@ -1046,5 +1046,15 @@ describe('LittleTidfordApp Unit Tests', () => {
           expect(body).toEqual(responseBody)
       })
     })
+    test("400: Rejects if request is not an emailaddress", ()=>{
+      const responseBody = "This endpoint ony accepts email addresses"
+
+      return request(app)
+      .get(`/staff/999`)
+      .expect(400)
+      .then(({body})=>{
+          expect(body.msg).toEqual(responseBody)
+      })
+    })
   })
 })
