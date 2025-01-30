@@ -41,7 +41,7 @@ function Events({isLoading, setIsLoading, isSignedIn, profile, user}) {
                    xPosition={(index-4)*0.4} 
                    yPosition={(index%2*1.5)-(0.5+(Math.random()*0.5))} 
                    zPosition={(Math.random()*0.04)+0.1} 
-                   image={event}
+                   eventData={event}
                    color={posterColours[index]}
                    user={user}
                    profile={profile}

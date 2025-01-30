@@ -64,39 +64,40 @@ export const getUsernfo = async (user) => {
     }
   }
 }
-export const addEventToUserCalendar = async (user) => {
-
-  console.log("This is the user: ", user)
+export const addEventToUserCalendar = async (user, event) => {
+  console.log(event.start.local)
+  console.log(event.name.text)
     try{
-      const event = {
-        'summary': 'Google I/O 2015',
-        'location': '800 Howard St., San Francisco, CA 94103',
-        'description': 'A chance to hear more about Googles developer products.',
+      const requestEvent = {
+        'summary': event.name.text,
+        'location': 'Little Tidford Village Hall, 53 The street, Little Tidford, LT9 9LT',
+        'description': event.description.text,
         'start': {
-          'dateTime': '2025-01-28T09:00:00-07:00',
-          'timeZone': 'America/Los_Angeles',
+          'dateTime': event.start.local+"-00:00",
+          'timeZone': event.start.timeZone,
         },
         'end': {
-          'dateTime': '2025-01-28T17:00:00-07:00',
-          'timeZone': 'America/Los_Angeles',
+          'dateTime': event.end.local+"-00:00",
+          'timeZone': event.start.timeZone,
         },
+        'organizer':{email:"littletidfordvillagehall@gmail.com"},
         'attendees': [
-          {'email': 'lpage@example.com'},
-          {'email': 'sbrin@example.com'},
         ],
       };
+      Object.keys(event.attendees).map((user)=> requestEvent.attendees.push({email: user}))
+      console.log(requestEvent.attendees)
 
       const request = await axios
-          .post(`https://www.googleapis.com/calendar/v3/calendars/primary/events`,event, {
+          .post(`https://www.googleapis.com/calendar/v3/calendars/primary/events`,requestEvent, {
               headers: {
                   Authorization: `Bearer ${user.access_token}`,
                   Accept: 'application/json'
               }
           })
-          console.log(request.data)
+          console.log("This is the request data: ", request.data)
           return request.data
     }
     catch(error){
-      console.log(error)
+      console.log("This is the error", error)
     }
 }

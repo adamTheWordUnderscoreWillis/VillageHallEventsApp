@@ -4,7 +4,7 @@ import { BoxGeometry, MeshStandardMaterial, TextureLoader } from "three"
 import { useEffect, useRef, useState } from "react"
 import { addAttendee, addEventToUserCalendar, removeAttendee } from "./api"
 
-function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile, user}){
+function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, profile, user}){
     const [isClicked, setIsClicked]= useState(false)
     const [isfocused, setIsFocused]= useState(false)
     const [isGoing, setIsGoing]= useState(false)
@@ -21,7 +21,7 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile
                 event.stopPropagation()
                  document.body.style.cursor = 'pointer'
                 } }
-            onClick={()=>{addEventToUserCalendar(user)}}
+            onClick={()=>{addEventToUserCalendar(user, eventData)}}
             >
                 <mesh  
                 position={[0.32,0,0]}>
@@ -46,7 +46,7 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile
 
     useEffect(()=>{
         const handleIsGoing = async ()=>{
-            if(image.attendees[profile.email]){
+            if(eventData.attendees[profile.email]){
                 await setIsGoing(true)
             }
         }
@@ -63,8 +63,8 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile
         isClicked? posterRef.current.rotation.x = state.camera.rotation.x: posterRef.current.rotation.x= 0;    
     })
 
-    const posterMap = useLoader(TextureLoader, image.logo.url)
-    const aspectRatio = image.logo.original.height/image.logo.original.width
+    const posterMap = useLoader(TextureLoader, eventData.logo.url)
+    const aspectRatio = eventData.logo.original.height/eventData.logo.original.width
     let imageHeight = 0
     let imageWidth = 0
     if(aspectRatio > 0){
@@ -75,7 +75,7 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile
         imageHeight = 0.3*aspectRatio
         imageWidth = 0.3
     }
-    const date = new Date(image.start.local)
+    const date = new Date(eventData.start.local)
     function GoingToEventSticker (){
         return(
             <group 
@@ -111,11 +111,11 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile
     function handleSignUp(){
         if(isGoing === true){
             console.log("No longer attending")
-            removeAttendee(image, profile)
+            removeAttendee(eventData, profile)
         }
         else{
             console.log("signed Up!")
-            addAttendee(image, profile)
+            addAttendee(eventData, profile)
         }
         setIsGoing(!isGoing)
     }
@@ -157,7 +157,7 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile
                 maxWidth={0.5}
                 position={[-0.28,0.44,0]}
                 >
-                    {image.name.text}
+                    {eventData.name.text}
                 </Text>
                 <mesh  
                     position={[0,0.35,-0.001]}>
@@ -176,7 +176,7 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile
                 maxWidth={0.5}
                 position={[-0.28,-0.35,0]}
                 >
-                    {`£${image.price}`}
+                    {`£${eventData.price}`}
                 </Text>
                 <Text 
                 color={`hsl(${color}, 100%, 90%)`} 
@@ -250,7 +250,7 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile
                 maxWidth={0.5}
                 position={[-0.28,0.24,0]}
                 >
-                    {image.description.text}
+                    {eventData.description.text}
                 </Text>
                 <mesh  
                 position={[0,0,-0.0015]}>
