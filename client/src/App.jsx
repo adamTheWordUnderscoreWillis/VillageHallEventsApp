@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState } from "react"
 import Scene from "./components/Scene"
-import Events from "./Events"
+import { Login } from "./components/Login";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-
+  const [isSignedIn, setIsSignedIn]=useState(false)
   return (
-    <>
-    <Scene/>
-    </>
+        <>
+          <Login isSignedIn={isSignedIn} setIsSignedIn={setIsSignedIn}/>
+        <Scene isSignedIn={isSignedIn} className={"scene"}/>
+        </>
   )
 }
 

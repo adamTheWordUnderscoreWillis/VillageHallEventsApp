@@ -25,10 +25,38 @@ function loadingBanner (){
         </group>
     )
 }
-function NoticeBoard ({isLoading}){
+function signInBanner (){
+    return(
+        <group>
+                <mesh position={[0,0,0.1]} rotation={[0,0,0]} >
+                    <planeGeometry args={[4,3,1]}/>
+                    <meshStandardMaterial color={"brown"}/>
+                </mesh>
+                <group position={[0,0,0.3]} rotation={[0,0,0]}>
+                    <mesh>
+                        <boxGeometry args={[3,0.5,0.1]}/>
+                        <meshStandardMaterial color={"red"}/>
+                    </mesh>
+                    <Text 
+          color="black" 
+          anchorX="centre" 
+          anchorY="middle" 
+          fontSize="0.4" 
+          position={[-1.3,0,0.11]}>
+            Please Sign In
+          </Text>
+
+                </group>
+        </group>
+    )
+}
+function NoticeBoard ({isLoading, isSignedIn}){
     return(
         <>
         {isLoading?loadingBanner(): null}
+        {!isLoading&&!isSignedIn?signInBanner(): null}
+
+
         
             <group>
                 {/* BackBoard */}

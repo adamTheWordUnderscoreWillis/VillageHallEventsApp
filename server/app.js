@@ -3,7 +3,6 @@ const session = require('express-session');
 const cors = require("cors")
 const {getAllEvents, getEventById, addAttendebyEventId, createNewEvent, deleteEventById, removeAttendeeByID} = require("./db/controllers/events.controllers");
 const { handleBsonErrors, handle404Errors, handleCustomErrors, handleServerErrors } = require("./db/controllers/errorhandling");
-const { getClientAuthorization, receiveAccessToken } = require("./db/controllers/googleApi");
 
 const app = express()
 
@@ -26,9 +25,6 @@ app.post("/events/newEvent", createNewEvent)
 app.delete("/events/:eventId/deleteEvent", deleteEventById)
 app.patch("/events/:eventId/attendee", addAttendebyEventId)
 app.patch("/events/:eventId/removeAttendee", removeAttendeeByID)
-app.get("/oauth2callback", receiveAccessToken)
-
-app.get("/google/authentication",getClientAuthorization )
 
 
 app.use(handleBsonErrors);

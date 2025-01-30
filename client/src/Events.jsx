@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { fetchEvents } from "./components/api"
 import Poster from "./components/poster"
 
-function Events({isLoading, setIsLoading}) {
+function Events({isLoading, setIsLoading, isSignedIn}) {
    const  [events, setEvents] = useState(null)
    
     useEffect(()=>{
@@ -25,9 +25,11 @@ function Events({isLoading, setIsLoading}) {
       }
       return colors
     }, [events])
-
      if(isLoading === true){
        return 0
+      }
+      if (isSignedIn === false){
+        return 0
       }
       return (
         <>

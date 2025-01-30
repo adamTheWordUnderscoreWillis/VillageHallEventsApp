@@ -10,7 +10,41 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color}){
     const [isGoing, setIsGoing]= useState(false)
     const posterRef = useRef()
     const signUpButtonRef = useRef()
+    const calendarButtonRef = useRef()
     const user = "user@email.com"
+
+    function showCalendarButton (){
+        return(
+            <group 
+            ref={calendarButtonRef} 
+            class="Calendar Button"
+            position={[-0.2,-0.33,-0.001]}
+            onPointerEnter={ (event) => {
+                event.stopPropagation()
+                 document.body.style.cursor = 'pointer'
+                } }
+            onClick={handleSignUp}
+            >
+                <mesh  
+                position={[0.32,0,0]}>
+                                <planeGeometry args={[0.36,0.04,1]}/>
+                                <meshStandardMaterial color={isGoing? `hsl(0, 100.00%, 60.40%)` :`hsl(${(color+ 15)%360}, 100%, 60%)` }/>
+                </mesh>
+                <Text 
+        color={`hsl(${color}, 100%, 10%)`} 
+        anchorX="left" 
+        anchorY="top" 
+        fontSize="0.04" 
+        fontWeight="bold"
+        overflowWrap="normal"
+        maxWidth={0.5}
+        position={[0.15,0.03,0.001]}
+        >
+            Add to Calendar?
+        </Text>
+            </group>
+        )
+    }
 
     useEffect(()=>{
         const handleIsGoing = async ()=>{
@@ -79,11 +113,11 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color}){
     function handleSignUp(){
         if(isGoing === true){
             console.log("No longer attending")
-            removeAttendee(image.id)
+            removeAttendee(image)
         }
         else{
             console.log("signed Up!")
-            addAttendee(image.id)
+            addAttendee(image)
         }
         setIsGoing(!isGoing)
     }
@@ -204,6 +238,7 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color}){
                     {isGoing? "Cancel..." :"Sign Up!"}
                 </Text>
                     </group>
+                {isGoing? showCalendarButton(): null}
 
             </group>
             <group class="body">
