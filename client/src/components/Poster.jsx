@@ -4,21 +4,54 @@ import { BoxGeometry, MeshStandardMaterial, TextureLoader } from "three"
 import { useEffect, useRef, useState } from "react"
 import { addAttendee, removeAttendee } from "./api"
 
-function Poster({yRotation, xPosition,yPosition,zPosition, image, color, user}){
+function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile}){
     const [isClicked, setIsClicked]= useState(false)
     const [isfocused, setIsFocused]= useState(false)
     const [isGoing, setIsGoing]= useState(false)
     const posterRef = useRef()
     const signUpButtonRef = useRef()
+    const calendarButtonRef = useRef()
+    function showCalendarButton (){
+        return(
+            <group 
+            ref={calendarButtonRef} 
+            class="Calendar Button"
+            position={[-0.2,-0.33,-0.001]}
+            onPointerEnter={ (event) => {
+                event.stopPropagation()
+                 document.body.style.cursor = 'pointer'
+                } }
+            onClick={handleSignUp}
+            >
+                <mesh  
+                position={[0.32,0,0]}>
+                                <planeGeometry args={[0.36,0.04,1]}/>
+                                <meshStandardMaterial color={isGoing? `hsl(0, 100.00%, 60.40%)` :`hsl(${(color+ 15)%360}, 100%, 60%)` }/>
+                </mesh>
+                <Text 
+        color={`hsl(${color}, 100%, 10%)`} 
+        anchorX="left" 
+        anchorY="top" 
+        fontSize="0.04" 
+        fontWeight="bold"
+        overflowWrap="normal"
+        maxWidth={0.5}
+        position={[0.15,0.03,0.001]}
+        >
+            Add to Calendar?
+        </Text>
+            </group>
+        )
+    }
 
     useEffect(()=>{
         const handleIsGoing = async ()=>{
-            if(image.attendees[user]){
+            if(image.attendees[profile.email]){
                 await setIsGoing(true)
             }
         }
         handleIsGoing()
-    },[])
+    },[profile])
 
     useFrame((state)=>{
         isfocused? posterRef.current.position.z = zPosition+0.1: posterRef.current.position.z= zPosition;
@@ -78,11 +111,11 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color, user}){
     function handleSignUp(){
         if(isGoing === true){
             console.log("No longer attending")
-            removeAttendee(image.id)
+            removeAttendee(image, profile)
         }
         else{
             console.log("signed Up!")
-            addAttendee(image.id)
+            addAttendee(image, profile)
         }
         setIsGoing(!isGoing)
     }
@@ -203,6 +236,7 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color, user}){
                     {isGoing? "Cancel..." :"Sign Up!"}
                 </Text>
                     </group>
+                {isGoing? showCalendarButton(): null}
 
             </group>
             <group class="body">

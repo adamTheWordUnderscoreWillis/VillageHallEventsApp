@@ -1,17 +1,25 @@
 import { useEffect, useMemo, useState } from "react"
 import Scene from "./components/Scene"
-import Events from "./Events"
+import { Login } from "./components/Login";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { GoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
+import { getUsernfo } from "./components/api";
+
 
 function App() {
-
-  const [user, setUser] = useState("user@email.com")
-  useEffect(()=>{
-  },[])
-
   return (
-    <>
-      <Scene user={user}/>
-    </>
+        <>
+          {/* <GoogleLogin
+            onSuccess={credentialResponse => {
+              setUser(credentialResponse)
+            }}
+            onError={(error) => {
+              console.log('Login Failed', error);
+            }}
+          />; */}
+          {/* <Login isSignedIn={isSignedIn} setProfile={setProfile} profile={profile} setIsSignedIn={setIsSignedIn}/> */}
+        <Scene className={"scene"}/>
+        </>
   )
 }
 
