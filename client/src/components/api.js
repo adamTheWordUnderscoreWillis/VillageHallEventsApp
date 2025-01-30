@@ -25,7 +25,6 @@ export const fetchStaffMember = (emailAddress)=> {
   }
 }
 export const addAttendee = (event, profile)=> {
-  console.log({id: event.id, profile})
     const attendeeData = {
         [profile.email]: profile.name
       }
@@ -37,7 +36,6 @@ export const addAttendee = (event, profile)=> {
     })
 }
 export const removeAttendee = (event, profile)=> {
-    console.log({id: event.id, profile})
     const attendeeData = {
       [profile.email]: profile.name
     }
@@ -59,11 +57,46 @@ export const getUsernfo = async (user) => {
                   Accept: 'application/json'
               }
           })
-          console.log("Request data ", request.data)
           return request.data
     }
     catch(error){
       console.log(error)
     }
   }
+}
+export const addEventToUserCalendar = async (user) => {
+
+  console.log("This is the user: ", user)
+    try{
+      const event = {
+        'summary': 'Google I/O 2015',
+        'location': '800 Howard St., San Francisco, CA 94103',
+        'description': 'A chance to hear more about Googles developer products.',
+        'start': {
+          'dateTime': '2025-01-28T09:00:00-07:00',
+          'timeZone': 'America/Los_Angeles',
+        },
+        'end': {
+          'dateTime': '2025-01-28T17:00:00-07:00',
+          'timeZone': 'America/Los_Angeles',
+        },
+        'attendees': [
+          {'email': 'lpage@example.com'},
+          {'email': 'sbrin@example.com'},
+        ],
+      };
+
+      const request = await axios
+          .post(`https://www.googleapis.com/calendar/v3/calendars/primary/events`,event, {
+              headers: {
+                  Authorization: `Bearer ${user.access_token}`,
+                  Accept: 'application/json'
+              }
+          })
+          console.log(request.data)
+          return request.data
+    }
+    catch(error){
+      console.log(error)
+    }
 }

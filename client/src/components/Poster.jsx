@@ -2,9 +2,9 @@ import { useFrame, useLoader } from "@react-three/fiber"
 import { Text } from "@react-three/drei"
 import { BoxGeometry, MeshStandardMaterial, TextureLoader } from "three"
 import { useEffect, useRef, useState } from "react"
-import { addAttendee, removeAttendee } from "./api"
+import { addAttendee, addEventToUserCalendar, removeAttendee } from "./api"
 
-function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile}){
+function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile, user}){
     const [isClicked, setIsClicked]= useState(false)
     const [isfocused, setIsFocused]= useState(false)
     const [isGoing, setIsGoing]= useState(false)
@@ -21,7 +21,7 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile
                 event.stopPropagation()
                  document.body.style.cursor = 'pointer'
                 } }
-            onClick={handleSignUp}
+            onClick={()=>{addEventToUserCalendar(user)}}
             >
                 <mesh  
                 position={[0.32,0,0]}>
