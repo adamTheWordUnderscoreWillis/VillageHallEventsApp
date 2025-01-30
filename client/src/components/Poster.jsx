@@ -4,15 +4,13 @@ import { BoxGeometry, MeshStandardMaterial, TextureLoader } from "three"
 import { useEffect, useRef, useState } from "react"
 import { addAttendee, removeAttendee } from "./api"
 
-function Poster({yRotation, xPosition,yPosition,zPosition, image, color}){
+function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile}){
     const [isClicked, setIsClicked]= useState(false)
     const [isfocused, setIsFocused]= useState(false)
     const [isGoing, setIsGoing]= useState(false)
     const posterRef = useRef()
     const signUpButtonRef = useRef()
     const calendarButtonRef = useRef()
-    const user = "user@email.com"
-
     function showCalendarButton (){
         return(
             <group 
@@ -48,12 +46,12 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color}){
 
     useEffect(()=>{
         const handleIsGoing = async ()=>{
-            if(image.attendees[user]){
+            if(image.attendees[profile.email]){
                 await setIsGoing(true)
             }
         }
         handleIsGoing()
-    },[])
+    },[profile])
 
     useFrame((state)=>{
         isfocused? posterRef.current.position.z = zPosition+0.1: posterRef.current.position.z= zPosition;
@@ -113,11 +111,11 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color}){
     function handleSignUp(){
         if(isGoing === true){
             console.log("No longer attending")
-            removeAttendee(image)
+            removeAttendee(image, profile)
         }
         else{
             console.log("signed Up!")
-            addAttendee(image)
+            addAttendee(image, profile)
         }
         setIsGoing(!isGoing)
     }

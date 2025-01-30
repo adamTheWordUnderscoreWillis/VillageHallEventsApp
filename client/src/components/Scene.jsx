@@ -6,7 +6,7 @@ import { Suspense, useState } from "react";
 import { NotEqualStencilFunc } from "three";
 import {OrbitControls, Environment}from '@react-three/drei';
 import NoticeBoard from "./noticeboard";
-function Scene ({isSignedIn}){
+function Scene ({isSignedIn, profile}){
     const  [isLoading, setIsLoading] = useState(true)
     return(
         <>
@@ -16,7 +16,7 @@ function Scene ({isSignedIn}){
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
             <NoticeBoard isSignedIn={isSignedIn} isLoading={isLoading}/>
             <Floor/>
-            <Events isSignedIn={isSignedIn} isLoading={isLoading} setIsLoading={setIsLoading}/>
+            <Events isSignedIn={isSignedIn} isLoading={isLoading} profile={profile} setIsLoading={setIsLoading}/>
             <OrbitControls
             minAzimuthAngle={-Math.PI / 5}
             maxAzimuthAngle={Math.PI / 5}

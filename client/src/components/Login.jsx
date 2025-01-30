@@ -4,9 +4,9 @@ import { addEvent, AuthorizeToken, gapiLoaded, gisLoaded } from "./googleApi";
 import { useGoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
 import { getUsernfo } from "./api";
 
-export const Login = ({isSignedIn, setIsSignedIn}) => {
-  const [user, setUser]=useState([])
-  const [profile, setProfile]=useState([])
+export const Login = ({isSignedIn, setIsSignedIn, setProfile, profile}) => {
+  const [user, setUser]=useState({})
+ 
 
   const login = useGoogleLogin({
     onSuccess: tokenResponse => setUser(tokenResponse),
@@ -19,10 +19,11 @@ export const Login = ({isSignedIn, setIsSignedIn}) => {
 
      useEffect(()=>{
       const intialiseUser = async ()=>{
-        // console.log("initialising user token: ", user.access_token)
-        const profileData = await getUsernfo(user)
-        setProfile(profileData)
-  
+          if(user.access_token){
+            const profileData = await getUsernfo(user)
+            await setProfile(profileData)
+            
+          }
       }
       intialiseUser()
     },[user]);

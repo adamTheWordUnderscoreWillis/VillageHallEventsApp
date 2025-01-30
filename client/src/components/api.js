@@ -11,10 +11,10 @@ export const fetchEvents = ()=> {
         return data
     })
 }
-export const addAttendee = (event)=> {
-    console.log(event.id)
+export const addAttendee = (event, profile)=> {
+  console.log({id: event.id, profile})
     const attendeeData = {
-        "user@email.com": "user"
+        [profile.email]: profile.name
       }
     return backEnd
     .patch(`/events/${event.id}/attendee`, attendeeData)
@@ -23,11 +23,11 @@ export const addAttendee = (event)=> {
         return data
     })
 }
-export const removeAttendee = (event)=> {
-    console.log(event.id)
+export const removeAttendee = (event, profile)=> {
+    console.log({id: event.id, profile})
     const attendeeData = {
-        "user@email.com": "user"
-      }
+      [profile.email]: profile.name
+    }
     return backEnd
     .patch(`/events/${event.id}/RemoveAttendee`, attendeeData)
     .then(({data})=>{
@@ -36,20 +36,21 @@ export const removeAttendee = (event)=> {
     })
 }
 
-export const getUsernfo = (user) => {
+export const getUsernfo = async (user) => {
   if (user) {
-    console.log(user.access_token)
-      axios
+    try{
+      const request = await axios
           .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
               headers: {
                   Authorization: `Bearer ${user.access_token}`,
                   Accept: 'application/json'
               }
           })
-          .then((res) => {
-            console.log(res.data)
-              return res.data
-          })
-          .catch((err) => console.log(err));
+          console.log("Request data ", request.data)
+          return request.data
+    }
+    catch(error){
+      console.log(error)
+    }
   }
 }
