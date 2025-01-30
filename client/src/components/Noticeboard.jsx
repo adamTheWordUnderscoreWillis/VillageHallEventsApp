@@ -91,12 +91,56 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile}){
             </group>
         )
     }
+    function signOutButton (){
+        return(
+            <group position={[-4,-1.5,-2]} rotation={[0,0,0]}>
+                <mesh position={[0,-1,-0.2]} rotation={[0,0,(Math.PI * 0.5)]}>
+                    <boxGeometry args={[3.2,0.1,0.1]}/>
+                    <meshStandardMaterial color={"brown"}/>
+                </mesh>
+                        <mesh
+                            ref={signInButton}
+                            onPointerEnter={ (event) => {
+                                event.stopPropagation()
+                                document.body.style.cursor = 'pointer'
+                            } }
+                            onPointerLeave={
+                                () => { 
+                                    document.body.style.cursor = 'default'
+                                    
+                                } }
+                            onClick={()=>{}}
+                        >
+                            <boxGeometry args={[1,1,0.1]}/>
+                            <meshStandardMaterial color={"brown"}/>
+                        </mesh>
+                        <Text 
+                            color="black" 
+                            anchorX="centre" 
+                            anchorY="middle" 
+                            fontSize="0.4" 
+                            position={[-0.48,0.25,0.11]}>
+                                SIGN
+                        </Text>
+                        <Text 
+                            color="black" 
+                            anchorX="centre" 
+                            anchorY="middle" 
+                            fontSize="0.4" 
+                            position={[-0.42,-0.15,0.11]}>
+                                OUT
+                        </Text>
+    
+                    </group>
+        )
+
+    }
 
     return(
         <>
         {isLoading?loadingBanner(): null}
         {!isLoading&&!isSignedIn?signInBanner(): null}
-
+        {!isLoading&&isSignedIn?signOutButton(): null}
 
         
             <group>

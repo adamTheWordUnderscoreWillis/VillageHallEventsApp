@@ -17,7 +17,7 @@ function App() {
               console.log('Login Failed', error);
             }}
           />; */}
-          {/* <Login isSignedIn={isSignedIn} setProfile={setProfile} profile={profile} setIsSignedIn={setIsSignedIn}/> */}
+          {/* <Login/> */}
         <Scene className={"scene"}/>
         </>
   )

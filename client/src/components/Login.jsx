@@ -7,37 +7,37 @@ export const Login = ({isSignedIn, setIsSignedIn, setProfile, profile}) => {
   const [user, setUser]=useState({})
  
 
-  const login = useGoogleLogin({
-    onSuccess: tokenResponse => setUser(tokenResponse),
-  });
+  // const login = useGoogleLogin({
+  //   onSuccess: tokenResponse => setUser(tokenResponse),
+  // });
 
-     useEffect(()=>{
-      //  gapiLoaded()
-        // gisLoaded()
-     }, [])
+  //    useEffect(()=>{
+  //     //  gapiLoaded()
+  //       // gisLoaded()
+  //    }, [])
 
-     useEffect(()=>{
-      const intialiseUser = async ()=>{
-          if(user.access_token){
-            const profileData = await getUsernfo(user)
-            await setProfile(profileData)
+  //    useEffect(()=>{
+  //     const intialiseUser = async ()=>{
+  //         if(user.access_token){
+  //           const profileData = await getUsernfo(user)
+  //           await setProfile(profileData)
             
-          }
-      }
-      intialiseUser()
-    },[user]);
+  //         }
+  //     }
+  //     intialiseUser()
+  //   },[user]);
 
-    //  const handleAuthClick = async () =>{
-    //     await AuthorizeToken()
-    //     setIsSignedIn(true)
-    //  }
+  //   //  const handleAuthClick = async () =>{
+  //   //     await AuthorizeToken()
+  //   //     setIsSignedIn(true)
+  //   //  }
       return (
         <Nav fill variant="pills" defaultActiveKey="/home">
         <Nav.Item>
-          <Nav.Link onClick={()=>{login()}}>{"Sign In"}</Nav.Link>
+          <Nav.Link onClick={()=>{}}>{"Sign In"}</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={addEvent}>Create Event</Nav.Link>
+          <Nav.Link onClick={()=>{}}>Create Event</Nav.Link>
         </Nav.Item>
       </Nav>
       );
