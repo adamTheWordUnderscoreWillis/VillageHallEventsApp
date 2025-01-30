@@ -25,7 +25,6 @@ export const fetchStaffMember = (emailAddress)=> {
   }
 }
 export const addAttendee = (event, profile)=> {
-  console.log({id: event.id, profile})
     const attendeeData = {
         [profile.email]: profile.name
       }
@@ -37,7 +36,6 @@ export const addAttendee = (event, profile)=> {
     })
 }
 export const removeAttendee = (event, profile)=> {
-    console.log({id: event.id, profile})
     const attendeeData = {
       [profile.email]: profile.name
     }
@@ -59,11 +57,47 @@ export const getUsernfo = async (user) => {
                   Accept: 'application/json'
               }
           })
-          console.log("Request data ", request.data)
           return request.data
     }
     catch(error){
       console.log(error)
     }
   }
+}
+export const addEventToUserCalendar = async (user, event) => {
+  console.log(event.start.local)
+  console.log(event.name.text)
+    try{
+      const requestEvent = {
+        'summary': event.name.text,
+        'location': 'Little Tidford Village Hall, 53 The street, Little Tidford, LT9 9LT',
+        'description': event.description.text,
+        'start': {
+          'dateTime': event.start.local+"-00:00",
+          'timeZone': event.start.timeZone,
+        },
+        'end': {
+          'dateTime': event.end.local+"-00:00",
+          'timeZone': event.start.timeZone,
+        },
+        'organizer':{email:"littletidfordvillagehall@gmail.com"},
+        'attendees': [
+        ],
+      };
+      Object.keys(event.attendees).map((user)=> requestEvent.attendees.push({email: user}))
+      console.log(requestEvent.attendees)
+
+      const request = await axios
+          .post(`https://www.googleapis.com/calendar/v3/calendars/primary/events`,requestEvent, {
+              headers: {
+                  Authorization: `Bearer ${user.access_token}`,
+                  Accept: 'application/json'
+              }
+          })
+          console.log("This is the request data: ", request.data)
+          return request.data
+    }
+    catch(error){
+      console.log("This is the error", error)
+    }
 }

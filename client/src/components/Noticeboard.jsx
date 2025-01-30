@@ -2,12 +2,12 @@ import { Text } from "@react-three/drei"
 import { useEffect, useRef, useState } from "react"
 import { Group } from "three"
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
-import { getUsernfo } from "./api";
+import { addEventToUserCalendar, getUsernfo } from "./api";
 
-function NoticeBoard ({isLoading, isSignedIn, setProfile}){
+function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser}){
     const signInButtonRef = useRef()
     const signOutButtonRef = useRef()
-    const [user, setUser]=useState({})
+    
 
     const login = useGoogleLogin({
         onSuccess: tokenResponse => setUser(tokenResponse),
