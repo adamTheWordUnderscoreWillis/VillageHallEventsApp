@@ -65,8 +65,6 @@ export const getUsernfo = async (user) => {
   }
 }
 export const addEventToUserCalendar = async (user, event) => {
-  console.log(event.start.local)
-  console.log(event.name.text)
     try{
       const requestEvent = {
         'summary': event.name.text,
@@ -94,7 +92,6 @@ export const addEventToUserCalendar = async (user, event) => {
                   Accept: 'application/json'
               }
           })
-          console.log("This is the request data: ", request.data)
           return request.data
     }
     catch(error){
