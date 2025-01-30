@@ -26,10 +26,10 @@ function Poster({yRotation, xPosition,yPosition,zPosition, image, color, profile
                 <mesh  
                 position={[0.32,0,0]}>
                                 <planeGeometry args={[0.36,0.04,1]}/>
-                                <meshStandardMaterial color={isGoing? `hsl(0, 100.00%, 60.40%)` :`hsl(${(color+ 15)%360}, 100%, 60%)` }/>
+                                <meshStandardMaterial color={`hsl(${(color+ 15)%360}, 50%, 30%)` }/>
                 </mesh>
                 <Text 
-        color={`hsl(${color}, 100%, 10%)`} 
+        color={`hsl(${color}, 100%, 90%)`} 
         anchorX="left" 
         anchorY="top" 
         fontSize="0.04" 
