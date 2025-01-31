@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { fetchEvents, fetchUserCalendarEvents } from "./components/api"
 import Poster from "./components/poster"
 
-function Events({isLoading, setIsLoading, isSignedIn, profile, user, calendarEvents}) {
+function Events({isLoading, setIsLoading, isSignedIn, profile, user, calendarEvents, setTargetedEvent}) {
    const  [events, setEvents] = useState(null)
    
     useEffect(()=>{
@@ -40,6 +40,7 @@ function Events({isLoading, setIsLoading, isSignedIn, profile, user, calendarEve
               }
                return (
                    <Poster
+                   setTargetedEvent={setTargetedEvent}
                    calendarEventId={calendarEventId}
                    key={`${event.id}poster`} 
                    yRotation={(Math.random()-0.1)*0.5} 

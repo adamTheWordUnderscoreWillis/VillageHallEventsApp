@@ -4,7 +4,7 @@ import { BoxGeometry, MeshStandardMaterial, TextureLoader } from "three"
 import { useEffect, useRef, useState } from "react"
 import { addAttendee, addEventToUserCalendar, removeAttendee, removeEventFromUserCalendar } from "./api"
 
-function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, profile, user, calendarEventId}){
+function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, profile, user, calendarEventId, setTargetedEvent}){
     const [isClicked, setIsClicked] = useState(false)
     const [isfocused, setIsFocused] = useState(false)
     const [isGoing, setIsGoing] = useState(false)
@@ -174,11 +174,13 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
             } }
             onClick={(event)=>{
                 event.stopPropagation()
+                setTargetedEvent(eventData)
                 
                 setIsClicked(true)
             }}
             onPointerMissed={()=>{
                 setIsClicked(false)
+                // setTargetedEvent({})
             }}
             >
             {isGoing ? GoingToEventSticker(): null}

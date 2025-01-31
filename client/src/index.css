@@ -32,7 +32,7 @@ a {
   align-content: center;
   justify-items: center;
   position: absolute;
-    bottom: -30px;
+    bottom: 0px;
     width: 100%;
 }
 a:hover {
