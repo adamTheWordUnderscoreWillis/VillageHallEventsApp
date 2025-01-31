@@ -19,6 +19,7 @@ function Scene (){
 
     const handleProfile = async()=>{
         if(profile.email){
+          console.log("This is the profile :", profile)
           const staffResponse = await fetchStaffMember(profile.email)
           const calendarEventsData = await fetchUserCalendarEvents(user)
           console.log("Calendar Events: ", calendarEventsData)

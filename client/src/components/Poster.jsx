@@ -125,6 +125,7 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
     }
     const handleIsGoing = async ()=>{
         if(eventData.attendees[profile.email]){
+            console.log(eventData.attendees[profile.email])
             await setIsGoing(true)
         }
         if(calendarEventId){
