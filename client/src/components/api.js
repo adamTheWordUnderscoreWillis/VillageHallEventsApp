@@ -64,6 +64,22 @@ export const getUsernfo = async (user) => {
     }
   }
 }
+
+export const fetchUserCalendarEvents = async(user)=>{
+  try{
+  const request = await axios
+          .get(`https://www.googleapis.com/calendar/v3/calendars/primary/events`, {
+              headers: {
+                  Authorization: `Bearer ${user.access_token}`,
+                  Accept: 'application/json'
+              }
+          })
+          return request.data.items
+    }
+    catch(error){
+      console.log("This is the fetch Error", error)
+    }
+}
 export const addEventToUserCalendar = async (user, event) => {
     try{
       const requestEvent = {

@@ -7,6 +7,14 @@ import { addEventToUserCalendar, getUsernfo } from "./api";
 function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser}){
     const signInButtonRef = useRef()
     const signOutButtonRef = useRef()
+
+    const colorPalette = {
+        NoticeBoardWood: `hsl(29, 88.70%, 27.60%)`,
+        backBoard: `hsl(61, 37.70%, 47.80%)`,
+        Loading: `hsl(0, 67.80%, 52.50%)`,
+        text: `hsl(0, 2.60%, 7.60%)`,
+        titleText: `hsl(64, 100.00%, 68.80%)`,
+    }
     
 
     const login = useGoogleLogin({
@@ -37,18 +45,18 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser}){
 
     function loadingBanner (){
         return(
-            <group>
+            <group >
                     <mesh position={[0,0,0.1]} rotation={[0,0,0]} >
                         <planeGeometry args={[4,3,1]}/>
-                        <meshStandardMaterial color={"brown"}/>
+                        <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                     </mesh>
                     <group position={[0,0,0.3]} rotation={[0,0,(Math.PI*0.1)]}>
                         <mesh>
                             <boxGeometry args={[3,0.5,0.1]}/>
-                            <meshStandardMaterial color={"red"}/>
+                            <meshStandardMaterial color={colorPalette.Loading}/>
                         </mesh>
                         <Text 
-              color="black" 
+              color={colorPalette.text}
               anchorX="centre" 
               anchorY="middle" 
               fontSize="0.4" 
@@ -66,7 +74,7 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser}){
             >
                     <mesh   position={[0,0,0.1]} rotation={[0,0,0]} >
                         <planeGeometry args={[4,3,1]}/>
-                        <meshStandardMaterial color={"brown"}/>
+                        <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                     </mesh>
                     <group position={[0,0,0.3]} rotation={[0,0,0]}>
                         <mesh
@@ -83,10 +91,10 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser}){
                             onClick={()=>{login()}}
                         >
                             <boxGeometry args={[3,0.5,0.1]}/>
-                            <meshStandardMaterial color={"red"}/>
+                            <meshStandardMaterial color={colorPalette.Loading}/>
                         </mesh>
                         <Text 
-              color="black" 
+              color={colorPalette.text} 
               anchorX="centre" 
               anchorY="middle" 
               fontSize="0.4" 
@@ -118,16 +126,16 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser}){
             >
                 <mesh position={[0,-1,-0.2]} rotation={[0,0,(Math.PI * 0.5)]}>
                     <boxGeometry args={[3.2,0.1,0.1]}/>
-                    <meshStandardMaterial color={"brown"}/>
+                    <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                 </mesh>
                         <mesh
                             
                         >
                             <boxGeometry args={[1,1,0.1]}/>
-                            <meshStandardMaterial color={"red"}/>
+                            <meshStandardMaterial color={colorPalette.Loading}/>
                         </mesh>
                         <Text 
-                            color="black" 
+                            color={colorPalette.text}  
                             anchorX="centre" 
                             anchorY="middle" 
                             fontSize="0.4" 
@@ -135,7 +143,7 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser}){
                                 SIGN
                         </Text>
                         <Text 
-                            color="black" 
+                            color={colorPalette.text} 
                             anchorX="centre" 
                             anchorY="middle" 
                             fontSize="0.4" 
@@ -157,52 +165,52 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser}){
         
             <group>
                 {/* BackBoard */}
-                <mesh >
-                    <planeGeometry args={[4,3,1]}/>
-                    <meshStandardMaterial color={"beige"}/>
+                <mesh castShadow  >
+                    < planeGeometry args={[4,3,1]}/>
+                    <meshStandardMaterial color={colorPalette.backBoard}/>
                 </mesh>
-                <mesh position={[0,0,-0.05]} rotation={[0,(Math.PI), 0]} >
+                <mesh castShadow position={[0,0,-0.05]} rotation={[0,(Math.PI), 0]} >
                     <planeGeometry args={[4,3,1]}/>
-                    <meshStandardMaterial color={"brown"}/>
+                    <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                 </mesh>
                 
                 {/* Wooden Boarder */}
                 <Text 
-          color="black" 
+          color={colorPalette.titleText}  
           anchorX="centre" 
           anchorY="middle" 
           fontSize="0.15" 
           position={[-1.6,1.8,0.11]}>
             LITTLE TIDFORD VILLAGE HALL NOITCEBOARD
           </Text>
-                <mesh position={[0,1.8,-0.1]}>
+                <mesh castShadow position={[0,1.8,-0.1]}>
                     <boxGeometry args={[3.6,0.2,0.4]}/>
-                    <meshStandardMaterial color={"brown"}/>
+                    <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                 </mesh>
-                <mesh position={[0,1.6,-0.1]}>
+                <mesh castShadow position={[0,1.6,-0.1]}>
                     <boxGeometry args={[4.4,0.2,0.4]}/>
-                    <meshStandardMaterial color={"brown"}/>
+                    <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                 </mesh>
-                <mesh position={[0,-1.6,0]}>
+                <mesh castShadow position={[0,-1.6,0]}>
                     <boxGeometry args={[4.4,0.2,0.2]}/>
-                    <meshStandardMaterial color={"brown"}/>
+                    <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                 </mesh>
-                <mesh position={[2.1,0,0]} rotation={[0,0,(Math.PI * 0.5)]}>
+                <mesh castShadow position={[2.1,0,0]} rotation={[0,0,(Math.PI * 0.5)]}>
                     <boxGeometry args={[3,0.2,0.2]}/>
-                    <meshStandardMaterial color={"brown"}/>
+                    <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                 </mesh>
-                <mesh position={[-2.1,0,0]} rotation={[0,0,(Math.PI * 0.5)]}>
+                <mesh castShadow position={[-2.1,0,0]} rotation={[0,0,(Math.PI * 0.5)]}>
                     <boxGeometry args={[3,0.2,0.2]}/>
-                    <meshStandardMaterial color={"brown"}/>
+                    <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                 </mesh>
                 {/* Legs */}
-                <mesh position={[1,-1,-0.2]} rotation={[0,0,(Math.PI * 0.5)]}>
+                <mesh castShadow position={[1,-1,-0.2]} rotation={[0,0,(Math.PI * 0.5)]}>
                     <boxGeometry args={[5,0.2,0.2]}/>
-                    <meshStandardMaterial color={"brown"}/>
+                    <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                 </mesh>
-                <mesh position={[-1,-1,-0.2]} rotation={[0,0,(Math.PI * 0.5)]}>
+                <mesh castShadow position={[-1,-1,-0.2]} rotation={[0,0,(Math.PI * 0.5)]}>
                     <boxGeometry args={[5,0.2,0.2]}/>
-                    <meshStandardMaterial color={"brown"}/>
+                    <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                 </mesh>
             </group>
         </>

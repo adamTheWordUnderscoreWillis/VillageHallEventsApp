@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import { fetchEvents } from "./components/api"
+import { fetchEvents, fetchUserCalendarEvents } from "./components/api"
 import Poster from "./components/poster"
 
 function Events({isLoading, setIsLoading, isSignedIn, profile, user}) {
    const  [events, setEvents] = useState(null)
+  
    
     useEffect(()=>{
       
