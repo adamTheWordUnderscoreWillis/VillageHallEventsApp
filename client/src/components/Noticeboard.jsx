@@ -22,11 +22,6 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser}){
       });
     
          useEffect(()=>{
-          //  gapiLoaded()
-            // gisLoaded()
-         }, [])
-    
-         useEffect(()=>{
           const intialiseUser = async ()=>{
               if(user.access_token){
                 const profileData = await getUsernfo(user)

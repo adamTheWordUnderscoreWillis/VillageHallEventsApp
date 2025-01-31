@@ -68,7 +68,7 @@ export const getUsernfo = async (user) => {
 export const fetchUserCalendarEvents = async(user)=>{
   try{
   const request = await axios
-          .get(`https://www.googleapis.com/calendar/v3/calendars/primary/events`, {
+          .get(`https://www.googleapis.com/calendar/v3/calendars/primary/events?q=${"Little Tidford Village Hall"}`, {
               headers: {
                   Authorization: `Bearer ${user.access_token}`,
                   Accept: 'application/json'
@@ -78,6 +78,24 @@ export const fetchUserCalendarEvents = async(user)=>{
     }
     catch(error){
       console.log("This is the fetch Error", error)
+    }
+}
+
+export const removeEventFromUserCalendar = async(user, calendarEventId)=>{
+  console.log("The id coming in", calendarEventId)
+  try{
+  const request = await axios
+          .delete(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${calendarEventId}`, {
+              headers: {
+                  Authorization: `Bearer ${user.access_token}`,
+                  Accept: 'application/json'
+              }
+          })
+          console.log(request.data)
+          return request.data
+    }
+    catch(error){
+      console.log("This is the delete Error", error)
     }
 }
 export const addEventToUserCalendar = async (user, event) => {
@@ -99,7 +117,6 @@ export const addEventToUserCalendar = async (user, event) => {
         ],
       };
       Object.keys(event.attendees).map((user)=> requestEvent.attendees.push({email: user}))
-      console.log(requestEvent.attendees)
 
       const request = await axios
           .post(`https://www.googleapis.com/calendar/v3/calendars/primary/events`,requestEvent, {
@@ -108,6 +125,7 @@ export const addEventToUserCalendar = async (user, event) => {
                   Accept: 'application/json'
               }
           })
+          console.log("This is the request: ", request.data)
           return request.data
     }
     catch(error){

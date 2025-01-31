@@ -1,5 +1,4 @@
 import { Canvas } from "@react-three/fiber";
-import Poster from "./poster";
 import Events from "../Events";
 import Floor from "./floor";
 import { Suspense, useEffect, useState } from "react";
@@ -12,14 +11,15 @@ function Scene ({setIsStaff}){
     const [profile, setProfile]=useState({})
     const [isSignedIn, setIsSignedIn]=useState(false)
     const [user, setUser]=useState({})
-    const  [calendarEvents, setcalendarEvents] = useState(null)
+    const  [calendarEvents, setcalendarEvents] = useState([])
     
 
     const handleProfile = async()=>{
         if(profile.email){
           const staffResponse = await fetchStaffMember(profile.email)
-          const calendarEvents = await fetchUserCalendarEvents(user)
-            console.log(calendarEvents)
+          const calendarEventsData = await fetchUserCalendarEvents(user)
+          console.log("Calendar Events: ", calendarEventsData)
+          setcalendarEvents(calendarEventsData)
           if(staffResponse.staffCheck){
             setIsStaff(true)
           }
@@ -33,7 +33,7 @@ function Scene ({setIsStaff}){
     useEffect(()=>{
         handleProfile()
         }, [profile])
-        const sunPosition = [2,1.6,2]
+    const sunPosition = [2,1.6,2]
     return(
         <>
         <Canvas shadows>
@@ -43,7 +43,7 @@ function Scene ({setIsStaff}){
             <directionalLight castShadow position={sunPosition} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
             <NoticeBoard isSignedIn={isSignedIn} isLoading={isLoading} setProfile={setProfile} user={user} setUser={setUser}/>
             <Floor/>
-            <Events isSignedIn={isSignedIn} isLoading={isLoading} profile={profile} setIsLoading={setIsLoading}user={user}/>
+            <Events isSignedIn={isSignedIn} isLoading={isLoading} profile={profile} setIsLoading={setIsLoading}user={user} calendarEvents={calendarEvents}/>
             <OrbitControls
             minAzimuthAngle={-Math.PI*0.25}
             maxAzimuthAngle={Math.PI*0.25}
