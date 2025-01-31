@@ -2,15 +2,41 @@ import { useFrame, useLoader } from "@react-three/fiber"
 import { Text } from "@react-three/drei"
 import { BoxGeometry, MeshStandardMaterial, TextureLoader } from "three"
 import { useEffect, useRef, useState } from "react"
-import { addAttendee, addEventToUserCalendar, removeAttendee } from "./api"
+import { addAttendee, addEventToUserCalendar, removeAttendee, removeEventFromUserCalendar } from "./api"
 
-function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, profile, user}){
-    const [isClicked, setIsClicked]= useState(false)
-    const [isfocused, setIsFocused]= useState(false)
-    const [isGoing, setIsGoing]= useState(false)
+function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, profile, user, calendarEventId}){
+    const [isClicked, setIsClicked] = useState(false)
+    const [isfocused, setIsFocused] = useState(false)
+    const [isGoing, setIsGoing] = useState(false)
+    const [calenderID, setCalendarId] = useState(calendarEventId)
+    const [isInUserCalendar, setIsInUserCalendar] = useState(false)
     const posterRef = useRef()
     const signUpButtonRef = useRef()
     const calendarButtonRef = useRef()
+    
+    async function handlecalendarEvent (){
+        if(isInUserCalendar){
+            try{
+                await removeEventFromUserCalendar(user, calenderID)
+                setIsInUserCalendar(false)
+                setCalendarId("")
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+        else{
+            try{
+                const newEvent = await addEventToUserCalendar(user,eventData)
+                setCalendarId(newEvent.id)
+                setIsInUserCalendar(true)
+
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+    }
     function showCalendarButton (){
         return(
             <group 
@@ -21,11 +47,11 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
                 event.stopPropagation()
                  document.body.style.cursor = 'pointer'
                 } }
-            onClick={()=>{addEventToUserCalendar(user, eventData)}}
+            onClick={handlecalendarEvent}
             >
                 <mesh  
-                position={[0.32,0,0]}>
-                                <planeGeometry args={[0.36,0.04,1]}/>
+                position={[0.2,0,0]}>
+                                <planeGeometry args={[0.6,0.04,1]}/>
                                 <meshStandardMaterial color={`hsl(${(color+ 15)%360}, 50%, 30%)` }/>
                 </mesh>
                 <Text 
@@ -35,52 +61,20 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
         fontSize="0.04" 
         fontWeight="bold"
         overflowWrap="normal"
-        maxWidth={0.5}
-        position={[0.15,0.03,0.001]}
+        maxWidth={0.9}
+        position={[-0.09,0.03,0.001]}
         >
-            Add to Calendar?
+            {isInUserCalendar? "Remove from calendar" :"Pop it in the calendar?"}
         </Text>
             </group>
         )
     }
-
-    useEffect(()=>{
-        const handleIsGoing = async ()=>{
-            if(eventData.attendees[profile.email]){
-                await setIsGoing(true)
-            }
-        }
-        handleIsGoing()
-    },[profile])
-
-    useFrame((state)=>{
-        isfocused? posterRef.current.position.z = zPosition+0.1: posterRef.current.position.z= zPosition;
-        isClicked? posterRef.current.position.z = state.camera.position.z -1: posterRef.current.position.z= zPosition;
-        isClicked? posterRef.current.position.x = state.camera.position.x/1.5: posterRef.current.position.x= xPosition;
-        isClicked? posterRef.current.position.y = state.camera.position.y/1.5: posterRef.current.position.y= yPosition;
-        isClicked? posterRef.current.rotation.z = 0: posterRef.current.rotation.z= yRotation;
-        isClicked? posterRef.current.rotation.y = state.camera.rotation.y: posterRef.current.rotation.y= 0;    
-        isClicked? posterRef.current.rotation.x = state.camera.rotation.x: posterRef.current.rotation.x= 0;    
-    })
-
-    const posterMap = useLoader(TextureLoader, eventData.logo.url)
-    const aspectRatio = eventData.logo.original.height/eventData.logo.original.width
-    let imageHeight = 0
-    let imageWidth = 0
-    if(aspectRatio > 0){
-        imageHeight = 0.3
-        imageWidth = 0.3*aspectRatio
-    }
-    else{
-        imageHeight = 0.3*aspectRatio
-        imageWidth = 0.3
-    }
-    const date = new Date(eventData.start.local)
     function GoingToEventSticker (){
         return(
             <group 
-                position={[0.25,0.3,0.04]}
+                position={[0.2,-0.22,0.04]}
                 rotation={[0,0,-yRotation]}
+                scale={[1.3,1.3,1.3]}
                     class="goingSticker" 
                     >
                         <mesh  
@@ -107,11 +101,21 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
                     </group>
         )
     }
-
-    function handleSignUp(){
+    
+    async function handleSignUp(){
         if(isGoing === true){
             console.log("No longer attending")
-            removeAttendee(eventData, profile)
+            await removeAttendee(eventData, profile)
+            if(isInUserCalendar){
+                try{
+                    await removeEventFromUserCalendar(user, calenderID)
+                    setIsInUserCalendar(false)
+                    setCalendarId("")
+                }
+                catch(err){
+                    console.log(err)
+                }
+            }
         }
         else{
             console.log("signed Up!")
@@ -119,9 +123,41 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
         }
         setIsGoing(!isGoing)
     }
+    const handleIsGoing = async ()=>{
+        if(eventData.attendees[profile.email]){
+            await setIsGoing(true)
+        }
+        if(calendarEventId){
+            console.log(eventData.name.text, " is in Calendar")
+            await setIsInUserCalendar(true)
+        }
+    }
+
+    useEffect(()=>{
+        handleIsGoing()
+    },[profile])
+
+    useFrame((state)=>{
+        isfocused? posterRef.current.position.z = zPosition+0.1: posterRef.current.position.z= zPosition;
+        isClicked? posterRef.current.position.z = state.camera.position.z -1: posterRef.current.position.z= zPosition;
+        isClicked? posterRef.current.position.x = state.camera.position.x/1.5: posterRef.current.position.x= xPosition;
+        isClicked? posterRef.current.position.y = state.camera.position.y/1.5: posterRef.current.position.y= yPosition;
+        isClicked? posterRef.current.rotation.z = 0: posterRef.current.rotation.z= yRotation;
+        isClicked? posterRef.current.rotation.y = state.camera.rotation.y: posterRef.current.rotation.y= 0;    
+        isClicked? posterRef.current.rotation.x = state.camera.rotation.x: posterRef.current.rotation.x= 0;    
+    })
+
+    const posterMap = useLoader(TextureLoader, eventData.logo.url)
+    let imageWidth = 0.25
+    let imageHeight = 0.25
+   const date = new Date(eventData.start.local)
+    
+
+
     return(
         <>
-        <group 
+        <group
+        scale={[1.4,1.4,1.4]}
         position={[xPosition ,yPosition,zPosition]}
         rotation={[0,0,yRotation]}
         ref={posterRef}
@@ -151,11 +187,11 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
                 color={`hsl(${color}, 100%, 95%)`} 
                 anchorX="left" 
                 anchorY="top" 
-                fontSize="0.04"
+                fontSize="0.06"
                 fontWeight="bold"
                 overflowWrap="normal"
-                maxWidth={0.5}
-                position={[-0.28,0.44,0]}
+                maxWidth={0.6}
+                position={[-0.29,0.44,0]}
                 >
                     {eventData.name.text}
                 </Text>
@@ -163,6 +199,35 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
                     position={[0,0.35,-0.001]}>
                             <planeGeometry args={[0.6,0.2,1]}/>
                             <meshStandardMaterial color={`hsl(${color}, 100%, 10%)` }/>
+                </mesh>
+            </group>
+            <group class="body">
+                <Text 
+                color={`hsl(${color}, 100%, 10%)`} 
+                anchorX="left" 
+                anchorY="top" 
+                fontSize="0.04" 
+                fontWeight="bold"
+                overflowWrap="normal"
+                maxWidth={0.3}
+                position={[-0.28,0.24,0]}
+                >
+                    {eventData.description.text}
+                </Text>
+                <mesh  
+                position={[0,0,-0.0015]}>
+                                <planeGeometry args={[0.6,0.9,1]}/>
+                                <meshStandardMaterial color={`hsl(${color}, 50%, 70%)` }/>
+                </mesh>
+                <mesh  
+                position={[0.175,0.124,0]}>
+                                <planeGeometry args={[imageWidth, imageHeight ]}/>
+                                <meshStandardMaterial map={posterMap}/>
+                </mesh>
+                <mesh  
+                position={[0.175,0.124,-0.001]}>
+                                <planeGeometry args={[imageWidth+0.01, imageHeight+0.01]}/>
+                                <meshStandardMaterial color={`hsl(${color}, 100%, 15%)`}/>
                 </mesh>
             </group>
             <group class="posterFooter">
@@ -211,7 +276,8 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
                     <group 
                     ref={signUpButtonRef} 
                     class="signUpButton" 
-                    position={[-0.2,-0.33,-0.001]}
+                    position={[0.174,-0.03,-0.001]}
+                    scale={[1.3,1.3,1.3]}
                     onPointerEnter={ (event) => {
                         event.stopPropagation()
                          document.body.style.cursor = 'pointer'
@@ -239,35 +305,7 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
                 {isGoing? showCalendarButton(): null}
 
             </group>
-            <group class="body">
-                <Text 
-                color={`hsl(${color}, 100%, 10%)`} 
-                anchorX="left" 
-                anchorY="top" 
-                fontSize="0.02" 
-                fontWeight="bold"
-                overflowWrap="normal"
-                maxWidth={0.5}
-                position={[-0.28,0.24,0]}
-                >
-                    {eventData.description.text}
-                </Text>
-                <mesh  
-                position={[0,0,-0.0015]}>
-                                <planeGeometry args={[0.6,0.9,1]}/>
-                                <meshStandardMaterial color={`hsl(${color}, 50%, 70%)` }/>
-                </mesh>
-                <mesh  
-                position={[0,-0.05,0]}>
-                                <planeGeometry args={[imageHeight, imageWidth]}/>
-                                <meshStandardMaterial map={posterMap}/>
-                </mesh>
-                <mesh  
-                position={[0,-0.05,-0.001]}>
-                                <planeGeometry args={[imageHeight+0.03, imageWidth+0.03]}/>
-                                <meshStandardMaterial color={`hsl(${color}, 100%, 15%)`}/>
-                </mesh>
-            </group>
+
 
         </group>
         </>

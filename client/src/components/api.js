@@ -64,9 +64,41 @@ export const getUsernfo = async (user) => {
     }
   }
 }
+
+export const fetchUserCalendarEvents = async(user)=>{
+  try{
+  const request = await axios
+          .get(`https://www.googleapis.com/calendar/v3/calendars/primary/events?q=${"Little Tidford Village Hall"}`, {
+              headers: {
+                  Authorization: `Bearer ${user.access_token}`,
+                  Accept: 'application/json'
+              }
+          })
+          return request.data.items
+    }
+    catch(error){
+      console.log("This is the fetch Error", error)
+    }
+}
+
+export const removeEventFromUserCalendar = async(user, calendarEventId)=>{
+  console.log("The id coming in", calendarEventId)
+  try{
+  const request = await axios
+          .delete(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${calendarEventId}`, {
+              headers: {
+                  Authorization: `Bearer ${user.access_token}`,
+                  Accept: 'application/json'
+              }
+          })
+          console.log(request.data)
+          return request.data
+    }
+    catch(error){
+      console.log("This is the delete Error", error)
+    }
+}
 export const addEventToUserCalendar = async (user, event) => {
-  console.log(event.start.local)
-  console.log(event.name.text)
     try{
       const requestEvent = {
         'summary': event.name.text,
@@ -85,7 +117,6 @@ export const addEventToUserCalendar = async (user, event) => {
         ],
       };
       Object.keys(event.attendees).map((user)=> requestEvent.attendees.push({email: user}))
-      console.log(requestEvent.attendees)
 
       const request = await axios
           .post(`https://www.googleapis.com/calendar/v3/calendars/primary/events`,requestEvent, {
@@ -94,7 +125,7 @@ export const addEventToUserCalendar = async (user, event) => {
                   Accept: 'application/json'
               }
           })
-          console.log("This is the request data: ", request.data)
+          console.log("This is the request: ", request.data)
           return request.data
     }
     catch(error){
