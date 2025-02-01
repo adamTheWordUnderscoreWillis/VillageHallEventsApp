@@ -40,7 +40,7 @@ function Scene (){
     const sunPosition = [2,1.6,2]
     return(
         <>
-        {isStaff?<StaffNavBar targetedEvent={targetedEvent}/>:null}
+        {isStaff?<StaffNavBar profile={profile} targetedEvent={targetedEvent}/>:null}
         <Canvas shadows>
             <Sky sunPosition={sunPosition}/>
             <Suspense fallback={null}>

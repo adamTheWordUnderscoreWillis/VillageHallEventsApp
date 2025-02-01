@@ -10,11 +10,11 @@ import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-export function StaffNavBar({targetedEvent}){
+import { createNewEvent } from './api';
+export function StaffNavBar({targetedEvent, profile}){
 
     const [form, setForm] = useState({})
     const [errors, setErrors] = useState({})
-
     const handleSubmit = (event)=>{
         event.preventDefault()
         const formErrors = validateForm()
@@ -24,6 +24,7 @@ export function StaffNavBar({targetedEvent}){
         }
         else{
             setErrors({})
+            createNewEvent(form, profile)
             console.log("form submitted")
         }
     }

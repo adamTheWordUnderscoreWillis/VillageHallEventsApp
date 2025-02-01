@@ -151,7 +151,7 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
     const posterMap = useLoader(TextureLoader, eventData.logo.url)
     let imageWidth = 0.25
     let imageHeight = 0.25
-   const date = new Date(eventData.start.local)
+   const date = new Date(eventData.start.utc)
     
 
 
