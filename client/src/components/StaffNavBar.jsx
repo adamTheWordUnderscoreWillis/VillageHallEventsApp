@@ -10,7 +10,7 @@ import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { createNewEvent } from './api';
+import { createNewEvent, deleteEventById } from './api';
 export function StaffNavBar({targetedEvent, profile}){
 
     const [form, setForm] = useState({})
@@ -28,6 +28,10 @@ export function StaffNavBar({targetedEvent, profile}){
             console.log("form submitted")
         }
     }
+    const handledeleteEvent = ()=>{
+        deleteEventById(targetedEvent, profile)
+    }
+
     const setField = (field, value) => {
         console.log(form)
         setForm({
@@ -186,7 +190,7 @@ export function StaffNavBar({targetedEvent, profile}){
                             {listAttendees()}
                         </NavDropdown>
                         <NavItem>
-                            <Button variant="danger">
+                            <Button onClick={handledeleteEvent} variant="danger">
                                 Cancel Event
                             </Button>
                         </NavItem>

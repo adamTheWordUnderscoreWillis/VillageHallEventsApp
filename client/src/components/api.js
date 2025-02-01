@@ -134,7 +134,7 @@ export const addEventToUserCalendar = async (user, event) => {
     }
 }
 export const createNewEvent = async (formData, profile) => {
-  const {name, description, start, end, image, price} = formData
+  const {name, description, start, end, logo, price} = formData
   const newEventData = {
         name: {
           text: name,
@@ -177,7 +177,6 @@ export const createNewEvent = async (formData, profile) => {
         attendees: {},
   }
   try{
-    console.log(profile.email)
     const request = await backEnd
       .post("/events/newEvent", newEventData, {
         headers:{
@@ -186,6 +185,21 @@ export const createNewEvent = async (formData, profile) => {
       })
       console.log(request.data)
 
+  }
+  catch(err){
+    console.log(err)
+  }
+}
+export const deleteEventById = async(event, profile)=>{
+  try{
+
+    const request = await backEnd
+    .delete(`/events/${event.id}/deleteEvent`, {
+      headers:{
+        authorization: profile.email 
+      }
+    })
+    console.log(request)
   }
   catch(err){
     console.log(err)
