@@ -5,10 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import { addAttendee, addEventToUserCalendar, removeAttendee, removeEventFromUserCalendar } from "./api"
 
 function Poster({
-    yRotation, 
-    xPosition,
-    yPosition,
-    zPosition,
+    posterTransform,
     eventData,
     color,
     profile,
@@ -25,7 +22,6 @@ function Poster({
     const posterRef = useRef()
     const signUpButtonRef = useRef()
     const calendarButtonRef = useRef()
-    
     async function handlecalendarEvent (){
         if(isInUserCalendar){
             try{
@@ -85,7 +81,7 @@ function Poster({
         return(
             <group 
                 position={[0.2,-0.22,0.04]}
-                rotation={[0,0,-yRotation]}
+                rotation={[0,0,-posterTransform.rotation[2]]}
                 scale={[1.3,1.3,1.3]}
                     class="goingSticker" 
                     >
@@ -113,7 +109,6 @@ function Poster({
                     </group>
         )
     }
-    
     async function handleSignUp(){
         if(isGoing === true){
             console.log("No longer attending")
@@ -160,11 +155,11 @@ function Poster({
     },[profile])
 
     useFrame((state)=>{
-        isfocused? posterRef.current.position.z = zPosition+0.1: posterRef.current.position.z= zPosition;
-        isClicked? posterRef.current.position.z = state.camera.position.z -1: posterRef.current.position.z= zPosition;
-        isClicked? posterRef.current.position.x = state.camera.position.x/1.5: posterRef.current.position.x= xPosition;
-        isClicked? posterRef.current.position.y = state.camera.position.y/1.5: posterRef.current.position.y= yPosition;
-        isClicked? posterRef.current.rotation.z = 0: posterRef.current.rotation.z= yRotation;
+        isfocused? posterRef.current.position.z = posterTransform.position[2]+0.1: posterRef.current.position.z= posterTransform.position[2];
+        isClicked? posterRef.current.position.z = state.camera.position.z -1: posterRef.current.position.z= posterTransform.position[2];
+        isClicked? posterRef.current.position.x = state.camera.position.x/1.5: posterRef.current.position.x= posterTransform.position[0];
+        isClicked? posterRef.current.position.y = state.camera.position.y/1.5: posterRef.current.position.y= posterTransform.position[1];
+        isClicked? posterRef.current.rotation.z = 0: posterRef.current.rotation.z= posterTransform.rotation[2];
         isClicked? posterRef.current.rotation.y = state.camera.rotation.y: posterRef.current.rotation.y= 0;    
         isClicked? posterRef.current.rotation.x = state.camera.rotation.x: posterRef.current.rotation.x= 0;    
     })
@@ -179,9 +174,9 @@ function Poster({
     return(
         <>
         <group
-        scale={[1.4,1.4,1.4]}
-        position={[xPosition ,yPosition,zPosition]}
-        rotation={[0,0,yRotation]}
+        scale={[1.2,1.2,1.2]}
+        position={posterTransform.position}
+        rotation={posterTransform.rotation}
         ref={posterRef}
         onPointerEnter={ (event) => {
             event.stopPropagation()

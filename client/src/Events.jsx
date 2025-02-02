@@ -17,9 +17,7 @@ function Events({
   setErrorText
 }) {
 
-  function listEvents(){
-    
-  }
+
    const  [events, setEvents] = useState(null)
    const  [calendarEvents, setcalendarEvents] = useState([])
    
@@ -57,6 +55,29 @@ function Events({
       }
       return colors
     }, [events])
+    const num = (-4)*0.5
+    const posterTransform = useMemo(()=>{
+      if(events === null) return 0
+
+      const transforms = []
+      for(let i=0; i<events.length; i++){
+        let transformObject = {
+          position: [
+            ((i%3)*1.4)-1.4,
+            ((-i%4)*1.2)+1.9,
+            // (i%4*0.9)-(0.5+(Math.random()*0.5)),
+            (Math.random()*0.04)+0.1
+          ],
+          rotation: [0,0,(Math.random()-0.1)*0.5]
+
+
+        }
+        transforms.push(transformObject)
+      }
+      return transforms;
+    },[events])
+
+    console.log("Poster", posterTransform)
      if(isLoading === true){
        return 0
       }
@@ -102,11 +123,8 @@ function Events({
                    targetedEvent={targetedEvent}
                    calendarEventId={calendarEventId}
                    key={`${event.id}poster`} 
-                   yRotation={(Math.random()-0.1)*0.5} 
-                   xPosition={(index-4)*0.4} 
-                   yPosition={(index%2*1.5)-(0.5+(Math.random()*0.5))} 
-                   zPosition={(Math.random()*0.04)+0.1} 
                    eventData={event}
+                   posterTransform={posterTransform[index]}
                    color={posterColours[index]}
                    user={user}
                    profile={profile}

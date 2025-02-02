@@ -1,6 +1,13 @@
 import { Text } from "@react-three/drei"
 export const handleError= (err)=>{
     console.log(err)
+
+    const dimensions = {
+        boardHeight: 5,
+        boardWidth: 4,
+        boardDepth: 1,
+        plankWidth: 0.2
+    }
     const colorPalette = {
         NoticeBoardWood: `hsl(29, 88.70%, 27.60%)`,
         backBoard: `hsl(29, 63.40%, 56.10%)`,
@@ -12,7 +19,7 @@ export const handleError= (err)=>{
         return(
             <group >
                     <mesh position={[0,0,0.05]} rotation={[0,0,0]} >
-                        <planeGeometry args={[4,3,1]}/>
+                        <planeGeometry args={[dimensions.boardWidth,dimensions.boardHeight,dimensions.boardDepth]}/>
                         <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                     </mesh>
                     <group position={[0,0,0.1]} rotation={[0,0,(Math.PI*0.1)]}>
@@ -47,7 +54,7 @@ export const handleError= (err)=>{
         return(
             <group >
                     <mesh position={[0,0,0.05]} rotation={[0,0,0]} >
-                        <planeGeometry args={[4,3,1]}/>
+                        <planeGeometry args={[dimensions.boardWidth,dimensions.boardHeight,dimensions.boardDepth]}/>
                         <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                     </mesh>
                     <group position={[0,0,0.1]} rotation={[0,0,(Math.PI*0.1)]}>
@@ -84,7 +91,7 @@ export const handleError= (err)=>{
             <group >
                     <group position={[0,0,0.1]} rotation={[0,0, 0]}>
                         <mesh>
-                            <boxGeometry args={[3,0.5,0.1]}/>
+                            <boxGeometry args={[dimensions.boardWidth,dimensions.boardHeight,dimensions.boardDepth]}/>
                             <meshStandardMaterial color={colorPalette.Loading}/>
                         </mesh>
                         <group>

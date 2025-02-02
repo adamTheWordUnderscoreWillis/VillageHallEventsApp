@@ -46,7 +46,9 @@ function Scene (){
             targetedEvent={targetedEvent}
             />
             :null}
-        <Canvas shadows>
+        <Canvas 
+        shadows
+        >
             <Sky 
               sunPosition={sunPosition}
               />
@@ -89,7 +91,7 @@ function Scene (){
             <OrbitControls
               minAzimuthAngle={-Math.PI*0.1}
               maxAzimuthAngle={Math.PI*0.1}
-              minPolarAngle={Math.PI*0.4}
+              minPolarAngle={Math.PI*0.47}
               maxPolarAngle={0}
               enablePan={false}
               maxDistance={7}
