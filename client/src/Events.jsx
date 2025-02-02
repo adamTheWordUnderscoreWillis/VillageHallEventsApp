@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { fetchEvents, fetchUserCalendarEvents } from "./components/api"
 import Poster from "./components/poster"
 import { handleError } from "./components/errorHandling.jsx"
+import { Text } from "@react-three/drei"
 
 function Events({
   isLoading, 
@@ -16,6 +17,9 @@ function Events({
   setErrorText
 }) {
 
+  function listEvents(){
+    
+  }
    const  [events, setEvents] = useState(null)
    const  [calendarEvents, setcalendarEvents] = useState([])
    
@@ -27,6 +31,7 @@ function Events({
         try{
           const data = await fetchEvents()
           const eventsData = data.events
+          console.log(data)
           if(Object.keys(user)>0){
             const calendarEventsData = await fetchUserCalendarEvents(user)
             setcalendarEvents(calendarEventsData)
@@ -58,9 +63,34 @@ function Events({
       if (isSignedIn === false){
         return 0
       }
+
+      function noEventsBanner (){
+        return (
+          <group >
+                              <group position={[0,0,0.1]} rotation={[0,0, 0]}>
+                                  <mesh>
+                                      <boxGeometry args={[3,0.5,0.1]}/>
+                                      <meshStandardMaterial color={"black"}/>
+                                  </mesh>
+                                  <group>
+                          <Text 
+                              color="white"
+                              anchorX="centre" 
+                              anchorY="middle" 
+                              fontSize="0.3" 
+                              position={[-1.3,0.05,0.11]}>
+                                  NO EVENTS, SORRY
+                              </Text>
+                      </group>
+                              </group>
+                      </group>
+        )
+      }
       return (
         <>
-             {events.map((event, index)=>{
+            {events.length >0?null: noEventsBanner()}
+             {
+             events.map((event, index)=>{
               const calendarEntry = calendarEvents.filter((calendarEvent)=> calendarEvent.summary === event.name.text && event.start.utc === calendarEvent.start.dateTime)
               let calendarEventId
               if(calendarEntry.length){

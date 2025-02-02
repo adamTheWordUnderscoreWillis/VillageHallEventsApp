@@ -21,10 +21,7 @@ exports.fetchAllEvents = async ()=>{
         return formattedData
     }
     else{
-        throw {
-            msg: "There are no events in the database",
-            status: 404
-        }
+        return []
     }
 }
 

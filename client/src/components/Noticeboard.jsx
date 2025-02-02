@@ -49,19 +49,6 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
 
     function loadingText(){
         return(
-            <Text 
-              color={colorPalette.text}
-              anchorX="centre" 
-              anchorY="middle" 
-              fontSize="0.4" 
-              position={[-0.8,0,0.11]}>
-                {isError? errorText : "LOADING"}
-              </Text>
-        )
-    }
-
-    function errorMessageBanner (){
-        return(
             <group >
                     <mesh position={[0,0,0.05]} rotation={[0,0,0]} >
                         <planeGeometry args={[4,3,1]}/>
@@ -72,7 +59,15 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
                             <boxGeometry args={[3,0.5,0.1]}/>
                             <meshStandardMaterial color={colorPalette.Loading}/>
                         </mesh>
-                        {isError? errorText: loadingText()}
+                        
+                        <Text 
+                        color={colorPalette.text}
+                        anchorX="centre" 
+                        anchorY="middle" 
+                        fontSize="0.4" 
+                        position={[-0.8,0,0.11]}>
+                            {isError? errorText : "LOADING"}
+                        </Text>
                     </group>
             </group>
         )
@@ -119,7 +114,7 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
     function signOutButton (){
         return(
             <group 
-            position={[1,-1.8,1.5]} 
+            position={[1,-1.8,0.5]} 
             rotation={[0,0,0]}
             ref={signOutButtonRef}
                             onPointerEnter={ (event) => {
@@ -167,7 +162,8 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
 
     return(
         <>
-        {isLoading||isError?errorMessageBanner(): null}
+        {isError? errorText: null}
+        {isLoading && !isError?loadingText(): null}
         {!isLoading&&!isSignedIn?signInBanner(): null}
         {!isLoading&&isSignedIn?signOutButton(): null}
 

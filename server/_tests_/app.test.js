@@ -445,9 +445,9 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body).toEqual(desiredEventsData)
       })
     })
-    test("404: Returns not found when there are no events in the database", ()=>{
+    test("200: Returns an object with an empty array f there are no events", ()=>{
       return db.collection("events").deleteMany({}).then(()=>{
-        return request(app).get("/events").expect(404)
+        return request(app).get("/events").expect(200)
       })
       .then(({body})=>{
 
