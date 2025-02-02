@@ -4,7 +4,19 @@ import { BoxGeometry, MeshStandardMaterial, TextureLoader } from "three"
 import { useEffect, useRef, useState } from "react"
 import { addAttendee, addEventToUserCalendar, removeAttendee, removeEventFromUserCalendar } from "./api"
 
-function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, profile, user, calendarEventId}){
+function Poster({
+    yRotation, 
+    xPosition,
+    yPosition,
+    zPosition,
+    eventData,
+    color,
+    profile,
+    user, 
+    calendarEventId, 
+    setTargetedEvent, 
+    targetedEvent
+}){
     const [isClicked, setIsClicked] = useState(false)
     const [isfocused, setIsFocused] = useState(false)
     const [isGoing, setIsGoing] = useState(false)
@@ -105,7 +117,13 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
     async function handleSignUp(){
         if(isGoing === true){
             console.log("No longer attending")
-            await removeAttendee(eventData, profile)
+            const attendeeData = {
+                [profile.email]: profile.name
+              }
+            await removeAttendee(eventData, attendeeData)
+            const targetedEventUpdate = {...targetedEvent}
+            delete targetedEventUpdate.attendees[profile.email]
+            await setTargetedEvent(targetedEventUpdate)
             if(isInUserCalendar){
                 try{
                     await removeEventFromUserCalendar(user, calenderID)
@@ -119,12 +137,16 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
         }
         else{
             console.log("signed Up!")
-            addAttendee(eventData, profile)
+            await addAttendee(eventData, profile)
+            const AddTargetEvent = {...targetedEvent}
+            AddTargetEvent.attendees[profile.email] = profile.name
+            await setTargetedEvent(AddTargetEvent)
         }
         setIsGoing(!isGoing)
     }
     const handleIsGoing = async ()=>{
         if(eventData.attendees[profile.email]){
+            console.log(eventData.attendees[profile.email])
             await setIsGoing(true)
         }
         if(calendarEventId){
@@ -150,7 +172,7 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
     const posterMap = useLoader(TextureLoader, eventData.logo.url)
     let imageWidth = 0.25
     let imageHeight = 0.25
-   const date = new Date(eventData.start.local)
+   const date = new Date(eventData.start.utc)
     
 
 
@@ -174,11 +196,13 @@ function Poster({yRotation, xPosition,yPosition,zPosition, eventData, color, pro
             } }
             onClick={(event)=>{
                 event.stopPropagation()
+                setTargetedEvent(eventData)
                 
                 setIsClicked(true)
             }}
             onPointerMissed={()=>{
                 setIsClicked(false)
+                // setTargetedEvent({})
             }}
             >
             {isGoing ? GoingToEventSticker(): null}

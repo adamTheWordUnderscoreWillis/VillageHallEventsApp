@@ -1,20 +1,27 @@
 import { Text } from "@react-three/drei"
 import { useEffect, useRef, useState } from "react"
-import { Group } from "three"
+import { Group, RepeatWrapping, TextureLoader } from "three"
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import { addEventToUserCalendar, getUsernfo } from "./api";
+import { useLoader } from "@react-three/fiber";
 
-function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser}){
+function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser, setIsStaff}){
     const signInButtonRef = useRef()
     const signOutButtonRef = useRef()
 
     const colorPalette = {
         NoticeBoardWood: `hsl(29, 88.70%, 27.60%)`,
-        backBoard: `hsl(61, 37.70%, 47.80%)`,
+        backBoard: `hsl(29, 63.40%, 56.10%)`,
         Loading: `hsl(0, 67.80%, 52.50%)`,
         text: `hsl(0, 2.60%, 7.60%)`,
         titleText: `hsl(64, 100.00%, 68.80%)`,
     }
+
+    const backboardFabricColour = useLoader(TextureLoader, "./fabric_pattern_07_col_1_4k.jpg")
+
+    backboardFabricColour.repeat.set(4,4)
+    backboardFabricColour.wrapS = RepeatWrapping
+    backboardFabricColour.wrapT = RepeatWrapping
     
 
     const login = useGoogleLogin({
@@ -35,7 +42,8 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser}){
     const logout = ()=>{
         console.log("log out")
         googleLogout();
-        setProfile({})
+        setProfile({});
+        setIsStaff(false)
     }
 
     function loadingBanner (){
@@ -67,11 +75,11 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser}){
         return(
             <group
             >
-                    <mesh   position={[0,0,0.1]} rotation={[0,0,0]} >
+                    <mesh   position={[0,0,0.05]} rotation={[0,0,0]} >
                         <planeGeometry args={[4,3,1]}/>
                         <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                     </mesh>
-                    <group position={[0,0,0.3]} rotation={[0,0,0]}>
+                    <group position={[0,0,0.1]} rotation={[0,0,0]}>
                         <mesh
                             ref={signInButtonRef}
                             onPointerEnter={ (event) => {
@@ -162,7 +170,10 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser}){
                 {/* BackBoard */}
                 <mesh castShadow  >
                     < planeGeometry args={[4,3,1]}/>
-                    <meshStandardMaterial color={colorPalette.backBoard}/>
+                    <meshStandardMaterial 
+                    // color={colorPalette.backBoard}
+                    map={backboardFabricColour}
+                    />
                 </mesh>
                 <mesh castShadow position={[0,0,-0.05]} rotation={[0,(Math.PI), 0]} >
                     <planeGeometry args={[4,3,1]}/>
