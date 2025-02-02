@@ -36,10 +36,7 @@ export const addAttendee = (event, profile)=> {
         return data
     })
 }
-export const removeAttendee = (event, profile)=> {
-    const attendeeData = {
-      [profile.email]: profile.name
-    }
+export const removeAttendee = (event, attendeeData)=> {
     return backEnd
     .patch(`/events/${event.id}/RemoveAttendee`, attendeeData)
     .then(({data})=>{
@@ -199,7 +196,7 @@ export const deleteEventById = async(event, profile)=>{
         authorization: profile.email 
       }
     })
-    console.log(request)
+    console.log("This is the delete Request: ", request)
   }
   catch(err){
     console.log(err)

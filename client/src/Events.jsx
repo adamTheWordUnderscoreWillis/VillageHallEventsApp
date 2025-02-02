@@ -2,19 +2,35 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { fetchEvents, fetchUserCalendarEvents } from "./components/api"
 import Poster from "./components/poster"
 
-function Events({isLoading, setIsLoading, isSignedIn, profile, user, calendarEvents, setTargetedEvent}) {
+function Events({
+  isLoading, 
+  setIsLoading, 
+  staffAction, 
+  isSignedIn, 
+  profile, 
+  user, 
+  setTargetedEvent, 
+  targetedEvent
+}) {
+
    const  [events, setEvents] = useState(null)
+   const  [calendarEvents, setcalendarEvents] = useState([])
    
     useEffect(()=>{
       const getEvents = async () => {
         await setIsLoading(true)
         const data = await fetchEvents()
         const eventsData = data.events
+        const calendarEventsData = await fetchUserCalendarEvents(user)
+        console.log("Calendar Events: ", calendarEventsData)
+        setcalendarEvents(calendarEventsData)
+        console.log("This was the staff Action", staffAction)
         await setEvents(eventsData)
         await setIsLoading(false)
       }
       getEvents()
-     },[])
+     },[profile, staffAction])
+
      const posterColours = useMemo(()=>{
       if(events === null) return 0
 
@@ -41,6 +57,7 @@ function Events({isLoading, setIsLoading, isSignedIn, profile, user, calendarEve
                return (
                    <Poster
                    setTargetedEvent={setTargetedEvent}
+                   targetedEvent={targetedEvent}
                    calendarEventId={calendarEventId}
                    key={`${event.id}poster`} 
                    yRotation={(Math.random()-0.1)*0.5} 

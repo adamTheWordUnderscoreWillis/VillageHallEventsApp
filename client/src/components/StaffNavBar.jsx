@@ -10,12 +10,13 @@ import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { createNewEvent, deleteEventById } from './api';
-export function StaffNavBar({targetedEvent, profile}){
+import { createNewEvent, deleteEventById, removeAttendee } from './api';
+export function StaffNavBar({targetedEvent, profile, setStaffAction, setTargetedEvent}){
 
     const [form, setForm] = useState({})
     const [errors, setErrors] = useState({})
-    const handleSubmit = (event)=>{
+    
+    const handleSubmit = async (event)=>{
         event.preventDefault()
         const formErrors = validateForm()
         if(Object.keys(formErrors).length > 0){
@@ -24,12 +25,39 @@ export function StaffNavBar({targetedEvent, profile}){
         }
         else{
             setErrors({})
-            createNewEvent(form, profile)
-            console.log("form submitted")
+            try{
+                await createNewEvent(form, profile)
+                setStaffAction(`Event ${form.name} was succesfully created`)
+                console.log("form submitted")
+
+            }
+            catch(err){
+                console.log(err)
+            }
         }
     }
-    const handledeleteEvent = ()=>{
-        deleteEventById(targetedEvent, profile)
+    const handledeleteEvent = async ()=>{
+        try{
+            await deleteEventById(targetedEvent, profile)
+            setStaffAction(`Event ${targetedEvent.name.text} was succesfully deleted`)
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+    const handleRemoveAttendee = async (key, attendeesObject )=>{
+        const attendeeData = {}
+        attendeeData[key] = attendeesObject[key]
+        try{
+            await removeAttendee(targetedEvent, attendeeData)
+            const targetedEventUpdate = {...targetedEvent}
+            delete targetedEventUpdate.attendees[profile.email]
+            await setTargetedEvent(targetedEventUpdate)
+            setStaffAction(`Attendee ${attendeesObject[key]} was removed by staff from Event ${targetedEvent.name.text}`)
+        }
+        catch(err){
+            console.log(err)
+        }
     }
 
     const setField = (field, value) => {
@@ -67,7 +95,7 @@ export function StaffNavBar({targetedEvent, profile}){
     }
     
     useEffect(()=>{
-        
+        console.log(targetedEvent)
     },[targetedEvent])
 
     function createEventForm(){
@@ -166,15 +194,22 @@ export function StaffNavBar({targetedEvent, profile}){
         
     }
     function listAttendees (){
-        if(Object.keys(targetedEvent.attendees).length >0 ){
-            for(const key in targetedEvent.attendees){
+        if(Object.keys(targetedEvent.attendees).length > 0){
+            for(const attendee in targetedEvent.attendees){
                 return(
                     <NavDropdown.Item>
-                        <p>{targetedEvent.attendees[key]}</p>
-                        <Button variant="danger">Remove</Button>
+                        <p>{targetedEvent.attendees[attendee]}</p>
+                        <Button onClick={()=>{handleRemoveAttendee(attendee, targetedEvent.attendees)}} variant="danger">Remove</Button>
                         </NavDropdown.Item>
                 )
             }
+        }
+        else{
+            return(
+                < NavDropdown.Item disabled={true}>
+                    <p>No Attendees</p>
+                </NavDropdown.Item>
+            )
         }
     }
 

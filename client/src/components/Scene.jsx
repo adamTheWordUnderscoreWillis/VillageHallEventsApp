@@ -13,17 +13,14 @@ function Scene (){
     const [isSignedIn, setIsSignedIn]=useState(false)
     const [user, setUser]=useState({})
     const [isStaff, setIsStaff]=useState(false)
-    const  [calendarEvents, setcalendarEvents] = useState([])
     const [targetedEvent, setTargetedEvent]= useState({})
+    const [staffAction, setStaffAction] = useState()
     
 
     const handleProfile = async()=>{
         if(profile.email){
           console.log("This is the profile :", profile)
           const staffResponse = await fetchStaffMember(profile.email)
-          const calendarEventsData = await fetchUserCalendarEvents(user)
-          console.log("Calendar Events: ", calendarEventsData)
-          setcalendarEvents(calendarEventsData)
           if(staffResponse.staffCheck){
             setIsStaff(true)
           }
@@ -40,23 +37,58 @@ function Scene (){
     const sunPosition = [2,1.6,2]
     return(
         <>
-        {isStaff?<StaffNavBar profile={profile} targetedEvent={targetedEvent}/>:null}
+        {isStaff?
+          <StaffNavBar 
+            setStaffAction={setStaffAction} 
+            profile={profile}
+            setTargetedEvent={setTargetedEvent} 
+            targetedEvent={targetedEvent}
+            />
+            :null}
         <Canvas shadows>
-            <Sky sunPosition={sunPosition}/>
-            <Suspense fallback={null}>
-            <ambientLight intensity={Math.PI / 2} />
-            <directionalLight castShadow position={sunPosition} angle={0.15} penumbra={1} decay={0} intensity={Math.PI} />
-            <NoticeBoard setIsStaff={setIsStaff} isSignedIn={isSignedIn} isLoading={isLoading} setProfile={setProfile} user={user} setUser={setUser}/>
+            <Sky 
+              sunPosition={sunPosition}
+              />
+            <Suspense 
+              fallback={null}
+              >
+            <ambientLight 
+              intensity={Math.PI / 2} 
+              />
+            <directionalLight 
+              castShadow position={sunPosition} 
+              angle={0.15} 
+              penumbra={1} 
+              decay={0} 
+              intensity={Math.PI} 
+              />
+            <NoticeBoard 
+              setIsStaff={setIsStaff} 
+              isSignedIn={isSignedIn} 
+              isLoading={isLoading} 
+              setProfile={setProfile} 
+              user={user} 
+              setUser={setUser}
+              />
             <Floor/>
-            <Events setTargetedEvent={setTargetedEvent} isSignedIn={isSignedIn} isLoading={isLoading} profile={profile} setIsLoading={setIsLoading}user={user} calendarEvents={calendarEvents}/>
+            <Events 
+              staffAction={staffAction} 
+              targetedEvent={targetedEvent}
+              setTargetedEvent={setTargetedEvent} 
+              isSignedIn={isSignedIn} 
+              isLoading={isLoading} 
+              profile={profile} 
+              setIsLoading={setIsLoading}
+              user={user}
+            />
             <OrbitControls
-            minAzimuthAngle={-Math.PI*0.1}
-            maxAzimuthAngle={Math.PI*0.1}
-            minPolarAngle={Math.PI*0.4}
-            maxPolarAngle={0}
-            enablePan={false}
-            maxDistance={7}
-            minDistance={3}
+              minAzimuthAngle={-Math.PI*0.1}
+              maxAzimuthAngle={Math.PI*0.1}
+              minPolarAngle={Math.PI*0.4}
+              maxPolarAngle={0}
+              enablePan={false}
+              maxDistance={7}
+              minDistance={3}
             />
             </Suspense>
         </Canvas>
