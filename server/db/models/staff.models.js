@@ -23,6 +23,6 @@ exports.fetcStaffMemberbyKey = async(emailAddress)=>{
         }
     }
     else{
-        throw new Error("This endpoint ony accepts email addresses", {status: 400, msg: "This endpoint ony accepts email addresses"})
+        throw {status: 400, msg: "This endpoint ony accepts email addresses"}
     }
 }

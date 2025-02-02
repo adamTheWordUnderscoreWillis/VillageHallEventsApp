@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { fetchEvents, fetchUserCalendarEvents } from "./components/api"
 import Poster from "./components/poster"
+import { handleError } from "./components/errorHandling.jsx"
 
 function Events({
   isLoading, 
@@ -10,7 +11,9 @@ function Events({
   profile, 
   user, 
   setTargetedEvent, 
-  targetedEvent
+  targetedEvent,
+  setIsError,
+  setErrorText
 }) {
 
    const  [events, setEvents] = useState(null)
@@ -19,14 +22,23 @@ function Events({
     useEffect(()=>{
       const getEvents = async () => {
         await setIsLoading(true)
-        const data = await fetchEvents()
-        const eventsData = data.events
-        const calendarEventsData = await fetchUserCalendarEvents(user)
-        console.log("Calendar Events: ", calendarEventsData)
-        setcalendarEvents(calendarEventsData)
-        console.log("This was the staff Action", staffAction)
-        await setEvents(eventsData)
-        await setIsLoading(false)
+        await setIsError(false)
+        await setErrorText(null)
+        try{
+          const data = await fetchEvents()
+          const eventsData = data.events
+          if(Object.keys(user)>0){
+            const calendarEventsData = await fetchUserCalendarEvents(user)
+            setcalendarEvents(calendarEventsData)
+          }
+            await setEvents(eventsData)
+            await setIsLoading(false)
+        }
+        catch(err){
+          const errorMessage = await handleError(err)
+          await setErrorText(errorMessage)
+          setIsError(true)
+        }
       }
       getEvents()
      },[profile, staffAction])

@@ -445,6 +445,19 @@ describe('LittleTidfordApp Unit Tests', () => {
         expect(body).toEqual(desiredEventsData)
       })
     })
+    test("404: Returns not found when there are no events in the database", ()=>{
+      return db.collection("events").deleteMany({}).then(()=>{
+        return request(app).get("/events").expect(404)
+      })
+      .then(({body})=>{
+
+        expect(body.msg).toEqual("There are no events in the database")
+
+      })
+    })
+    test("404: Returns not found when the endpoint doesn't exist", ()=>{
+        return request(app).get("/notAnEndpoint").expect(404)
+    })
   })
   describe('Get Event by ID Endpoint', ()=>{
     test ("200: Returns Okay Status Code", ()=>{

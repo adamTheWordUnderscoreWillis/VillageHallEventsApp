@@ -15,11 +15,12 @@ function Scene (){
     const [isStaff, setIsStaff]=useState(false)
     const [targetedEvent, setTargetedEvent]= useState({})
     const [staffAction, setStaffAction] = useState()
+    const [isError, setIsError] = useState(false)
+    const [errorText, setErrorText] = useState("beans")
     
 
     const handleProfile = async()=>{
         if(profile.email){
-          console.log("This is the profile :", profile)
           const staffResponse = await fetchStaffMember(profile.email)
           if(staffResponse.staffCheck){
             setIsStaff(true)
@@ -69,6 +70,8 @@ function Scene (){
               setProfile={setProfile} 
               user={user} 
               setUser={setUser}
+              isError={isError}
+              errorText={errorText}
               />
             <Floor/>
             <Events 
@@ -80,6 +83,8 @@ function Scene (){
               profile={profile} 
               setIsLoading={setIsLoading}
               user={user}
+              setIsError={setIsError}
+              setErrorText={setErrorText}
             />
             <OrbitControls
               minAzimuthAngle={-Math.PI*0.1}

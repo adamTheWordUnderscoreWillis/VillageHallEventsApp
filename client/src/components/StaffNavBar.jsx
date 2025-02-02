@@ -11,6 +11,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { createNewEvent, deleteEventById, removeAttendee } from './api';
+import { handleError } from './errorHandling.jsx';
 export function StaffNavBar({targetedEvent, profile, setStaffAction, setTargetedEvent}){
 
     const [form, setForm] = useState({})
@@ -56,7 +57,7 @@ export function StaffNavBar({targetedEvent, profile, setStaffAction, setTargeted
             setStaffAction(`Attendee ${attendeesObject[key]} was removed by staff from Event ${targetedEvent.name.text}`)
         }
         catch(err){
-            console.log(err)
+            handleError(err)
         }
     }
 
@@ -95,7 +96,6 @@ export function StaffNavBar({targetedEvent, profile, setStaffAction, setTargeted
     }
     
     useEffect(()=>{
-        console.log(targetedEvent)
     },[targetedEvent])
 
     function createEventForm(){

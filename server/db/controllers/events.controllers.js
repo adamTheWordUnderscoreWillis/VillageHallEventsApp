@@ -1,8 +1,13 @@
 const {fetchAllEvents, fetchEventById, insertNewAttendee, insertNewEvent, removeEventById, deleteAttendee} = require("../models/events.Models.js")
 
-exports.getAllEvents = async (req,res) =>{
-    const events = await fetchAllEvents()
-    await res.status(200).send({events:events})
+exports.getAllEvents = async (req,res,next) =>{
+    try{
+        const events = await fetchAllEvents()
+        await res.status(200).send({events:events})
+    }
+    catch(err){
+        next(err)
+    }
 }
 
 

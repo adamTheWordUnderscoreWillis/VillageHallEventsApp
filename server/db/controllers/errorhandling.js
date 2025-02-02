@@ -7,8 +7,8 @@ exports.handleBsonErrors = (err,req,res,next)=>{
     else next(err);
 }
 exports.handleCustomErrors = (err,req,res,next)=>{
-    if(err.message){
-       return res.status(400).send({msg: err.message})
+    if(err.msg && err.status){
+       return res.status(err.status).send({msg: err.msg})
     }
     else next(err);
 }

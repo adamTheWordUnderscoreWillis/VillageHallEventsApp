@@ -21,7 +21,10 @@ exports.fetchAllEvents = async ()=>{
         return formattedData
     }
     else{
-        throw new Error("Data was not found")
+        throw {
+            msg: "There are no events in the database",
+            status: 404
+        }
     }
 }
 
@@ -47,7 +50,7 @@ exports.fetchEventById = async (eventId)=>{
         }
 
         else{
-            throw new Error("We could not find any data for that event", {status: 404, msg: "We could not find any data for that event"})
+            throw {status: 404, msg: "We could not find any data for that event"}
         }
 }
 
@@ -62,14 +65,14 @@ exports.insertNewAttendee = async (eventId, body)=>{
             let update = {$set: {attendees: data.attendees}}
                 let updateResponse = await db.collection("events").updateOne(query, update)
                 if(updateResponse.modifiedCount < 1){
-                    throw new Error(`We were not able to update the attendees data`, {status: 404, msg: `We were not able to update the attendees data`})
+                    throw {status: 404, msg: `We were not able to update the attendees data`}
                 }
                 else{
                     return updateResponse
                 }
         }
         else{
-            throw new Error("We could not find any data for that event", {status: 404, msg: "We could not find any data for that event"})
+            throw {status: 404, msg: "We could not find any data for that event"}
         }
         
         
@@ -92,7 +95,7 @@ exports.insertNewEvent = async(newEvent, authorization)=>{
         let staff = await db.collection("staff").findOne({email: authorization})
 
         if(!staff){
-            throw new Error("This account is not allowed to create events", {status: 400, msg: "This account is not allowed to create events"})
+            throw {status: 400, msg: "This account is not allowed to create events"}
         }
         else{
             
@@ -101,7 +104,7 @@ exports.insertNewEvent = async(newEvent, authorization)=>{
                 return data
             }
             else{
-                throw new Error("Event could not be added to database", {status: 400, msg: "Event could not be added to database"})
+                throw {status: 400, msg: "Event could not be added to database"}
             }
         }
 }
@@ -110,7 +113,7 @@ exports.removeEventById = async (eventId, authorization)=>{
         let staff = await db.collection("staff").findOne({email: authorization})
 
         if(!staff){
-            throw new Error("This account is not allowed to delete events", {status: 400, msg: "This account is not allowed to create events"})
+            throw {status: 400, msg: "This account is not allowed to delete events"}
         }
         else{
             let deletedEvent = await db.collection("events").deleteOne({_id: ObjectId.createFromHexString(eventId)})
@@ -118,7 +121,7 @@ exports.removeEventById = async (eventId, authorization)=>{
                 return deletedEvent
             }
             else{
-                throw new Error("The event you tried to delete doesn't exist", {status: 400, msg: "The event you tried to delete doesn't exist"})
+                throw {status: 400, msg: "The event you tried to delete doesn't exist"}
             }
         }
 }
@@ -135,16 +138,16 @@ exports.deleteAttendee = async (eventId ,body)=>{
             let updateString = await db.collection("events").updateOne(query, update)
 
             if(deleteString.modifiedCount <1){
-                throw new Error("Could not find attendees data", {status: 404, msg: "Could not find attendees data"})
+                throw {status: 404, msg: "Could not find attendees data"}
             }
             else if(updateString.modifiedCount < 1){
-                throw new Error("User was not signed up to event", {status: 404, msg: "User was not signed up to event"})
+                throw {status: 404, msg: "User was not signed up to event"}
             }
             else{
                 return {msg: `${body[attendeeKey[0]]} has been removed from event ${eventId}`}
             }
         }
         else{
-            throw new Error("We could not find any data for that event", {status: 404, msg: "We could not find any data for that event"})
+            throw {status: 404, msg: "We could not find any data for that event"}
         }
 }

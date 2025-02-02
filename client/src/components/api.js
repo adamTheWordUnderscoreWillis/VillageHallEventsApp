@@ -8,7 +8,6 @@ export const fetchEvents = ()=> {
     return backEnd
     .get("/events")
     .then(({data})=>{
-      console.log("This is the events: ", data)
         return data
     })
 }
@@ -17,7 +16,6 @@ export const fetchStaffMember = (emailAddress)=> {
     return backEnd
     .get(`/staff/${emailAddress}`)
     .then(({data})=>{
-      console.log(data)
         return data
     })
   }
@@ -58,7 +56,7 @@ export const getUsernfo = async (user) => {
           return request.data
     }
     catch(error){
-      console.log(error)
+      throw new Error(error)
     }
   }
 }
@@ -75,7 +73,7 @@ export const fetchUserCalendarEvents = async(user)=>{
           return request.data.items
     }
     catch(error){
-      console.log("This is the fetch Error", error)
+      throw new Error(error)
     }
 }
 
@@ -123,11 +121,10 @@ export const addEventToUserCalendar = async (user, event) => {
                   Accept: 'application/json'
               }
           })
-          console.log("This is the request: ", request.data)
           return request.data
     }
     catch(error){
-      console.log("This is the error", error)
+      throw new Error(error)
     }
 }
 export const createNewEvent = async (formData, profile) => {
@@ -184,7 +181,7 @@ export const createNewEvent = async (formData, profile) => {
 
   }
   catch(err){
-    console.log(err)
+    throw new Error(error)
   }
 }
 export const deleteEventById = async(event, profile)=>{
@@ -196,9 +193,8 @@ export const deleteEventById = async(event, profile)=>{
         authorization: profile.email 
       }
     })
-    console.log("This is the delete Request: ", request)
   }
   catch(err){
-    console.log(err)
+    throw new Error(error)
   }
 }

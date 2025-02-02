@@ -5,9 +5,10 @@ import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import { addEventToUserCalendar, getUsernfo } from "./api";
 import { useLoader } from "@react-three/fiber";
 
-function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser, setIsStaff}){
+function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, user, setUser, setIsStaff}){
     const signInButtonRef = useRef()
     const signOutButtonRef = useRef()
+
 
     const colorPalette = {
         NoticeBoardWood: `hsl(29, 88.70%, 27.60%)`,
@@ -46,27 +47,32 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser, setIsSt
         setIsStaff(false)
     }
 
-    function loadingBanner (){
+    function loadingText(){
         return(
-            <group >
-                    <mesh position={[0,0,0.1]} rotation={[0,0,0]} >
-                        <planeGeometry args={[4,3,1]}/>
-                        <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
-                    </mesh>
-                    <group position={[0,0,0.3]} rotation={[0,0,(Math.PI*0.1)]}>
-                        <mesh>
-                            <boxGeometry args={[3,0.5,0.1]}/>
-                            <meshStandardMaterial color={colorPalette.Loading}/>
-                        </mesh>
-                        <Text 
+            <Text 
               color={colorPalette.text}
               anchorX="centre" 
               anchorY="middle" 
               fontSize="0.4" 
               position={[-0.8,0,0.11]}>
-                LOADING
+                {isError? errorText : "LOADING"}
               </Text>
-    
+        )
+    }
+
+    function errorMessageBanner (){
+        return(
+            <group >
+                    <mesh position={[0,0,0.05]} rotation={[0,0,0]} >
+                        <planeGeometry args={[4,3,1]}/>
+                        <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
+                    </mesh>
+                    <group position={[0,0,0.1]} rotation={[0,0,(Math.PI*0.1)]}>
+                        <mesh>
+                            <boxGeometry args={[3,0.5,0.1]}/>
+                            <meshStandardMaterial color={colorPalette.Loading}/>
+                        </mesh>
+                        {isError? errorText: loadingText()}
                     </group>
             </group>
         )
@@ -161,7 +167,7 @@ function NoticeBoard ({isLoading, isSignedIn, setProfile, user, setUser, setIsSt
 
     return(
         <>
-        {isLoading?loadingBanner(): null}
+        {isLoading||isError?errorMessageBanner(): null}
         {!isLoading&&!isSignedIn?signInBanner(): null}
         {!isLoading&&isSignedIn?signOutButton(): null}
 
