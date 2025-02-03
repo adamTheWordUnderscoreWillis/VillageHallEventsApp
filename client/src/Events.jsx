@@ -3,8 +3,11 @@ import { fetchEvents, fetchUserCalendarEvents } from "./components/api"
 import Poster from "./components/poster"
 import { handleError } from "./components/errorHandling.jsx"
 import { Text } from "@react-three/drei"
+import { A11y } from "@react-three/a11y"
 
 function Events({
+  events,
+  setEvents,
   isLoading, 
   setIsLoading, 
   staffAction, 
@@ -16,9 +19,6 @@ function Events({
   setIsError,
   setErrorText
 }) {
-
-
-   const  [events, setEvents] = useState(null)
    const  [calendarEvents, setcalendarEvents] = useState([])
    
     useEffect(()=>{
@@ -29,7 +29,6 @@ function Events({
         try{
           const data = await fetchEvents()
           const eventsData = data.events
-          console.log(data)
           if(Object.keys(user)>0){
             const calendarEventsData = await fetchUserCalendarEvents(user)
             setcalendarEvents(calendarEventsData)
@@ -65,10 +64,9 @@ function Events({
           position: [
             ((i%3)*1.4)-1.4,
             ((-i%4)*1.2)+1.9,
-            // (i%4*0.9)-(0.5+(Math.random()*0.5)),
             (Math.random()*0.04)+0.1
           ],
-          rotation: [0,0,(Math.random()-0.1)*0.5]
+          rotation: [0,0,(((Math.random()-0.5)*0.5))]
 
 
         }
@@ -76,8 +74,6 @@ function Events({
       }
       return transforms;
     },[events])
-
-    console.log("Poster", posterTransform)
      if(isLoading === true){
        return 0
       }
@@ -118,6 +114,7 @@ function Events({
                 calendarEventId = calendarEntry[0].id
               }
                return (
+
                    <Poster
                    setTargetedEvent={setTargetedEvent}
                    targetedEvent={targetedEvent}
@@ -128,6 +125,8 @@ function Events({
                    color={posterColours[index]}
                    user={user}
                    profile={profile}
+                   isLoading={isLoading}
+                   setIsLoading={setIsLoading}
                    />
                  )
              })}

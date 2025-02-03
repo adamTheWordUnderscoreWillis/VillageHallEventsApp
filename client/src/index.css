@@ -3,6 +3,14 @@
   height: 100%;
   background-color: #5efaff;
 }
+Nav{
+  background-color: rgb(253, 255, 111);
+  font-size: large;
+  font-weight:bold;
+}
+.mb-3{
+  margin: 5px
+}
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -30,7 +38,12 @@
     bottom: 0px;
     width: 100%;
 }
-
+.navStyling{
+    margin-right: 40px
+}
+.StaffBarItems{
+  margin: 15px;
+}
 body {
   margin: 0;
   display: flex;

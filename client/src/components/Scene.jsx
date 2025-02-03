@@ -7,6 +7,8 @@ import {OrbitControls, Environment, Sky}from '@react-three/drei';
 import NoticeBoard from "./noticeboard";
 import { fetchStaffMember, fetchUserCalendarEvents } from "./api";
 import { StaffNavBar } from "./StaffNavBar";
+import { handleError } from "./errorHandling";
+import {A11yAnnouncer} from "@react-three/a11y"
 function Scene (){
     const  [isLoading, setIsLoading] = useState(true)
     const [profile, setProfile]=useState({})
@@ -16,14 +18,21 @@ function Scene (){
     const [targetedEvent, setTargetedEvent]= useState({})
     const [staffAction, setStaffAction] = useState()
     const [isError, setIsError] = useState(false)
-    const [errorText, setErrorText] = useState("beans")
+    const [errorText, setErrorText] = useState(null)
+    const  [events, setEvents] = useState(null)
+    
     
 
     const handleProfile = async()=>{
         if(profile.email){
-          const staffResponse = await fetchStaffMember(profile.email)
-          if(staffResponse.staffCheck){
-            setIsStaff(true)
+          try{
+            const staffResponse = await fetchStaffMember(profile.email)
+            if(staffResponse.staffCheck){
+              setIsStaff(true)
+            }
+          }
+          catch(err){
+            handleError(err)
           }
           setIsSignedIn(true)
         }
@@ -44,6 +53,8 @@ function Scene (){
             profile={profile}
             setTargetedEvent={setTargetedEvent} 
             targetedEvent={targetedEvent}
+            events={events}
+            staffAction={staffAction}
             />
             :null}
         <Canvas 
@@ -66,6 +77,7 @@ function Scene (){
               intensity={Math.PI} 
               />
             <NoticeBoard 
+            targetedEvent={targetedEvent}
               setIsStaff={setIsStaff} 
               isSignedIn={isSignedIn} 
               isLoading={isLoading} 
@@ -87,6 +99,8 @@ function Scene (){
               user={user}
               setIsError={setIsError}
               setErrorText={setErrorText}
+              events={events}
+              setEvents={setEvents}
             />
             <OrbitControls
               minAzimuthAngle={-Math.PI*0.1}
@@ -99,9 +113,7 @@ function Scene (){
             />
             </Suspense>
         </Canvas>
-        <div id="AccesiblityDiv">
-          <p>Accesibility prompt bar</p>
-        </div>
+        <A11yAnnouncer/>
         </>
     )
 }

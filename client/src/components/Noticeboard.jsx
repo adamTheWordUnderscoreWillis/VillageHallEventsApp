@@ -4,11 +4,13 @@ import { Group, RepeatWrapping, TextureLoader } from "three"
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import { addEventToUserCalendar, getUsernfo } from "./api";
 import { useLoader } from "@react-three/fiber";
+import { A11y, useA11y } from "@react-three/a11y";
 
-function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, user, setUser, setIsStaff}){
+function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, user, setUser, setIsStaff, targetedEvent}){
+    const [signInFocussed, setSignInFocussed] = useState(false)
     const signInButtonRef = useRef()
     const signOutButtonRef = useRef()
-
+    
     const dimensions = {
         boardHeight: 5,
         boardWidth: 4,
@@ -19,9 +21,11 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
         NoticeBoardWood: `hsl(29, 88.70%, 27.60%)`,
         backBoard: `hsl(29, 63.40%, 56.10%)`,
         Loading: `hsl(0, 67.80%, 52.50%)`,
-        signIN: `hsl(135, 87.30%, 37.10%)`,
+        signIN: `hsl(192, 94.80%, 38.00%)`,
         text: `hsl(0, 2.60%, 7.60%)`,
         titleText: `hsl(64, 100.00%, 68.80%)`,
+        allySelection: `hsl(0, 0.00%, 100.00%)`
+
     }
 
     const backboardFabricColour = useLoader(TextureLoader, "./fabric_pattern_07_col_1_4k.jpg")
@@ -30,21 +34,22 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
     backboardFabricColour.wrapS = RepeatWrapping
     backboardFabricColour.wrapT = RepeatWrapping
     
+    useEffect(()=>{
+     const intialiseUser = async ()=>{
+         if(user.access_token){
+           const profileData = await getUsernfo(user)
+           await setProfile(profileData)
+           
+         }
+     }
+     intialiseUser()
+   },[user]);
 
     const login = useGoogleLogin({
         onSuccess: tokenResponse => setUser(tokenResponse),
       });
     
-         useEffect(()=>{
-          const intialiseUser = async ()=>{
-              if(user.access_token){
-                const profileData = await getUsernfo(user)
-                await setProfile(profileData)
-                
-              }
-          }
-          intialiseUser()
-        },[user]);
+        
 
     const logout = ()=>{
         console.log("log out")
@@ -53,76 +58,34 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
         setIsStaff(false)
     }
 
-    function loadingText(){
-        return(
-            <group >
-                    <mesh position={[0,0,0.05]} rotation={[0,0,0]} >
-                        <planeGeometry args={[dimensions.boardWidth,dimensions.boardHeight,dimensions.boardDepth]}/>
-                        <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
-                    </mesh>
-                    <group position={[0,0,0.1]} rotation={[0,0,(Math.PI*0.1)]}>
-                        <mesh>
-                            <boxGeometry args={[3,0.5,0.1]}/>
-                            <meshStandardMaterial color={colorPalette.Loading}/>
+    function LoadingText(){
+        if(isLoading){
+            return(
+                <group >
+                        <mesh position={[0,0,0.05]} rotation={[0,0,0]} >
+                            <planeGeometry args={[dimensions.boardWidth,dimensions.boardHeight,dimensions.boardDepth]}/>
+                            <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                         </mesh>
-                        
-                        <Text 
-                        color={colorPalette.text}
-                        anchorX="centre" 
-                        anchorY="middle" 
-                        fontSize="0.4" 
-                        position={[-0.8,0,0.11]}>
-                            {isError? errorText : "LOADING"}
-                        </Text>
-                    </group>
-            </group>
-        )
-    }
-    function signInBanner (){
-        return(
-            <group>
-                 <group 
-                    position={[1,-1.8,0.5]} 
-                    rotation={[0,0,0]}
-                    ref={signInButtonRef}
-                    onPointerEnter={ (event) => {
-                        event.stopPropagation()
-                        document.body.style.cursor = 'pointer'
-                    } }
-                    onPointerLeave={
-                        () => { 
-                            document.body.style.cursor = 'default'
+                        <group position={[0,0,0.1]} rotation={[0,0,(Math.PI*0.1)]}>
+                            <mesh>
+                                <boxGeometry args={[3,0.5,0.1]}/>
+                                <meshStandardMaterial color={colorPalette.Loading}/>
+                            </mesh>
                             
-                        } }
-                    onClick={()=>{login()}}>
-                <mesh position={[0,-1,-0.2]} rotation={[0,0,(Math.PI * 0.5)]}>
-                    <boxGeometry args={[3.2,0.1,0.1]}/>
-                    <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
-                </mesh>
-                        <mesh
-                            
-                        >
-                            <boxGeometry args={[1,1,0.1]}/>
-                            <meshStandardMaterial color={colorPalette.signIN}/>
-                        </mesh>
-                        <Text 
-                            color={colorPalette.text}  
+                            <Text 
+                            color={colorPalette.text}
                             anchorX="centre" 
                             anchorY="middle" 
                             fontSize="0.4" 
-                            position={[-0.48,0.25,0.11]}>
-                                SIGN
-                        </Text>
-                        <Text 
-                            color={colorPalette.text} 
-                            anchorX="centre" 
-                            anchorY="middle" 
-                            fontSize="0.4" 
-                            position={[-0.2,-0.15,0.11]}>
-                                IN
-                        </Text>
-    
-                    </group>
+                            position={[-0.8,0,0.11]}>
+                                {isError? errorText : "LOADING"}
+                            </Text>
+                        </group>
+                </group>
+            )           
+        }
+        else if(!isLoading&&!isSignedIn){
+            return(
                 <group
                 >
                         <mesh   position={[0,0,0.05]} rotation={[0,0,0]} >
@@ -157,68 +120,155 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
         
                         </group>
                 </group>
-
-            </group>
-        )
+            )
+        }
+        else{
+            return(
+                <>
+                </>
+            )
+        }
     }
     
-    function signOutButton (){
-        return(
-            <group 
-            position={[1,-1.8,0.5]} 
-            rotation={[0,0,0]}
-            ref={signOutButtonRef}
-                            onPointerEnter={ (event) => {
-                                event.stopPropagation()
-                                document.body.style.cursor = 'pointer'
-                            } }
-                            onPointerLeave={
-                                () => { 
-                                    document.body.style.cursor = 'default'
-                                    
+    function SignOutButton (){
+        const a11y = useA11y()
+        if(!isLoading&&isSignedIn){
+            return(
+                <group
+                position={[1,-1.8,0.5]} 
+                scale={a11y.focus?[1.2,1.2,1.2]:[1,1,1]}
+                rotation={[0,0,0]}
+                ref={signOutButtonRef}
+                                onPointerEnter={ (event) => {
+                                    event.stopPropagation()
+                                    document.body.style.cursor = 'pointer'
                                 } }
-                            onClick={()=>{logout()}}
-            >
-                <mesh position={[0,-1,-0.2]} rotation={[0,0,(Math.PI * 0.5)]}>
-                    <boxGeometry args={[3.2,0.1,0.1]}/>
-                    <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
-                </mesh>
-                        <mesh
-                            
+                                onPointerLeave={
+                                    () => { 
+                                        document.body.style.cursor = 'default'
+                                        
+                                    } }
+                                onClick={()=>{logout()}}
+                >
+                    
+                    <mesh position={[0,-1,-0.2]} rotation={[0,0,(Math.PI * 0.5)]}>
+                        <boxGeometry args={[3.2,0.1,0.1]}/>
+                        <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
+                    </mesh>
+                            <mesh
+                                
+                            >
+                                <boxGeometry args={[1,1,0.1]}/>
+                                <meshStandardMaterial 
+                                color={colorPalette.Loading}
+                                emissive={a11y.focus?"red": null}
+                                />
+                            </mesh>
+                            <Text 
+                                color={colorPalette.text}  
+                                anchorX="centre" 
+                                anchorY="middle" 
+                                fontSize="0.4" 
+                                position={[-0.48,0.25,0.11]}>
+                                    SIGN
+                            </Text>
+                            <Text 
+                                color={colorPalette.text} 
+                                anchorX="centre" 
+                                anchorY="middle" 
+                                fontSize="0.4" 
+                                position={[-0.42,-0.15,0.11]}>
+                                    OUT
+                            </Text>
+        
+                        </group>
+            )
+
+        }
+        else if(!isLoading&&!isSignedIn){
+            return(
+                <group
+                        position={[1,-1.8,0.5]} 
+                        rotation={[0,0,0]}
+                        scale={a11y.focus?[1.2,1.2,1.2]:[1,1,1]}
+                        ref={signInButtonRef}
+                        // onPointerEnter={ (event) => {
+                        //     event.stopPropagation()
+                        //     document.body.style.cursor = 'pointer'
+                        // } }
+                        onPointerLeave={
+                            () => { 
+                                document.body.style.cursor = 'default'
+                                
+                            } }
+                        onClick={()=>{login()}}>
+                        <mesh 
+                            position={[0,-1,-0.2]} 
+                            rotation={[0,0,(Math.PI * 0.5)]}
                         >
-                            <boxGeometry args={[1,1,0.1]}/>
-                            <meshStandardMaterial color={colorPalette.Loading}/>
+                            <boxGeometry args={[3.2,0.1,0.1]}/>
+                            <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                         </mesh>
-                        <Text 
-                            color={colorPalette.text}  
-                            anchorX="centre" 
-                            anchorY="middle" 
-                            fontSize="0.4" 
-                            position={[-0.48,0.25,0.11]}>
-                                SIGN
-                        </Text>
-                        <Text 
-                            color={colorPalette.text} 
-                            anchorX="centre" 
-                            anchorY="middle" 
-                            fontSize="0.4" 
-                            position={[-0.42,-0.15,0.11]}>
-                                OUT
-                        </Text>
-    
-                    </group>
-        )
+                        <mesh>
+                            <boxGeometry args={[1,1,0.1]}/>
+                            <meshStandardMaterial 
+                            color={a11y.hover?"green":colorPalette.signIN}
+                            emissive={a11y.focus?"red": null}
+                            />
+                        </mesh>
+                            <Text 
+                                color={colorPalette.text}  
+                                anchorX="centre" 
+                                anchorY="middle"                    
+                                fontSize="0.4" 
+                                position={[-0.48,0.25,0.11]}>
+                                    SIGN
+                            </Text>
+                            <Text 
+                                color={colorPalette.text} 
+                                anchorX="centre" 
+                                anchorY="middle" 
+                                fontSize="0.4" 
+                                position={[-0.2,-0.15,0.11]}>
+                                    IN
+                            </Text>
+        
+                        </group>
+
+            )
+        }
+        else{
+            return(
+                <>
+                </>
+            )
+        }
 
     }
 
     return(
         <>
         {isError? errorText: null}
-        {isLoading && !isError?loadingText(): null}
-        {!isLoading&&!isSignedIn?signInBanner(): null}
-        {!isLoading&&isSignedIn?signOutButton(): null}
-
         
+        <LoadingText/>
+
+        {/* {!isLoading&&!isSignedIn?signInBanner(): null} */}
+        
+        {/* {!isLoading&&isSignedIn?signOutButton(): null} */}
+        {/* <A11y
+        role="content">
+            <SignInBanner/>
+        </A11y> */}
+
+        <A11y
+        disabled={targetedEvent.id?true:false}
+        role="button"
+        actionCall={isSignedIn?logout:login}
+        >
+            <SignOutButton/>
+        </A11y>
+
+
             <group>
                 {/* BackBoard */}
                 <mesh castShadow  >

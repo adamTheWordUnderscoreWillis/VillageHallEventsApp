@@ -451,7 +451,7 @@ describe('LittleTidfordApp Unit Tests', () => {
       })
       .then(({body})=>{
 
-        expect(body.msg).toEqual("There are no events in the database")
+        expect(body).toEqual({events:[]})
 
       })
     })

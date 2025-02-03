@@ -108,5 +108,8 @@ export const handleError= (err)=>{
             </group>
         )
     }
+    else if (err.response.data.msg === "This endpoint ony accepts email addresses" ){
+        
+    }
     
 }

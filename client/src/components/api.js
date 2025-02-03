@@ -27,6 +27,8 @@ export const addAttendee = (event, profile)=> {
     const attendeeData = {
         [profile.email]: profile.name
       }
+      console.log(attendeeData)
+      console.log(event.id)
     return backEnd
     .patch(`/events/${event.id}/attendee`, attendeeData)
     .then(({data})=>{
@@ -78,7 +80,6 @@ export const fetchUserCalendarEvents = async(user)=>{
 }
 
 export const removeEventFromUserCalendar = async(user, calendarEventId)=>{
-  console.log("The id coming in", calendarEventId)
   try{
   const request = await axios
           .delete(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${calendarEventId}`, {
@@ -87,7 +88,6 @@ export const removeEventFromUserCalendar = async(user, calendarEventId)=>{
                   Accept: 'application/json'
               }
           })
-          console.log(request.data)
           return request.data
     }
     catch(error){
