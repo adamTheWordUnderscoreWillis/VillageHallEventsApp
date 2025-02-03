@@ -19,15 +19,15 @@ app.use(session({
 
      }}))
 
-app.get('/events', getAllEvents)
-app.get('/events/:eventId', getEventById)
-app.get('/events/:eventId', getEventById)
-app.get('/auth', getAuthorization)
-app.get('/staff/:emailAddress', checkStaffMemberbyEmailAddress)
-app.post("/events/newEvent", createNewEvent)
-app.delete("/events/:eventId/deleteEvent", deleteEventById)
-app.patch("/events/:eventId/attendee", addAttendebyEventId)
-app.patch("/events/:eventId/removeAttendee", removeAttendeeByID)
+app.get('/api/events', getAllEvents)
+app.get('/api/events/:eventId', getEventById)
+app.get('/api/events/:eventId', getEventById)
+app.get('/api/auth', getAuthorization)
+app.get('/api/staff/:emailAddress', checkStaffMemberbyEmailAddress)
+app.post("/api/events/newEvent", createNewEvent)
+app.delete("/api/events/:eventId/deleteEvent", deleteEventById)
+app.patch("/api/events/:eventId/attendee", addAttendebyEventId)
+app.patch("/api/events/:eventId/removeAttendee", removeAttendeeByID)
 
 
 app.use(handleBsonErrors);

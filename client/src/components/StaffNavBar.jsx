@@ -120,7 +120,7 @@ export function StaffNavBar({staffAction, targetedEvent, profile, setStaffAction
               </InputGroup>
               <InputGroup className="mb-3">
                 <InputGroup.Text id="newEventSummary">description</InputGroup.Text>
-                <Form.Control
+                <Form.Control as="textarea" rows={3}
                   placeholder="Max 100"
                   aria-label="EventDescription"
                   aria-describedby="basic-addon1"
@@ -214,7 +214,8 @@ export function StaffNavBar({staffAction, targetedEvent, profile, setStaffAction
     }
     function eventDetails(){
         return (
-            <Nav>
+            <Nav
+            >
                     <NavDropdown className='navStyling' title="Event Details">
                         <NavItem
                             className='StaffBarItems'
@@ -239,7 +240,6 @@ export function StaffNavBar({staffAction, targetedEvent, profile, setStaffAction
                 <Navbar.Brand
                 >Staff Menu</Navbar.Brand>
                 <Nav
-                
                 >
                     <NavDropdown
                     className='navStyling'

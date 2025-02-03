@@ -9,6 +9,7 @@ import { fetchStaffMember, fetchUserCalendarEvents } from "./api";
 import { StaffNavBar } from "./StaffNavBar";
 import { handleError } from "./errorHandling";
 import {A11yAnnouncer} from "@react-three/a11y"
+import { LoadingScreen } from "./LoadingScreen";
 function Scene (){
     const  [isLoading, setIsLoading] = useState(true)
     const [profile, setProfile]=useState({})
@@ -60,12 +61,12 @@ function Scene (){
         <Canvas 
         shadows
         >
+              <Suspense 
+                fallback={LoadingScreen}
+              >
             <Sky 
               sunPosition={sunPosition}
               />
-            <Suspense 
-              fallback={null}
-              >
             <ambientLight 
               intensity={Math.PI / 2} 
               />
@@ -78,15 +79,15 @@ function Scene (){
               />
             <NoticeBoard 
             targetedEvent={targetedEvent}
-              setIsStaff={setIsStaff} 
-              isSignedIn={isSignedIn} 
-              isLoading={isLoading} 
-              setProfile={setProfile} 
-              user={user} 
-              setUser={setUser}
-              isError={isError}
-              errorText={errorText}
-              />
+            setIsStaff={setIsStaff} 
+            isSignedIn={isSignedIn} 
+            isLoading={isLoading} 
+            setProfile={setProfile} 
+            user={user} 
+            setUser={setUser}
+            isError={isError}
+            errorText={errorText}
+            />
             <Floor/>
             <Events 
               staffAction={staffAction} 
@@ -101,7 +102,7 @@ function Scene (){
               setErrorText={setErrorText}
               events={events}
               setEvents={setEvents}
-            />
+              />
             <OrbitControls
               minAzimuthAngle={-Math.PI*0.1}
               maxAzimuthAngle={Math.PI*0.1}
@@ -110,8 +111,8 @@ function Scene (){
               enablePan={false}
               maxDistance={7}
               minDistance={3}
-            />
-            </Suspense>
+              />
+              </Suspense>
         </Canvas>
         <A11yAnnouncer/>
         </>

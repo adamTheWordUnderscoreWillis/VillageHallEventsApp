@@ -34,7 +34,7 @@ describe('LittleTidfordApp Unit Tests', () => {
 
   describe('Get All Events Endpoint', ()=>{
     test ("200: Returns Okay Status Code", ()=>{
-      return request(app).get("/events").expect(200)
+      return request(app).get("/api/events").expect(200)
     })
     test("200: Return All events Data", ()=>{
       const desiredEventsData = {
@@ -440,14 +440,14 @@ describe('LittleTidfordApp Unit Tests', () => {
           ]
         }
       return request(app)
-      .get("/events")
+      .get("/api/events")
       .then(({body})=>{
         expect(body).toEqual(desiredEventsData)
       })
     })
     test("200: Returns an object with an empty array f there are no events", ()=>{
       return db.collection("events").deleteMany({}).then(()=>{
-        return request(app).get("/events").expect(200)
+        return request(app).get("/api/events").expect(200)
       })
       .then(({body})=>{
 
@@ -456,12 +456,12 @@ describe('LittleTidfordApp Unit Tests', () => {
       })
     })
     test("404: Returns not found when the endpoint doesn't exist", ()=>{
-        return request(app).get("/notAnEndpoint").expect(404)
+        return request(app).get("/api/notAnEndpoint").expect(404)
     })
   })
   describe('Get Event by ID Endpoint', ()=>{
     test ("200: Returns Okay Status Code", ()=>{
-      return request(app).get("/events/677d06d3724343657a79816d").expect(200)
+      return request(app).get("/api/events/677d06d3724343657a79816d").expect(200)
     })
     test ("200: Returns the correct event object", ()=>{
       const desiredEvent = {
@@ -513,18 +513,18 @@ describe('LittleTidfordApp Unit Tests', () => {
       }
 
       return request(app)
-      .get("/events/677d06d3724343657a79816d")
+      .get("/api/events/677d06d3724343657a79816d")
       .then(({body})=>{
         expect(body).toEqual(desiredEvent)
       })
     })
     test ("400: Id is an improper hex string", ()=>{
-      return request(app).get("/events/NotAnId").then(({body})=>{
+      return request(app).get("/api/events/NotAnId").then(({body})=>{
         expect(body.msg).toEqual("Database Error: We cannot find the thing you seek...")
       })
     })
     test ("400: Id is unique hex but doesn't exist in database", ()=>{
-      return request(app).get("/events/999d06d3724343657a79816b").then(({body})=>{
+      return request(app).get("/api/events/999d06d3724343657a79816b").then(({body})=>{
         expect(body.msg).toEqual("We could not find any data for that event")
       })
     })
@@ -535,7 +535,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         "user@email.com": "user"
       }
       return request(app)
-      .patch("/events/677d06d3724343657a79816d/attendee")
+      .patch("/api/events/677d06d3724343657a79816d/attendee")
       .send(newAttendee)
       .expect(201)
     })
@@ -592,12 +592,12 @@ describe('LittleTidfordApp Unit Tests', () => {
       }
       }
       return request(app)
-      .patch("/events/677d06d3724343657a79816d/attendee")
+      .patch("/api/events/677d06d3724343657a79816d/attendee")
       .send(newAttendee)
       .expect(201)
       .then(()=>{
         return request(app)
-        .get("/events/677d06d3724343657a79816d")
+        .get("/api/events/677d06d3724343657a79816d")
       })
       .then(({body})=>{
         expect(body).toEqual(updatedAttendeesEvent)
@@ -608,7 +608,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         "user@email.com": "user"
       }
       return request(app)
-      .patch("/events/677756d3724343657a79816d/attendee")
+      .patch("/api/events/677756d3724343657a79816d/attendee")
       .send(newAttendee)
       .then(({body})=>{
         expect(body.msg).toEqual("We could not find any data for that event")
@@ -619,7 +619,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         "user@email.com": "user"
       }
       return request(app)
-      .patch("/events/notHexId/attendee")
+      .patch("/api/events/notHexId/attendee")
       .send(newAttendee)
       .then(({body})=>{
         expect(body.msg).toEqual("Database Error: We cannot find the thing you seek...")
@@ -632,11 +632,11 @@ describe('LittleTidfordApp Unit Tests', () => {
         "user@email.com": "user"
       }
       return request(app)
-      .patch("/events/677d06d3724343657a79816d/attendee")
+      .patch("/api/events/677d06d3724343657a79816d/attendee")
       .send(attendeeToDelete)
       .then(()=>{
         return request(app)
-        .patch("/events/677d06d3724343657a79816d/removeAttendee")
+        .patch("/api/events/677d06d3724343657a79816d/removeAttendee")
         .send(attendeeToDelete)
         .expect(201)
       })
@@ -698,23 +698,23 @@ describe('LittleTidfordApp Unit Tests', () => {
         }
       }
       return request(app)
-      .patch("/events/677d06d3724343657a79816d/attendee")
+      .patch("/api/events/677d06d3724343657a79816d/attendee")
       .send(attendeeToDelete)
       .then(()=>{
         return request(app)
-      .patch("/events/677d06d3724343657a79816d/attendee")
+      .patch("/api/events/677d06d3724343657a79816d/attendee")
       .send(secondAttendee)
       })
       .then(()=>{
         return request(app)
-        .patch("/events/677d06d3724343657a79816d/RemoveAttendee")
+        .patch("/api/events/677d06d3724343657a79816d/RemoveAttendee")
         .send(attendeeToDelete)
         .expect(201)
       })
       .then(({body})=>{
         expect(body.msg).toBe("user has been removed from event 677d06d3724343657a79816d")
         return request(app)
-        .get("/events/677d06d3724343657a79816d")
+        .get("/api/events/677d06d3724343657a79816d")
       })
       .then(({body})=>{
         expect(body).toEqual(updatedAttendeesEvent)
@@ -725,7 +725,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         "user@email.com": "user"
       }
       return request(app)
-      .patch("/events/677756d3724343657a79816d/removeAttendee")
+      .patch("/api/events/677756d3724343657a79816d/removeAttendee")
       .send(newAttendee)
       .then(({body})=>{
         expect(body.msg).toEqual("We could not find any data for that event")
@@ -736,7 +736,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         "user@email.com": "user"
       }
       return request(app)
-      .patch("/events/notHexId/removeAttendee")
+      .patch("/api/events/notHexId/removeAttendee")
       .send(newAttendee)
       .then(({body})=>{
         expect(body.msg).toEqual("Database Error: We cannot find the thing you seek...")
@@ -792,7 +792,7 @@ describe('LittleTidfordApp Unit Tests', () => {
             authorization: process.env.STAFF_MEMBER
         }
       return request(app)
-      .post("/events/newEvent")
+      .post("/api/events/newEvent")
       .set(user)
       .send(newEvent)
       .expect(201)
@@ -890,7 +890,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         authorization: process.env.STAFF_MEMBER
     }
       return request(app)
-      .post("/events/newEvent")
+      .post("/api/events/newEvent")
       .send(newEvent)
       .set(user)
       .then(({body})=>{
@@ -899,7 +899,7 @@ describe('LittleTidfordApp Unit Tests', () => {
       })
       .then((id)=>{
         return request(app)
-        .get(`/events/${id}`)
+        .get(`/api/events/${id}`)
       })
       .then(({body})=>{
         expect(body.event).toEqual(expectedEvent)
@@ -954,7 +954,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         authorization: "notStaff@email.net"
     }
       return request(app)
-      .post("/events/newEvent")
+      .post("/api/events/newEvent")
       .send(newEvent)
       .set(user)
       .then(({body})=>{
@@ -969,7 +969,7 @@ describe('LittleTidfordApp Unit Tests', () => {
       }
 
       return request(app)
-      .delete("/events/677d06d3724343657a79816d/deleteEvent")
+      .delete("/api/events/677d06d3724343657a79816d/deleteEvent")
       .set(user)
       .expect(204)
     })
@@ -979,12 +979,12 @@ describe('LittleTidfordApp Unit Tests', () => {
       }
 
       return request(app)
-      .delete("/events/677d06d3724343657a79816d/deleteEvent")
+      .delete("/api/events/677d06d3724343657a79816d/deleteEvent")
       .set(user).then(({body})=>{
         expect(body).toEqual({})
       })
       .then(()=>{
-        return request(app).get("/events/677d06d3724343657a79816d")
+        return request(app).get("/api/events/677d06d3724343657a79816d")
       })
       .then(({body})=>{
         expect(body.msg).toEqual("We could not find any data for that event")
@@ -996,7 +996,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         authorization: "notStaff@email.net"
     }
       return request(app)
-      .delete("/events/677d06d3724343657a79816d/deleteEvent")
+      .delete("/api/events/677d06d3724343657a79816d/deleteEvent")
       .set(user)
       .then(({body})=>{
         expect(body.msg).toEqual("This account is not allowed to delete events")
@@ -1008,7 +1008,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         authorization: process.env.STAFF_MEMBER
     }
       return request(app)
-      .delete("/events/677756d3724343657a79816d/deleteEvent")
+      .delete("/api/events/677756d3724343657a79816d/deleteEvent")
       .set(user)
       .then(({body})=>{
         expect(body.msg).toEqual("The event you tried to delete doesn't exist")
@@ -1020,7 +1020,7 @@ describe('LittleTidfordApp Unit Tests', () => {
         authorization: process.env.STAFF_MEMBER
     }
       return request(app)
-      .delete("/events/notHexId/deleteEvent")
+      .delete("/api/events/notHexId/deleteEvent")
       .set(user)
       .then(({body})=>{
         expect(body.msg).toEqual("Database Error: We cannot find the thing you seek...")
@@ -1029,7 +1029,7 @@ describe('LittleTidfordApp Unit Tests', () => {
   })
   describe('checkStaffMember', ()=>{
     test("200: Returns Okay Status Code", ()=>{
-      return request(app).get(`/staff/${process.env.STAFF_MEMBER}`).expect(200)
+      return request(app).get(`/api/staff/${process.env.STAFF_MEMBER}`).expect(200)
     })
     test("200: Returns true if The email address is a staffmember", ()=>{
       const responseBody = {
@@ -1039,7 +1039,7 @@ describe('LittleTidfordApp Unit Tests', () => {
       }
 
       return request(app)
-      .get(`/staff/${process.env.STAFF_MEMBER}`)
+      .get(`/api/staff/${process.env.STAFF_MEMBER}`)
       .expect(200)
       .then(({body})=>{
           expect(body).toEqual(responseBody)
@@ -1053,7 +1053,7 @@ describe('LittleTidfordApp Unit Tests', () => {
       }
 
       return request(app)
-      .get(`/staff/notstaffMember@email.com`)
+      .get(`/api/staff/notstaffMember@email.com`)
       .expect(200)
       .then(({body})=>{
           expect(body).toEqual(responseBody)
@@ -1063,7 +1063,7 @@ describe('LittleTidfordApp Unit Tests', () => {
       const responseBody = "This endpoint ony accepts email addresses"
 
       return request(app)
-      .get(`/staff/999`)
+      .get(`/api/staff/999`)
       .expect(400)
       .then(({body})=>{
           expect(body.msg).toEqual(responseBody)

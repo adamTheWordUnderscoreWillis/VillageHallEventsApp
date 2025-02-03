@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const backEnd = axios.create({
-    baseURL: "http://localhost:5050",
+    baseURL: "/api",
 });
 
 export const fetchEvents = ()=> {
