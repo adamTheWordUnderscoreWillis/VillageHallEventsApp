@@ -82,10 +82,10 @@ export function StaffNavBar({staffAction, targetedEvent, profile, setStaffAction
         const newErrors = {}
 
         if(!name || name === '') newErrors.name = 'Please enter the name of the event'
-        else if(name.length > 40) newErrors.name = 'Please use less than 40 characters'
+        else if(name.length > 30) newErrors.name = 'Please use less than 40 characters'
         
         if(!description || description === '') newErrors.description = 'Please enter a description for the event'
-        else if(name.length > 100) newErrors.description = 'Please use less than 100 characters'
+        else if(name.length > 80) newErrors.description = 'Please use less than 100 characters'
         
         if(!start) newErrors.start = 'You must enter a start date for the event'
         else if (new Date(start).getTime()< new Date().getTime()) newErrors.start = "the start date cannot be in the past"
@@ -107,7 +107,7 @@ export function StaffNavBar({staffAction, targetedEvent, profile, setStaffAction
               <InputGroup className="mb-3">
                 <InputGroup.Text id="newEventSummary">Event Name</InputGroup.Text>
                 <Form.Control
-                  placeholder="Max 40"
+                  placeholder="Max 30 characters"
                   aria-label="EventName"
                   aria-describedby="basic-addon1"
                   value={form.name}
@@ -121,7 +121,7 @@ export function StaffNavBar({staffAction, targetedEvent, profile, setStaffAction
               <InputGroup className="mb-3">
                 <InputGroup.Text id="newEventSummary">description</InputGroup.Text>
                 <Form.Control as="textarea" rows={3}
-                  placeholder="Max 100"
+                  placeholder="Max 80 characters"
                   aria-label="EventDescription"
                   aria-describedby="basic-addon1"
                   value={form.description}

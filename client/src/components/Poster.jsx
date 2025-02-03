@@ -1,9 +1,10 @@
 import { useFrame, useLoader } from "@react-three/fiber"
 import { Text } from "@react-three/drei"
-import { BoxGeometry, MeshStandardMaterial, TextureLoader } from "three"
+import {TextureLoader } from "three"
 import { useEffect, useRef, useState } from "react"
 import { addAttendee, addEventToUserCalendar, removeAttendee, removeEventFromUserCalendar } from "./api"
-import { A11y, useA11y } from "@react-three/a11y"
+import { A11y, A11ySection, useA11y } from "@react-three/a11y"
+import { handleError } from "./errorHandling"
 function Poster({
     posterTransform,
     eventData,
@@ -25,42 +26,7 @@ function Poster({
     const posterRef = useRef()
     const signUpButtonRef = useRef()
     const calendarButtonRef = useRef()
-    function ExitPosterButton(){
-        const a11y = useA11y()
-        if(isClicked){
-            return (
-                <group 
-                    position={[-0.2,-0.45,0.04]}
-                    rotation={[0,0,0]}
-                    scale={a11y.focus?[0.85,0.85,0.85]:[0.8,0.8,0.8]}
-                        class="goingSticker" 
-                        >
-                            <mesh  
-                            position={[0,0,0]}
-                            rotation={[0,0,0]}
-                            >
-                                
-                                            <planeGeometry args={[0.35,0.08,1]}/>
-                                            <meshStandardMaterial color={`hsl(0, 57.50%, 59.40%)`}/>
-                            </mesh>
-                            <Text 
-                    color={`hsl(${color}, 100%, 10%)`} 
-                    anchorX="left" 
-                    anchorY="top" 
-                    fontSize="0.06" 
-                    fontWeight="bold"
-                    overflowWrap="normal"
-                    maxWidth={0.5}
-                    position={[-0.16,0.04,0.001]}
-                    rotation={[0,0,0]}
-                    >
-                        Exit Poster
-                    </Text>
-                        </group>
-            )
-        }
-        
-    }
+    
     function PosterMesh (){
         const a11y = useA11y()
         return(
@@ -72,7 +38,6 @@ function Poster({
         onPointerEnter={ (event) => {
             event.stopPropagation()
             isClicked? document.body.style.cursor = 'default':  document.body.style.cursor = 'pointer'
-            // setIsFocused(true)
         } }
             onClick={(event)=>{
                 event.stopPropagation()
@@ -180,11 +145,13 @@ function Poster({
                     <A11y
                         disabled={targetedEvent.id === eventData.id?false:true}
                         role="button"
+                        description="Button to to sign up for event or cancel your booking if you're already going."
                         actionCall={handleSignUp}
                     >
                         <SignUpButton/>
                     </A11y>
                     <A11y
+                        description="Button to add event to your google calendar"
                         disabled={isGoing&&targetedEvent.id === eventData.id?false:true}
                         role="button"
                         actionCall={handlecalendarEvent}
@@ -194,6 +161,7 @@ function Poster({
                     <A11y
                         disabled={targetedEvent.id === eventData.id?false:true}
                         role="button"
+                        description="Exits the selected poster"
                         actionCall={(event)=>{
                 
                             setTargetedEvent({})
@@ -252,7 +220,7 @@ function Poster({
                 setCalendarId("")
             }
             catch(err){
-                console.log(err)
+                handleError(err)
             }
         }
         else{
@@ -263,7 +231,7 @@ function Poster({
 
             }
             catch(err){
-                console.log(err)
+                handleError(err)
             }
         }
     }
@@ -285,10 +253,10 @@ function Poster({
                     <mesh  
                     position={[0.2,0,0]}>
                                     <planeGeometry args={[0.6,0.04,1]}/>
-                                    <meshStandardMaterial color={`hsl(${(color+ 15)%360}, 50%, 30%)` }/>
+                                    <meshStandardMaterial color={isInUserCalendar?`hsl(133, 60%, 50%)`:`hsl(${(color+ 15)%360}, 50%, 30%)` }/>
                     </mesh>
                     <Text 
-            color={`hsl(${color}, 100%, 90%)`} 
+            color={isInUserCalendar?"black":`hsl(${color}, 100%, 90%)`} 
             anchorX="left" 
             anchorY="top" 
             fontSize="0.04" 
@@ -308,6 +276,42 @@ function Poster({
                 </>
             )
         }
+    }
+    function ExitPosterButton(){
+        const a11y = useA11y()
+        if(isClicked){
+            return (
+                <group 
+                    position={[-0.2,-0.45,0.04]}
+                    rotation={[0,0,0]}
+                    scale={a11y.focus?[0.85,0.85,0.85]:[0.8,0.8,0.8]}
+                        class="goingSticker" 
+                        >
+                            <mesh  
+                            position={[0,0,0]}
+                            rotation={[0,0,0]}
+                            >
+                                
+                                            <planeGeometry args={[0.35,0.08,1]}/>
+                                            <meshStandardMaterial color={`hsl(0, 57.50%, 59.40%)`}/>
+                            </mesh>
+                            <Text 
+                    color={`hsl(${color}, 100%, 10%)`} 
+                    anchorX="left" 
+                    anchorY="top" 
+                    fontSize="0.06" 
+                    fontWeight="bold"
+                    overflowWrap="normal"
+                    maxWidth={0.5}
+                    position={[-0.16,0.04,0.001]}
+                    rotation={[0,0,0]}
+                    >
+                        Exit Poster
+                    </Text>
+                        </group>
+            )
+        }
+        
     }
     function GoingToEventSticker (){
         return(
@@ -392,7 +396,6 @@ function Poster({
             await removeAttendee(eventData, attendeeData)
             const targetedEventUpdate = {...targetedEvent}
             delete targetedEventUpdate.attendees[profile.email]
-            console.log(targetedEvent)
             await setTargetedEvent(targetedEventUpdate)
             if(isInUserCalendar){
                 try{
@@ -401,12 +404,11 @@ function Poster({
                     setCalendarId("")
                 }
                 catch(err){
-                    console.log(err)
+                    handleError(err)
                 }
             }
         }
         else{
-            console.log("signed Up!")
             await addAttendee(eventData, profile)
             const AddTargetEvent = {...targetedEvent}
             AddTargetEvent.attendees[profile.email] = profile.name
@@ -421,7 +423,6 @@ function Poster({
             await setIsGoing(true)
         }
         if(calendarEventId){
-            console.log(eventData.name.text, " is in Calendar")
             await setIsInUserCalendar(true)
         }
         setIsPosterLoading(false)
@@ -433,8 +434,8 @@ function Poster({
 
     useFrame((state)=>{
         isfocused? posterRef.current.position.z = posterTransform.position[2]+0.1: posterRef.current.position.z= posterTransform.position[2];
-        isClicked? posterRef.current.position.z = state.camera.position.z - 1: posterRef.current.position.z= posterTransform.position[2];
-        isClicked? posterRef.current.position.x = state.camera.position.x/1.2: posterRef.current.position.x= posterTransform.position[0];
+        isClicked? posterRef.current.position.z = state.camera.position.z - 1.5: posterRef.current.position.z= posterTransform.position[2];
+        isClicked? posterRef.current.position.x = state.camera.position.x/1.4: posterRef.current.position.x= posterTransform.position[0];
         isClicked? posterRef.current.position.y = state.camera.position.y/1.1: posterRef.current.position.y= posterTransform.position[1];
         isClicked? posterRef.current.rotation.z = 0: posterRef.current.rotation.z= posterTransform.rotation[2];
         isClicked? posterRef.current.rotation.y = state.camera.rotation.y: posterRef.current.rotation.y= 0;    
@@ -448,18 +449,25 @@ function Poster({
     
     return(
         <>
-        <A11y
-            disabled={targetedEvent.id?true:false}
-            role="button"
-            actionCall={(event)=>{
-                
-                setTargetedEvent(eventData)
-                
-                setIsClicked(true)
-            }}
+        <A11ySection
+            label={`Flyer for and event titled ${eventData.name.text}`}
+            description={`A flyer for an event called ${eventData.name.text} on ${date.toDateString()} at ${date.toLocaleTimeString("en-US",{hour:"2-digit", minute: "2-digit"})}`}
         >
-            <PosterMesh/>
-        </A11y>
+            <A11y
+                disabled={targetedEvent.id?true:false}
+                role="button"
+                description={`Flyer for and event titled ${eventData.name.text}`}
+                activationMsg={`${eventData.name.text} flyer selected`}
+                actionCall={(event)=>{
+                    
+                    setTargetedEvent(eventData)
+                    
+                    setIsClicked(true)
+                }}
+                >
+                <PosterMesh/>
+            </A11y>
+        </A11ySection>
         </>
     )
 }

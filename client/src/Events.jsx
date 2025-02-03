@@ -3,7 +3,7 @@ import { fetchEvents, fetchUserCalendarEvents } from "./components/api"
 import Poster from "./components/poster"
 import { handleError } from "./components/errorHandling.jsx"
 import { Text } from "@react-three/drei"
-import { A11y } from "@react-three/a11y"
+import { A11y, A11ySection } from "@react-three/a11y"
 
 function Events({
   events,
@@ -105,6 +105,10 @@ function Events({
       }
       return (
         <>
+         <A11ySection
+          label="Events Board"
+          description="This is a Village Hall Noticeboard with lots of flyers for different events on it. Click the flyers or tab and enter to get a closer look and use the sign up and calendar buttons."
+        >
             {events.length >0?null: noEventsBanner()}
              {
              events.map((event, index)=>{
@@ -114,22 +118,22 @@ function Events({
                 calendarEventId = calendarEntry[0].id
               }
                return (
-
-                   <Poster
-                   setTargetedEvent={setTargetedEvent}
-                   targetedEvent={targetedEvent}
-                   calendarEventId={calendarEventId}
-                   key={`${event.id}poster`} 
-                   eventData={event}
-                   posterTransform={posterTransform[index]}
-                   color={posterColours[index]}
-                   user={user}
-                   profile={profile}
-                   isLoading={isLoading}
-                   setIsLoading={setIsLoading}
-                   />
-                 )
-             })}
+                    <Poster
+                    setTargetedEvent={setTargetedEvent}
+                    targetedEvent={targetedEvent}
+                    calendarEventId={calendarEventId}
+                    key={`${event.id}poster`} 
+                    eventData={event}
+                    posterTransform={posterTransform[index]}
+                    color={posterColours[index]}
+                    user={user}
+                    profile={profile}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
+                    />
+                  )
+                })}
+                // </A11ySection>
            </>
          )
   }

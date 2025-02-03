@@ -192,10 +192,10 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
                         rotation={[0,0,0]}
                         scale={a11y.focus?[1.2,1.2,1.2]:[1,1,1]}
                         ref={signInButtonRef}
-                        // onPointerEnter={ (event) => {
-                        //     event.stopPropagation()
-                        //     document.body.style.cursor = 'pointer'
-                        // } }
+                        onPointerEnter={ (event) => {
+                            event.stopPropagation()
+                            document.body.style.cursor = 'pointer'
+                        } }
                         onPointerLeave={
                             () => { 
                                 document.body.style.cursor = 'default'
@@ -252,29 +252,20 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
         
         <LoadingText/>
 
-        {/* {!isLoading&&!isSignedIn?signInBanner(): null} */}
-        
-        {/* {!isLoading&&isSignedIn?signOutButton(): null} */}
-        {/* <A11y
-        role="content">
-            <SignInBanner/>
-        </A11y> */}
-
         <A11y
         disabled={targetedEvent.id?true:false}
         role="button"
+        desription="The sign button that logs you in and out"
+        activationMsg={isSignedIn?"You have just signed out": "You have just signed in"}
         actionCall={isSignedIn?logout:login}
         >
             <SignOutButton/>
         </A11y>
-
-
             <group>
                 {/* BackBoard */}
                 <mesh castShadow  >
                     < planeGeometry args={[dimensions.boardWidth,dimensions.boardHeight,dimensions.boardDepth]}/>
                     <meshStandardMaterial 
-                    // color={colorPalette.backBoard}
                     map={backboardFabricColour}
                     />
                 </mesh>
