@@ -26,8 +26,8 @@ const client = new MongoClient(uri, {
 
   let database
   module.exports = {
-    connectToServer: ()=>{
-        run().catch(console.dir);
+    connectToServer: async ()=>{
+        await run().catch(console.dir);
           database = client.db("development")
       },
       connectToTestServer: ()=>{

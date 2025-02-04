@@ -4,8 +4,8 @@ const app = require("./app.js")
 
 const {PORT} = process.env
 
-app.listen(PORT,()=>{
-    connect.connectToServer()
+app.listen(PORT, async()=>{
+    await connect.connectToServer()
     console.log(`Server is listening on ${PORT}`)
 });
 
