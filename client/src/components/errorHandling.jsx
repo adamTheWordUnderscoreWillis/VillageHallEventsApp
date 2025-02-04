@@ -15,7 +15,7 @@ export const handleError= (err)=>{
         text: `hsl(0, 2.60%, 7.60%)`,
         titleText: `hsl(64, 100.00%, 68.80%)`,
     }
-    if(err.data.msg === "Internal Server Error"){
+    if(err.response.data.msg === "Internal Server Error"){
         return(
             <group >
                     <mesh position={[0,0,0.05]} rotation={[0,0,0]} >
