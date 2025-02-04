@@ -56,6 +56,7 @@ function Events({
     }, [events])
     const num = (-4)*0.5
     const posterTransform = useMemo(()=>{
+      
       if(events === null) return 0
 
       const transforms = []
