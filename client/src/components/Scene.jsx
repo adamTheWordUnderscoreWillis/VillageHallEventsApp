@@ -59,12 +59,12 @@ function Scene (){
             staffAction={staffAction}
             />
             :null}
-        <Canvas 
-        shadows
-        >
               <Suspense 
                 fallback={<LoadingScreen/>}
               >
+        <Canvas 
+        shadows
+        >
             <Sky 
               sunPosition={sunPosition}
               />
@@ -113,9 +113,9 @@ function Scene (){
               maxDistance={7}
               minDistance={3}
               />
-              </Suspense>
         </Canvas>
         <A11yAnnouncer/>
+              </Suspense>
         </>
     )
 }

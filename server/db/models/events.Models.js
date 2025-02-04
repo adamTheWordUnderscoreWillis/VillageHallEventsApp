@@ -1,7 +1,9 @@
 const { ObjectId } = require("mongodb")
 const database = require("../connection.js")
+const { data } = require("browserslist")
 exports.fetchAllEvents = async ()=>{
     let db = database.getDb()
+    console.log(db)
     try{
         let data = await db.collection("events").find({}).toArray()
         if(data.length>0){
@@ -26,9 +28,9 @@ exports.fetchAllEvents = async ()=>{
         }
     }
     catch(err){
-        throw {msg: err,db:db, status: 400}
+        throw {msg: err, db: database, status: 400}
     }
-       
+    
 }
 
 exports.fetchEventById = async (eventId)=>{
