@@ -2,26 +2,32 @@ const { ObjectId } = require("mongodb")
 const database = require("../connection.js")
 exports.fetchAllEvents = async ()=>{
     let db = database.getDb()
-    let data = await db.collection("events").find({}).toArray()
-    if(data.length>0){
-        const formattedData = data.map((event)=>{
-            return {
-                name: event["name"],
-                id: event["_id"],
-                description: event["description"],
-                start: event["start"],
-                end: event["end"],
-                logo: event["logo"],
-                currency: event["currency"],
-                created: event["created"],
-                price: event["price"],
-                attendees: event["attendees"]
-            }
-        })
-        return formattedData
-    }
-    else{
-        return []
+    try{
+
+        let data = await db.collection("events").find({}).toArray()
+        if(data.length>0){
+            const formattedData = data.map((event)=>{
+                return {
+                    name: event["name"],
+                    id: event["_id"],
+                    description: event["description"],
+                    start: event["start"],
+                    end: event["end"],
+                    logo: event["logo"],
+                    currency: event["currency"],
+                    created: event["created"],
+                    price: event["price"],
+                    attendees: event["attendees"]
+                }
+            })
+            return formattedData
+        }
+        else{
+            console.log("Data", data)
+            return []
+        }
+    }catch(err){
+        console.log("Error", err)
     }
 }
 
