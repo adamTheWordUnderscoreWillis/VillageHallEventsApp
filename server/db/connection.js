@@ -29,13 +29,15 @@ const client = new MongoClient(uri, {
     connectToServer: async ()=>{
         await run().catch(console.dir);
         await client.connect()
-        database = client.db("development")
+        database = await client.db("development")
       },
       connectToTestServer: async ()=>{
         await client.connect()
         database = client.db("test")
       },
       getDb: ()=> {
+        // await client.connect()
+        // database = await client.db("development")
         return database
       },
       disconectFromServer: ()=>{
