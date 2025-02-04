@@ -14,7 +14,7 @@ exports.handleCustomErrors = (err,req,res,next)=>{
 }
 exports.handleServerErrors = (err,req,res,next)=>{
     console.log(err)
-       return res.status(500).send({ msg: "Internal Server Error", error: err})
+       return res.status(500).send({ msg: "Internal Server Error"})
 }
 
 exports.handle404Errors = (req, res) =>{
