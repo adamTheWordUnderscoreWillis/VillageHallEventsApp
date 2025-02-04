@@ -33,6 +33,7 @@ exports.fetchAllEvents = async ()=>{
 }
 
 exports.fetchEventById = async (eventId)=>{
+    await database.connectToServer('development')
     let db = database.getDb()
     let data = await db.collection("events").findOne({_id: ObjectId.createFromHexString(eventId)})
         if(data !== null && Object.keys(data).length >0){
@@ -59,6 +60,7 @@ exports.fetchEventById = async (eventId)=>{
 }
 
 exports.insertNewAttendee = async (eventId, body)=>{
+    await database.connectToServer('development')
         let db = database.getDb()
         let query = {_id: ObjectId.createFromHexString(eventId)}
         let data = await db.collection("events").findOne(query)
@@ -94,7 +96,7 @@ exports.insertNewEvent = async(newEvent, authorization)=>{
         price: newEvent.price,
         attendees: newEvent.attendees,
         created: new Date().toJSON()
-    }
+    }   await database.connectToServer('development')
         let db = database.getDb()
         let staff = await db.collection("staff").findOne({email: authorization})
 
@@ -113,6 +115,7 @@ exports.insertNewEvent = async(newEvent, authorization)=>{
         }
 }
 exports.removeEventById = async (eventId, authorization)=>{
+    await database.connectToServer('development')
     let db = database.getDb()
         let staff = await db.collection("staff").findOne({email: authorization})
 
@@ -130,6 +133,7 @@ exports.removeEventById = async (eventId, authorization)=>{
         }
 }
 exports.deleteAttendee = async (eventId ,body)=>{
+    await database.connectToServer('development')
     let db = database.getDb()
         let query = {_id: ObjectId.createFromHexString(eventId)}
         let data = await db.collection("events").findOne(query)
