@@ -63,10 +63,9 @@ function Events({
 
     }, [events])
     const posterTransform = useMemo(()=>{
-      if(events.length === null){
+      if(events === null || !events.length){
         return 0
-      } 
-
+      }
       else if(events.length>0){
         const transforms = []
         for(let i=0; i<events.length; i++){
