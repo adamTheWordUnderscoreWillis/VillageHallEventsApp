@@ -6,8 +6,7 @@ const {PORT} = process.env
 
 app.listen(PORT, async()=> {
     await connect.connectToServer()
-    const data = await connect.getDb()
-    console.log(data)
+    await connect.getDb()
 
     console.log(`Server is listening on ${PORT}`)
 });
