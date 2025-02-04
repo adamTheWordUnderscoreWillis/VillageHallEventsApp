@@ -96,7 +96,8 @@ exports.insertNewEvent = async(newEvent, authorization)=>{
         price: newEvent.price,
         attendees: newEvent.attendees,
         created: new Date().toJSON()
-    }   await database.connectToServer('development')
+    }   
+        await database.connectToServer('development')
         let db = database.getDb()
         let staff = await db.collection("staff").findOne({email: authorization})
 

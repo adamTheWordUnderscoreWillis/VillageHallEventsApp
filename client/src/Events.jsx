@@ -27,6 +27,7 @@ function Events({
         await setIsError(false)
         await setErrorText(null)
         try{
+          console.log("Hello")
           const data = await fetchEvents()
           const eventsData = data.events
           if(Object.keys(user)>0){
