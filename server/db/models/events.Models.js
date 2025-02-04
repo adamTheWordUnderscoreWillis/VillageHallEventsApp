@@ -4,7 +4,6 @@ exports.fetchAllEvents = async ()=>{
     try{
         let db = database.getDb()
         let data = await db.collection("events").find({}).toArray()
-        console.log("Marco")
         if(data.length>0){
             const formattedData = data.map((event)=>{
                 return {

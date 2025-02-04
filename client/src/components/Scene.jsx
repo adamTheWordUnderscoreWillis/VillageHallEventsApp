@@ -63,7 +63,7 @@ function Scene (){
         shadows
         >
               <Suspense 
-                fallback={LoadingScreen}
+                fallback={<LoadingScreen/>}
               >
             <Sky 
               sunPosition={sunPosition}

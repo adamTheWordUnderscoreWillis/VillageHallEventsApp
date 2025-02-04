@@ -14,7 +14,7 @@ const client = new MongoClient(uri, {
   let database
   module.exports = {
       connectToServer: ()=>{
-        database = client.db("development")
+          database = client.db("development")
       },
       connectToTestServer: ()=>{
         database = client.db("test")
