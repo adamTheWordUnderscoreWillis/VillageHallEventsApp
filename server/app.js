@@ -18,7 +18,9 @@ app.use(session({
         maxAge: 60000 * 60,
 
      }}))
-
+app.get('/api/', (req,res)=>{
+    res.status(200).send({msg: "The server is up and working"})
+})
 app.get('/api/events', getAllEvents)
 app.get('/api/events/:eventId', getEventById)
 app.get('/api/events/:eventId', getEventById)
