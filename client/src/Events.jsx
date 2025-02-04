@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { fetchEvents, fetchUserCalendarEvents } from "./components/api"
-import Poster from "./components/poster"
+import Poster from "./components/Poster.jsx"
 import { handleError } from "./components/errorHandling.jsx"
 import { Text } from "@react-three/drei"
-import { A11y, A11ySection } from "@react-three/a11y"
+import {A11ySection } from "@react-three/a11y"
 
 function Events({
   events,

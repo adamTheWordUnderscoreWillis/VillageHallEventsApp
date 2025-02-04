@@ -1,15 +1,16 @@
 import { Canvas } from "@react-three/fiber";
-import Events from "../Events";
-import Floor from "./floor";
-import { Suspense, useEffect, useState } from "react";
-import { NotEqualStencilFunc } from "three";
-import {OrbitControls, Environment, Sky}from '@react-three/drei';
-import NoticeBoard from "./noticeboard";
-import { fetchStaffMember, fetchUserCalendarEvents } from "./api";
-import { StaffNavBar } from "./StaffNavBar";
-import { handleError } from "./errorHandling";
 import {A11yAnnouncer} from "@react-three/a11y"
-import { LoadingScreen } from "./LoadingScreen";
+import { Suspense, useEffect, useState } from "react";
+import {OrbitControls, Sky}from '@react-three/drei';
+
+import Events from "../Events.jsx";
+import Floor from "./Floor.jsx";
+import NoticeBoard from "./Noticeboard.jsx";
+
+import { StaffNavBar } from "./StaffNavBar.jsx";
+import { handleError } from "./errorHandling.jsx";
+import { LoadingScreen } from "./LoadingScreen.jsx";
+import { fetchStaffMember} from "./api";
 function Scene (){
     const  [isLoading, setIsLoading] = useState(true)
     const [profile, setProfile]=useState({})
