@@ -15,7 +15,7 @@ const client = new MongoClient(uri, {
   let database
   module.exports = {
     connectToServer: async ()=>{
-        database = client.db("development")
+        database = await client.db("development")
       },
       connectToTestServer: ()=>{
         database = client.db("test")

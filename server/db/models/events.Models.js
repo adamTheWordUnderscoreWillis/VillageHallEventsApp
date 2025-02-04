@@ -1,7 +1,7 @@
 const { ObjectId } = require("mongodb")
 const database = require("../connection.js")
 exports.fetchAllEvents = async ()=>{
-    let db = await database.getDb()
+    let db = database.getDb()
     try{
         let data = await db.collection("events").find({}).toArray()
         if(data.length>0){
