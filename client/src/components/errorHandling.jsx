@@ -15,6 +15,41 @@ export const handleError= (err)=>{
         text: `hsl(0, 2.60%, 7.60%)`,
         titleText: `hsl(64, 100.00%, 68.80%)`,
     }
+    if(err.data.msg === "Internal Server Error"){
+        return(
+            <group >
+                    <mesh position={[0,0,0.05]} rotation={[0,0,0]} >
+                        <planeGeometry args={[dimensions.boardWidth,dimensions.boardHeight,dimensions.boardDepth]}/>
+                        <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
+                    </mesh>
+                    <group position={[0,0,0.1]} rotation={[0,0,(Math.PI*0.1)]}>
+                        <mesh>
+                            <boxGeometry args={[3,0.5,0.1]}/>
+                            <meshStandardMaterial color={colorPalette.Loading}/>
+                        </mesh>
+                        <group>
+                <Text 
+                    color="black"
+                    anchorX="centre" 
+                    anchorY="middle" 
+                    fontSize="0.3" 
+                    position={[-1.2,0.1,0.11]}>
+                        {"Server Error"}
+                    </Text>
+                <Text 
+                    color="black"
+                    anchorX="centre" 
+                    anchorY="middle" 
+                    fontSize="0.1" 
+                    position={[-0.9,-0.12,0.11]}>
+                        Please reload the page or try again later
+                    </Text>
+            </group>
+                    </group>
+            </group>
+           
+        )
+    }
     if(err.code === "ERR_NETWORK"){
         return(
             <group >
