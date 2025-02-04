@@ -6,6 +6,7 @@ exports.getAllEvents = async (req,res,next) =>{
         await res.status(200).send({events:events})
     }
     catch(err){
+        console.log(err)
         next(err)
     }
 }
@@ -18,6 +19,7 @@ exports.getEventById = async (req,res,next) =>{
         await res.status(200).send({event: event[0]})
     }
     catch(err){
+        console.log(err)
         next(err)
     }
 }
@@ -29,6 +31,7 @@ exports.createNewEvent = async(req,res,next)=>{
         await res.status(201).send({msg: `${newEvent.name.text} event added to database`, id: event.insertedId })
     }
     catch(err){
+        console.log(err)
         next(err)
     }
 }
@@ -40,6 +43,7 @@ exports.deleteEventById = async (req,res,next)=>{
         await res.status(204).send()
     }
     catch(err){
+        console.log(err)
         next(err)
     }
 }
@@ -53,6 +57,7 @@ exports.addAttendebyEventId = async (req,res, next) =>{
         await res.status(201).send({msg:`User: ${body[userKey]} has been added to event ${eventId}`})
     }
     catch(err){
+        console.log(err)
         next(err)
     }
 }
@@ -66,6 +71,7 @@ exports.removeAttendeeByID = async (req,res, next)=>{
 
     }
     catch(err){
+        console.log(err)
         next(err)
     }
 }
