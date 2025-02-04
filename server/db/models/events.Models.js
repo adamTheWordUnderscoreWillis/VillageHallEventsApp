@@ -1,8 +1,8 @@
 const { ObjectId } = require("mongodb")
 const database = require("../connection.js")
 exports.fetchAllEvents = async ()=>{
-    console.log("are console.logs happening")
     let db = database.getDb()
+    try{
         let data = await db.collection("events").find({}).toArray()
         if(data.length>0){
             const formattedData = data.map((event)=>{
@@ -22,9 +22,13 @@ exports.fetchAllEvents = async ()=>{
             return formattedData
         }
         else{
-            console.log("Data", data)
             return []
         }
+    }
+    catch(err){
+        throw err
+    }
+    
 }
 
 exports.fetchEventById = async (eventId)=>{

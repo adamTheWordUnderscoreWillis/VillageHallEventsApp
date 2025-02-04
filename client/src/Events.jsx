@@ -46,7 +46,7 @@ function Events({
      },[profile, staffAction])
 
      const posterColours = useMemo(()=>{
-      if(!events.length){
+      if(events.length === null){
         return 0
       }
       else if(events.length >0){
@@ -63,7 +63,10 @@ function Events({
     }, [events])
     const posterTransform = useMemo(()=>{
       
-      if(!events.length) return 0
+      if(events.length === null){
+        return 0
+      } 
+      
       else if(events.length>0){
         const transforms = []
         for(let i=0; i<events.length; i++){
