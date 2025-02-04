@@ -1,12 +1,12 @@
 import axios from "axios"
 
 const backEnd = axios.create({
-    baseURL: "/api",
+    baseURL: `${import.meta.env.VITE_BACKEND_URL}`,
 });
 
 export const fetchEvents = ()=> {
     return backEnd
-    .get("/events")
+    .get("/api/events")
     .then(({data})=>{
         return data
     })
@@ -14,7 +14,7 @@ export const fetchEvents = ()=> {
 export const fetchStaffMember = (emailAddress)=> {
   try{
     return backEnd
-    .get(`/staff/${emailAddress}`)
+    .get(`/api/staff/${emailAddress}`)
     .then(({data})=>{
         return data
     })
@@ -30,7 +30,7 @@ export const addAttendee = (event, profile)=> {
       console.log(attendeeData)
       console.log(event.id)
     return backEnd
-    .patch(`/events/${event.id}/attendee`, attendeeData)
+    .patch(`/api/events/${event.id}/attendee`, attendeeData)
     .then(({data})=>{
         console.log("Added Attendee Response", data)
         return data
@@ -38,7 +38,7 @@ export const addAttendee = (event, profile)=> {
 }
 export const removeAttendee = (event, attendeeData)=> {
     return backEnd
-    .patch(`/events/${event.id}/RemoveAttendee`, attendeeData)
+    .patch(`/api/events/${event.id}/RemoveAttendee`, attendeeData)
     .then(({data})=>{
         console.log("Removed Attendee Response", data)
         return data
@@ -172,7 +172,7 @@ export const createNewEvent = async (formData, profile) => {
   }
   try{
     const request = await backEnd
-      .post("/events/newEvent", newEventData, {
+      .post("/api/events/newEvent", newEventData, {
         headers:{
           authorization: profile.email 
         }
@@ -188,7 +188,7 @@ export const deleteEventById = async(event, profile)=>{
   try{
 
     const request = await backEnd
-    .delete(`/events/${event.id}/deleteEvent`, {
+    .delete(`/api/events/${event.id}/deleteEvent`, {
       headers:{
         authorization: profile.email 
       }
