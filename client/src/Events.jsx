@@ -46,34 +46,45 @@ function Events({
      },[profile, staffAction])
 
      const posterColours = useMemo(()=>{
-      if(events === null) return 0
-
-      const colors = []
-      for(let i=0; i< events.length; i++){
-        colors.push(Math.random()*255)
+      if(!events){
+        return 0
       }
-      return colors
+      else if(events.length >0){
+        const colors = []
+        for(let i=0; i< events.length; i++){
+          colors.push(Math.random()*255)
+        }
+        return colors
+      }
+      else{
+        return 0
+      }
+
     }, [events])
-    const num = (-4)*0.5
     const posterTransform = useMemo(()=>{
       
       if(events === null) return 0
-
-      const transforms = []
-      for(let i=0; i<events.length; i++){
-        let transformObject = {
-          position: [
-            ((i%3)*1.4)-1.4,
-            ((-i%4)*1.2)+1.9,
-            (Math.random()*0.04)+0.1
-          ],
-          rotation: [0,0,(((Math.random()-0.5)*0.5))]
-
-
+      else if(events.length>0){
+        const transforms = []
+        for(let i=0; i<events.length; i++){
+          let transformObject = {
+            position: [
+              ((i%3)*1.4)-1.4,
+              ((-i%4)*1.2)+1.9,
+              (Math.random()*0.04)+0.1
+            ],
+            rotation: [0,0,(((Math.random()-0.5)*0.5))]
+  
+  
+          }
+          transforms.push(transformObject)
         }
-        transforms.push(transformObject)
+        return transforms;
       }
-      return transforms;
+      else{
+        return 0
+      }
+
     },[events])
      if(isLoading === true){
        return 0
