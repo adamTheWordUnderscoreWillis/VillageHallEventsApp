@@ -239,20 +239,21 @@ export function StaffNavBar({staffAction, targetedEvent, profile, setStaffAction
             >
                 <Navbar.Brand
                 >Staff Menu</Navbar.Brand>
+                    {targetedEvent.id?eventDetails():null}
                 <Nav
                 >
                     <NavDropdown
-                    className='navStyling'
-                    disabled={events.length<12?false:true} title={events.length<12?"Create New Event": "Max 12 events"}>
+                        className='navStyling'
+                        disabled={events.length<12?false:true} 
+                        title={events.length<12?"Create New Event": "Max 12 events"}>
                         <NavItem
-className='StaffBarItems'          
+                            className='StaffBarItems'          
 
                         >
                             {createEventForm()}
                         </NavItem>
                     </NavDropdown>
                 </Nav>
-                    {targetedEvent.id?eventDetails():null}
             </Container>
         </Navbar>
        
