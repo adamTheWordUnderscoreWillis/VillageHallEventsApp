@@ -144,7 +144,7 @@ export const handleError= (err)=>{
                     anchorY="middle" 
                     fontSize="0.1" 
                     position={[-0.8,-0.12,0.11]}>
-                        Give it a sec... and reload
+                        Give it a sec... and reload.
                     </Text>
             </group>
                     </group>

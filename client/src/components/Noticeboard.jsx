@@ -131,41 +131,49 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
     }
     function LogInLogOutButton(){
         const a11y = useA11y()
-        return(
-            <group
-                position={[0,0,0]} 
-                scale={a11y.focus|| a11y.hover?[1.2,1.2,1.2]:[1,1,1]}
-                rotation={[0,0,0]}
-                ref={signOutButtonRef}
-                >
-                    
-                    <mesh
-                        position={[0,0,0]}
+        if(!isLoading){
+            return(
+                <group
+                    position={[0,0,0]} 
+                    scale={a11y.focus|| a11y.hover?[1.2,1.2,1.2]:[1,1,1]}
+                    rotation={[0,0,0]}
+                    ref={signOutButtonRef}
                     >
-                        <boxGeometry args={[1,1,0.1]}/>
-                        <meshStandardMaterial 
-                        color={a11y.focus|| a11y.hover?colorPalette.backBoard:isSignedIn?colorPalette.Loading:colorPalette.signIN}
-                        />
-                    </mesh>
-                    <Text 
-                        color={colorPalette.text}  
-                        anchorX="center" 
-                        anchorY="middle" 
-                        fontSize="0.4" 
-                        position={[0,0.25,0.11]}>
-                            SIGN
-                    </Text>
-                    <Text 
-                        color={colorPalette.text} 
-                        anchorX="center" 
-                        anchorY="middle" 
-                        fontSize="0.4" 
-                        position={[0,-0.15,0.11]}>
-                            {isSignedIn?"OUT":"IN"}
-                    </Text>
-        
-                        </group>
-        )
+                        
+                        <mesh
+                            position={[0,0,0]}
+                        >
+                            <boxGeometry args={[1,1,0.1]}/>
+                            <meshStandardMaterial 
+                            color={a11y.focus|| a11y.hover?colorPalette.backBoard:isSignedIn?colorPalette.Loading:colorPalette.signIN}
+                            />
+                        </mesh>
+                        <Text 
+                            color={colorPalette.text}  
+                            anchorX="center" 
+                            anchorY="middle" 
+                            fontSize="0.4" 
+                            position={[0,0.25,0.11]}>
+                                SIGN
+                        </Text>
+                        <Text 
+                            color={colorPalette.text} 
+                            anchorX="center" 
+                            anchorY="middle" 
+                            fontSize="0.4" 
+                            position={[0,-0.15,0.11]}>
+                                {isSignedIn?"OUT":"IN"}
+                        </Text>
+            
+                            </group>
+            )
+        }
+        else{
+            return(
+                <>
+                </>
+            )
+        }
 
     }
     function LoginSignPost (){
