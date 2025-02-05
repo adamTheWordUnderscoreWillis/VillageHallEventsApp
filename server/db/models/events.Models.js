@@ -27,7 +27,7 @@ exports.fetchAllEvents = async ()=>{
         }
     }
     catch(err){
-        throw {msg: err,db:db, status: 400}
+        throw {msg: err, status: 400}
     }
     
 }

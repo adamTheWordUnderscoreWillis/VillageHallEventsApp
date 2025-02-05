@@ -18,15 +18,11 @@ function Poster({
     setIsViewingPoster
 }){
     const [isClicked, setIsClicked] = useState(false)
-    const [isfocused, setIsFocused] = useState(false)
     const [isGoing, setIsGoing] = useState(false)
     const [isPosterLoading, setIsPosterLoading] = useState()
     const [calenderID, setCalendarId] = useState(calendarEventId)
     const [isInUserCalendar, setIsInUserCalendar] = useState(false)
-    const [isFocusedOnPoster, setIsFocussedOnPoster] = useState(false)
     const posterRef = useRef()
-    const signUpButtonRef = useRef()
-    const calendarButtonRef = useRef()
     const colourPalette = {
         banner: `hsl(${color}, 50%, 60%)`,
         body: `hsl(${(color+180)%360}, 50%, 70%)`,
@@ -35,6 +31,14 @@ function Poster({
         posterButton: `hsl(${(color+180)%360}, 40%, 50%)`,
         isGoing: `hsl(${(color+180)%360}, 40%, 50%)`
     }
+
+    const Pounds = new Intl.NumberFormat(
+        'en-GB',
+        {
+            style: 'currency',
+            currency: 'GBP'
+        }
+    )
     
     function PosterMesh (){
         const a11y = useA11y()
@@ -106,7 +110,7 @@ function Poster({
                 maxWidth={0.5}
                 position={[-0.28,-0.35,0]}
                 >
-                    {`£${eventData.price}`}
+                    {Pounds.format(eventData.price)}
                 </Text>
                 <Text 
                 color={colourPalette.bodyText} 
@@ -166,7 +170,6 @@ function Poster({
                         description="Exits the selected poster"
                         actionCall={(event)=>{
                 
-                            // setTargetedEvent({})
                             setIsViewingPoster(false)
                             setIsClicked(false)
                         }}
@@ -176,7 +179,6 @@ function Poster({
                     >
                         <ExitPosterButton/>
                     </A11y>
-                    {/* <PosterLoading/> */}
     
             </group>
     
@@ -188,8 +190,6 @@ function Poster({
         const newA11y = useA11y()
         return(
             <group 
-            // ref={signUpButtonRef} 
-            // onClick={handleSignUp}
             class="signUpButton" 
             position={[0.174,-0.03,-0.001]}
             scale={newA11y.focus || newA11y.hover? [1.35,1.35,3]:[1.3,1.3,1.3]}
@@ -246,11 +246,9 @@ function Poster({
         if(isGoing === true){
             return(
                 <group 
-                // ref={calendarButtonRef} 
                 class="Calendar Button"
                 position={[-0.2,-0.33,-0.001]}
                 scale={a11y.focus|| a11y.hover?[1,1.2,1]:[1,1,1]}        
-                // onClick={handlecalendarEvent}
                 >
                     <mesh  
                     position={[0.2,0,0]}>
@@ -394,7 +392,6 @@ function Poster({
     },[profile])
 
     useFrame((state)=>{
-        isfocused? posterRef.current.position.z = posterTransform.position[2]+0.1: posterRef.current.position.z= posterTransform.position[2];
         isClicked? posterRef.current.position.z = state.camera.position.z - 1.5: posterRef.current.position.z= posterTransform.position[2];
         isClicked? posterRef.current.position.x = state.camera.position.x/1.4: posterRef.current.position.x= posterTransform.position[0];
         isClicked? posterRef.current.position.y = state.camera.position.y/1.1: posterRef.current.position.y= posterTransform.position[1];
@@ -403,7 +400,7 @@ function Poster({
         isClicked? posterRef.current.rotation.x = state.camera.rotation.x: posterRef.current.rotation.x= 0;    
     })
 
-    const posterMap = useLoader(TextureLoader, "./homes-8194751_640.png")
+    const posterMap = useLoader(TextureLoader, "./homes-8194751_640.webp")
     let imageWidth = 0.25
     let imageHeight = 0.25
    const date = new Date(eventData.start.utc)
@@ -423,7 +420,6 @@ function Poster({
                     setIsViewingPoster(true)
                     
                     setTargetedEvent(eventData)
-                    setIsFocussedOnPoster(true)
                     
                     setIsClicked(true)
                 }}
@@ -432,7 +428,6 @@ function Poster({
                 }}
                 onPointerMissed={()=>{
                     setIsClicked(false)
-                    setIsFocussedOnPoster(false)
                     setIsViewingPoster(false)
                 }}
                 >

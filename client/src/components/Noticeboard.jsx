@@ -28,7 +28,7 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
 
     }
 
-    const backboardFabricColour = useLoader(TextureLoader, "./fabric_pattern_07_col_1_4k.jpg")
+    const backboardFabricColour = useLoader(TextureLoader, "./fabric_pattern_07_col_1_1k.webp")
 
     backboardFabricColour.repeat.set(4,5)
     backboardFabricColour.wrapS = RepeatWrapping

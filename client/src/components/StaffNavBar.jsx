@@ -14,7 +14,7 @@ import { createNewEvent, deleteEventById, removeAttendee } from './api';
 import { handleError } from './errorHandling.jsx';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-export function StaffNavBar({staffAction, targetedEvent, profile, setStaffAction, setTargetedEvent, events}){
+export function StaffNavBar({targetedEvent, profile, setStaffAction, setTargetedEvent, events}){
 
     const [form, setForm] = useState({})
     const [errors, setErrors] = useState({})
@@ -86,7 +86,7 @@ export function StaffNavBar({staffAction, targetedEvent, profile, setStaffAction
         else if(name.length > 30) newErrors.name = 'Please use less than 40 characters'
         
         if(!description || description === '') newErrors.description = 'Please enter a description for the event'
-        else if(name.length > 80) newErrors.description = 'Please use less than 100 characters'
+        else if(name.length > 60) newErrors.description = 'Please use less than 100 characters'
         
         if(!start) newErrors.start = 'You must enter a start date for the event'
         else if (new Date(start).getTime()< new Date().getTime()) newErrors.start = "the start date cannot be in the past"
@@ -122,7 +122,7 @@ export function StaffNavBar({staffAction, targetedEvent, profile, setStaffAction
               <InputGroup className="mb-3">
                 <InputGroup.Text id="newEventSummary">description</InputGroup.Text>
                 <Form.Control as="textarea" rows={3}
-                  placeholder="Max 80 characters"
+                  placeholder="Max 60 characters"
                   aria-label="EventDescription"
                   aria-describedby="basic-addon1"
                   value={form.description}

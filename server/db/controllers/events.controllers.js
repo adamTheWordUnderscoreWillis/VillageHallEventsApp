@@ -3,8 +3,6 @@ const {fetchAllEvents, fetchEventById, insertNewAttendee, insertNewEvent, remove
 exports.getAllEvents = async (req,res,next) =>{
     try{
         const events = await fetchAllEvents()
-        // res.header("Access-Control-Allow-Origin", "little-tidford-village-hall.vercel.app"); // update to match the domain you will make the request from
-        // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         await res.status(200).send({events:events})
     }
     catch(err){

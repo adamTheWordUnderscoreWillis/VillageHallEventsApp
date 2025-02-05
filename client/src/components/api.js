@@ -11,18 +11,21 @@ export const fetchEvents = ()=> {
     .then(({data})=>{
         return data
     })
+    .catch((err)=>{
+      console.log(err)
+      handleError(err)
+    })
 }
 export const fetchStaffMember = (emailAddress)=> {
-  try{
     return backEnd
     .get(`/api/staff/${emailAddress}`)
     .then(({data})=>{
         return data
     })
-  }
-  catch(err){
-    console.log(err)
-  }
+    .catch((err)=>{
+      handleError(err)
+      console.log(err)
+    })
 }
 export const addAttendee = (event, profile)=> {
     const attendeeData = {
@@ -34,6 +37,10 @@ export const addAttendee = (event, profile)=> {
         console.log("Added Attendee Response", data)
         return data
     })
+    .catch((err)=>{
+      handleError(err)
+      console.log(err)
+    })
 }
 export const removeAttendee = (event, attendeeData)=> {
     return backEnd
@@ -41,6 +48,10 @@ export const removeAttendee = (event, attendeeData)=> {
     .then(({data})=>{
         console.log("Removed Attendee Response", data)
         return data
+    })
+    .catch((err)=>{
+      handleError(err)
+      console.log(err)
     })
 }
 
@@ -57,7 +68,8 @@ export const getUsernfo = async (user) => {
           return request.data
     }
     catch(error){
-      throw new Error(error)
+      console.log(error)
+      handleError(error)
     }
   }
 }
@@ -74,7 +86,8 @@ export const fetchUserCalendarEvents = async(user)=>{
           return request.data.items
     }
     catch(error){
-      throw new Error(error)
+      handleError(error)
+      console.log(error)
     }
 }
 
@@ -91,6 +104,7 @@ export const removeEventFromUserCalendar = async(user, calendarEventId)=>{
     }
     catch(error){
       handleError(error)
+      console.log(error)
     }
 }
 export const addEventToUserCalendar = async (user, event) => {
@@ -123,7 +137,8 @@ export const addEventToUserCalendar = async (user, event) => {
           return request.data
     }
     catch(error){
-      throw new Error(error)
+      handleError(error)
+      console.log(error)
     }
 }
 export const createNewEvent = async (formData, profile) => {
@@ -179,7 +194,8 @@ export const createNewEvent = async (formData, profile) => {
 
   }
   catch(err){
-    throw new Error(error)
+    handleError(err)
+    console.log(err)
   }
 }
 export const deleteEventById = async(event, profile)=>{
@@ -193,6 +209,7 @@ export const deleteEventById = async(event, profile)=>{
     })
   }
   catch(err){
-    throw new Error(error)
+    handleError(err)
+    console.log(err)
   }
 }
