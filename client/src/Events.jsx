@@ -17,7 +17,9 @@ function Events({
   setTargetedEvent, 
   targetedEvent,
   setIsError,
-  setErrorText
+  setErrorText,
+  isViewingPoster,
+  setIsViewingPoster
 }) {
    const  [calendarEvents, setcalendarEvents] = useState([])
    
@@ -27,7 +29,6 @@ function Events({
         await setIsError(false)
         await setErrorText(null)
         try{
-          console.log("Hello")
           const data = await fetchEvents()
           const eventsData = data.events
           if(Object.keys(user)>0){
@@ -47,7 +48,6 @@ function Events({
      },[profile, staffAction])
 
      const posterColours = useMemo(()=>{
-      console.log("The Events", events)
       if(events === null || !events.length){
         return 0
       }
@@ -145,6 +145,8 @@ function Events({
                     profile={profile}
                     isLoading={isLoading}
                     setIsLoading={setIsLoading}
+                    setIsViewingPoster={setIsViewingPoster}
+                    isViewingPoster={isViewingPoster}
                     />
                   )
                 })}

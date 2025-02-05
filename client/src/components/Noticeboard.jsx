@@ -6,7 +6,7 @@ import { addEventToUserCalendar, getUsernfo } from "./api";
 import { useLoader } from "@react-three/fiber";
 import { A11y, useA11y } from "@react-three/a11y";
 
-function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, user, setUser, setIsStaff, targetedEvent}){
+function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, user, setUser, setIsStaff, targetedEvent, isViewingPoster}){
     const [signInFocussed, setSignInFocussed] = useState(false)
     const signInButtonRef = useRef()
     const signOutButtonRef = useRef()
@@ -19,7 +19,7 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
     }
     const colorPalette = {
         NoticeBoardWood: `hsl(29, 88.70%, 27.60%)`,
-        backBoard: `hsl(29, 63.40%, 56.10%)`,
+        backBoard: `hsl(17, 100.00%, 91.00%)`,
         Loading: `hsl(0, 67.80%, 52.50%)`,
         signIN: `hsl(192, 94.80%, 38.00%)`,
         text: `hsl(0, 2.60%, 7.60%)`,
@@ -129,120 +129,69 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
             )
         }
     }
-    
-    function SignOutButton (){
+    function LogInLogOutButton(){
         const a11y = useA11y()
-        if(!isLoading&&isSignedIn){
-            return(
-                <group
-                position={[1,-1.8,0.5]} 
-                scale={a11y.focus?[1.2,1.2,1.2]:[1,1,1]}
+        return(
+            <group
+                position={[0,0,0]} 
+                scale={a11y.focus|| a11y.hover?[1.2,1.2,1.2]:[1,1,1]}
                 rotation={[0,0,0]}
                 ref={signOutButtonRef}
-                                onPointerEnter={ (event) => {
-                                    event.stopPropagation()
-                                    document.body.style.cursor = 'pointer'
-                                } }
-                                onPointerLeave={
-                                    () => { 
-                                        document.body.style.cursor = 'default'
-                                        
-                                    } }
-                                onClick={()=>{logout()}}
                 >
                     
+                    <mesh
+                        position={[0,0,0]}
+                    >
+                        <boxGeometry args={[1,1,0.1]}/>
+                        <meshStandardMaterial 
+                        color={a11y.focus|| a11y.hover?colorPalette.backBoard:isSignedIn?colorPalette.Loading:colorPalette.signIN}
+                        />
+                    </mesh>
+                    <Text 
+                        color={colorPalette.text}  
+                        anchorX="center" 
+                        anchorY="middle" 
+                        fontSize="0.4" 
+                        position={[0,0.25,0.11]}>
+                            SIGN
+                    </Text>
+                    <Text 
+                        color={colorPalette.text} 
+                        anchorX="center" 
+                        anchorY="middle" 
+                        fontSize="0.4" 
+                        position={[0,-0.15,0.11]}>
+                            {isSignedIn?"OUT":"IN"}
+                    </Text>
+        
+                        </group>
+        )
+
+    }
+    function LoginSignPost (){
+        return (
+            <group
+                position={[1,-1.8,0.5]} 
+                scale={[1,1,1]}
+                rotation={[0,0,0]}
+                ref={signOutButtonRef}
+                >   
+                <A11y
+                    disabled={isViewingPoster?true:false}
+                    role="button"
+                    desription="The sign button that logs you in and out"
+                    activationMsg={isSignedIn?"You have just signed out": "You have just signed in"}
+                    actionCall={isSignedIn?logout:login}
+                >
+                    <LogInLogOutButton/>
+                </A11y>
                     <mesh position={[0,-1,-0.2]} rotation={[0,0,(Math.PI * 0.5)]}>
                         <boxGeometry args={[3.2,0.1,0.1]}/>
                         <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                     </mesh>
-                            <mesh
-                                
-                            >
-                                <boxGeometry args={[1,1,0.1]}/>
-                                <meshStandardMaterial 
-                                color={colorPalette.Loading}
-                                emissive={a11y.focus?"red": null}
-                                />
-                            </mesh>
-                            <Text 
-                                color={colorPalette.text}  
-                                anchorX="centre" 
-                                anchorY="middle" 
-                                fontSize="0.4" 
-                                position={[-0.48,0.25,0.11]}>
-                                    SIGN
-                            </Text>
-                            <Text 
-                                color={colorPalette.text} 
-                                anchorX="centre" 
-                                anchorY="middle" 
-                                fontSize="0.4" 
-                                position={[-0.42,-0.15,0.11]}>
-                                    OUT
-                            </Text>
-        
-                        </group>
-            )
+                </group>
 
-        }
-        else if(!isLoading&&!isSignedIn){
-            return(
-                <group
-                        position={[1,-1.8,0.5]} 
-                        rotation={[0,0,0]}
-                        scale={a11y.focus?[1.2,1.2,1.2]:[1,1,1]}
-                        ref={signInButtonRef}
-                        onPointerEnter={ (event) => {
-                            event.stopPropagation()
-                            document.body.style.cursor = 'pointer'
-                        } }
-                        onPointerLeave={
-                            () => { 
-                                document.body.style.cursor = 'default'
-                                
-                            } }
-                        onClick={()=>{login()}}>
-                        <mesh 
-                            position={[0,-1,-0.2]} 
-                            rotation={[0,0,(Math.PI * 0.5)]}
-                        >
-                            <boxGeometry args={[3.2,0.1,0.1]}/>
-                            <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
-                        </mesh>
-                        <mesh>
-                            <boxGeometry args={[1,1,0.1]}/>
-                            <meshStandardMaterial 
-                            color={a11y.hover?"green":colorPalette.signIN}
-                            emissive={a11y.focus?"red": null}
-                            />
-                        </mesh>
-                            <Text 
-                                color={colorPalette.text}  
-                                anchorX="centre" 
-                                anchorY="middle"                    
-                                fontSize="0.4" 
-                                position={[-0.48,0.25,0.11]}>
-                                    SIGN
-                            </Text>
-                            <Text 
-                                color={colorPalette.text} 
-                                anchorX="centre" 
-                                anchorY="middle" 
-                                fontSize="0.4" 
-                                position={[-0.2,-0.15,0.11]}>
-                                    IN
-                            </Text>
-        
-                        </group>
-
-            )
-        }
-        else{
-            return(
-                <>
-                </>
-            )
-        }
+        )
 
     }
 
@@ -252,15 +201,7 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
         
         <LoadingText/>
 
-        <A11y
-        disabled={targetedEvent.id?true:false}
-        role="button"
-        desription="The sign button that logs you in and out"
-        activationMsg={isSignedIn?"You have just signed out": "You have just signed in"}
-        actionCall={isSignedIn?logout:login}
-        >
-            <SignOutButton/>
-        </A11y>
+            <LoginSignPost/>
             <group>
                 {/* BackBoard */}
                 <mesh castShadow  >

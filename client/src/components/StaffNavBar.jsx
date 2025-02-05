@@ -24,7 +24,6 @@ export function StaffNavBar({staffAction, targetedEvent, profile, setStaffAction
         const formErrors = validateForm()
         if(Object.keys(formErrors).length > 0){
             setErrors(formErrors)
-            console.log(errors)
         }
         else{
             setErrors({})
@@ -37,6 +36,7 @@ export function StaffNavBar({staffAction, targetedEvent, profile, setStaffAction
             }
             catch(err){
                 console.log(err)
+                handleError(err)
             }
         }
     }
@@ -47,6 +47,7 @@ export function StaffNavBar({staffAction, targetedEvent, profile, setStaffAction
         }
         catch(err){
             console.log(err)
+            handleError(err)
         }
     }
     const handleRemoveAttendee = async (key, attendeesObject )=>{
@@ -60,12 +61,12 @@ export function StaffNavBar({staffAction, targetedEvent, profile, setStaffAction
             setStaffAction(`Attendee ${attendeesObject[key]} was removed by staff from Event ${targetedEvent.name.text}`)
         }
         catch(err){
+            console.log(err)
             handleError(err)
         }
     }
 
     const setField = (field, value) => {
-        console.log(form)
         setForm({
             ...form,
             [field]:value

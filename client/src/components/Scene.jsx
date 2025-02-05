@@ -21,7 +21,8 @@ function Scene (){
     const [staffAction, setStaffAction] = useState()
     const [isError, setIsError] = useState(false)
     const [errorText, setErrorText] = useState(null)
-    const  [events, setEvents] = useState(null)
+    const [events, setEvents] = useState(null)
+    const [isViewingPoster, setIsViewingPoster] = useState(false)
     
     
 
@@ -88,6 +89,7 @@ function Scene (){
             setUser={setUser}
             isError={isError}
             errorText={errorText}
+            isViewingPoster={isViewingPoster}
             />
             <Floor/>
             <Events 
@@ -103,6 +105,8 @@ function Scene (){
               setErrorText={setErrorText}
               events={events}
               setEvents={setEvents}
+              isViewingPoster={isViewingPoster}
+              setIsViewingPoster={setIsViewingPoster}
               />
             <OrbitControls
               minAzimuthAngle={-Math.PI*0.1}

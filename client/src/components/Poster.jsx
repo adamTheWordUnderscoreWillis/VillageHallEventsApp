@@ -14,8 +14,8 @@ function Poster({
     calendarEventId, 
     setTargetedEvent, 
     targetedEvent,
-    isLoading,
-    setIsLoading
+    isViewingPoster,
+    setIsViewingPoster
 }){
     const [isClicked, setIsClicked] = useState(false)
     const [isfocused, setIsFocused] = useState(false)
@@ -23,9 +23,18 @@ function Poster({
     const [isPosterLoading, setIsPosterLoading] = useState()
     const [calenderID, setCalendarId] = useState(calendarEventId)
     const [isInUserCalendar, setIsInUserCalendar] = useState(false)
+    const [isFocusedOnPoster, setIsFocussedOnPoster] = useState(false)
     const posterRef = useRef()
     const signUpButtonRef = useRef()
     const calendarButtonRef = useRef()
+    const colourPalette = {
+        banner: `hsl(${color}, 50%, 60%)`,
+        body: `hsl(${(color+180)%360}, 50%, 70%)`,
+        bannerText: `hsl(${(color+180)%360}, 80%, 50%)`,
+        bodyText: `hsl(${(color+180)%360}, 70%, 10%)`,
+        posterButton: `hsl(${(color+180)%360}, 40%, 50%)`,
+        isGoing: `hsl(${(color+180)%360}, 40%, 50%)`
+    }
     
     function PosterMesh (){
         const a11y = useA11y()
@@ -35,25 +44,12 @@ function Poster({
         position={posterTransform.position}
         rotation={posterTransform.rotation}
         ref={posterRef}
-        onPointerEnter={ (event) => {
-            event.stopPropagation()
-            isClicked? document.body.style.cursor = 'default':  document.body.style.cursor = 'pointer'
-        } }
-            onClick={(event)=>{
-                event.stopPropagation()
-                setTargetedEvent(eventData)
-                
-                setIsClicked(true)
-            }}
-            onPointerMissed={()=>{
-                setIsClicked(false)
-                setTargetedEvent({})
-            }}
+            
             >
-            {isGoing ? GoingToEventSticker(): null}
+            {isGoing || isPosterLoading ? GoingToEventSticker(): null}
             <group class="posterHeader">
                 <Text 
-                color={`hsl(${color}, 100%, 95%)`} 
+                color={colourPalette.bodyText} 
                 anchorX="left" 
                 anchorY="top" 
                 fontSize="0.06"
@@ -67,12 +63,12 @@ function Poster({
                 <mesh  
                     position={[0,0.35,-0.001]}>
                             <planeGeometry args={[0.6,0.2,1]}/>
-                            <meshStandardMaterial color={`hsl(${color}, 100%, 10%)` }/>
+                            <meshStandardMaterial color={colourPalette.banner }/>
                 </mesh>
             </group>
             <group class="body">
                 <Text 
-                color={`hsl(${color}, 100%, 10%)`} 
+                color={colourPalette.bodyText} 
                 anchorX="left" 
                 anchorY="top" 
                 fontSize="0.04" 
@@ -86,7 +82,7 @@ function Poster({
                 <mesh  
                 position={[0,0,-0.0015]}>
                                 <planeGeometry args={[0.6,0.9,1]}/>
-                                <meshStandardMaterial color={`hsl(${color}, 50%, 70%)` }/>
+                                <meshStandardMaterial color={colourPalette.body }/>
                 </mesh>
                 <mesh  
                 position={[0.175,0.124,0]}>
@@ -96,12 +92,12 @@ function Poster({
                 <mesh  
                 position={[0.175,0.124,-0.001]}>
                                 <planeGeometry args={[imageWidth+0.01, imageHeight+0.01]}/>
-                                <meshStandardMaterial color={`hsl(${color}, 100%, 15%)`}/>
+                                <meshStandardMaterial color={colourPalette.banner}/>
                 </mesh>
             </group>
             <group class="posterFooter">
                 <Text 
-                color={`hsl(${color}, 100%, 90%)`} 
+                color={colourPalette.bodyText} 
                 anchorX="left" 
                 anchorY="top" 
                 fontSize="0.06"
@@ -113,7 +109,7 @@ function Poster({
                     {`£${eventData.price}`}
                 </Text>
                 <Text 
-                color={`hsl(${color}, 100%, 90%)`} 
+                color={colourPalette.bodyText} 
                 anchorX="right" 
                 anchorY="top" 
                 fontSize="0.04" 
@@ -125,7 +121,7 @@ function Poster({
                     {date.toDateString()}
                 </Text>
                 <Text 
-                color={`hsl(${color}, 100%, 90%)`} 
+                color={colourPalette.bodyText} 
                 anchorX="right" 
                 anchorY="top" 
                 fontSize="0.04" 
@@ -140,38 +136,47 @@ function Poster({
                     <mesh  
                     position={[0,-0.4,-0.001]}>
                                     <planeGeometry args={[0.6,0.1,1]}/>
-                                    <meshStandardMaterial color={`hsl(${color}, 100%, 10%)` }/>
+                                    <meshStandardMaterial color={colourPalette.banner }/>
                     </mesh>
                     <A11y
-                        disabled={targetedEvent.id === eventData.id?false:true}
+                        disabled={isPosterLoading || !isClicked?true:false}
                         role="button"
                         description="Button to to sign up for event or cancel your booking if you're already going."
                         actionCall={handleSignUp}
+                        onPointerEnter={(event)=>{
+                            event.stopPropagation()
+                        }}
                     >
                         <SignUpButton/>
                     </A11y>
                     <A11y
                         description="Button to add event to your google calendar"
-                        disabled={isGoing&&targetedEvent.id === eventData.id?false:true}
+                        disabled={!isGoing|| !isClicked|| isPosterLoading ?true:false}
                         role="button"
                         actionCall={handlecalendarEvent}
+                        onPointerEnter={(event)=>{
+                            event.stopPropagation()
+                        }}
                     >
                         <ShowCalendarButton/>
                     </A11y>
                     <A11y
-                        disabled={targetedEvent.id === eventData.id?false:true}
+                        disabled={!isClicked?true:false}
                         role="button"
                         description="Exits the selected poster"
                         actionCall={(event)=>{
                 
-                            setTargetedEvent({})
-                            
+                            // setTargetedEvent({})
+                            setIsViewingPoster(false)
                             setIsClicked(false)
+                        }}
+                        onPointerEnter={(event)=>{
+                            event.stopPropagation()
                         }}
                     >
                         <ExitPosterButton/>
                     </A11y>
-                    <PosterLoading/>
+                    {/* <PosterLoading/> */}
     
             </group>
     
@@ -183,22 +188,19 @@ function Poster({
         const newA11y = useA11y()
         return(
             <group 
-            ref={signUpButtonRef} 
+            // ref={signUpButtonRef} 
+            // onClick={handleSignUp}
             class="signUpButton" 
             position={[0.174,-0.03,-0.001]}
             scale={newA11y.focus || newA11y.hover? [1.35,1.35,3]:[1.3,1.3,1.3]}
-            onPointerEnter={ (event) => {
-                event.stopPropagation()
-                 document.body.style.cursor = 'pointer'
-                } }
             >
                 <mesh  
                 position={[0,0,0]}>
                                 <planeGeometry args={[0.2,0.04,1]}/>
-                                <meshStandardMaterial color={isGoing? `hsl(0, 100.00%, 60.40%)` :`hsl(${(color+ 15)%360}, 100%, 60%)` }/>
+                                <meshStandardMaterial color={isGoing? `hsl(0, 100.00%, 60.40%)` :colourPalette.posterButton }/>
                 </mesh>
                 <Text 
-        color={`hsl(${color}, 100%, 10%)`} 
+        color={isGoing?colourPalette.bodyText:colourPalette.banner} 
         anchorX="left" 
         anchorY="top" 
         fontSize="0.04" 
@@ -215,6 +217,7 @@ function Poster({
     async function handlecalendarEvent (){
         if(isInUserCalendar){
             try{
+                setIsPosterLoading(true)
                 await removeEventFromUserCalendar(user, calenderID)
                 setIsInUserCalendar(false)
                 setCalendarId("")
@@ -222,17 +225,20 @@ function Poster({
             catch(err){
                 handleError(err)
             }
+            setIsPosterLoading(false)
         }
         else{
             try{
+                setIsPosterLoading(true)
                 const newEvent = await addEventToUserCalendar(user,eventData)
                 setCalendarId(newEvent.id)
                 setIsInUserCalendar(true)
-
+                
             }
             catch(err){
                 handleError(err)
             }
+            setIsPosterLoading(false)
         }
     }
     function ShowCalendarButton (){
@@ -240,23 +246,19 @@ function Poster({
         if(isGoing === true){
             return(
                 <group 
-                ref={calendarButtonRef} 
+                // ref={calendarButtonRef} 
                 class="Calendar Button"
                 position={[-0.2,-0.33,-0.001]}
-                scale={a11y.focus?[1,1.2,1]:[1,1,1]}        
-                onPointerEnter={ (event) => {
-                    event.stopPropagation()
-                     document.body.style.cursor = 'pointer'
-                    } }
-                onClick={handlecalendarEvent}
+                scale={a11y.focus|| a11y.hover?[1,1.2,1]:[1,1,1]}        
+                // onClick={handlecalendarEvent}
                 >
                     <mesh  
                     position={[0.2,0,0]}>
                                     <planeGeometry args={[0.6,0.04,1]}/>
-                                    <meshStandardMaterial color={isInUserCalendar?`hsl(133, 60%, 50%)`:`hsl(${(color+ 15)%360}, 50%, 30%)` }/>
+                                    <meshStandardMaterial color={isInUserCalendar?colourPalette.isGoing:colourPalette.posterButton }/>
                     </mesh>
                     <Text 
-            color={isInUserCalendar?"black":`hsl(${color}, 100%, 90%)`} 
+            color={colourPalette.banner} 
             anchorX="left" 
             anchorY="top" 
             fontSize="0.04" 
@@ -284,7 +286,7 @@ function Poster({
                 <group 
                     position={[-0.2,-0.45,0.04]}
                     rotation={[0,0,0]}
-                    scale={a11y.focus?[0.85,0.85,0.85]:[0.8,0.8,0.8]}
+                    scale={a11y.focus || a11y.hover?[0.85,0.85,0.85]:[0.8,0.8,0.8]}
                         class="goingSticker" 
                         >
                             <mesh  
@@ -293,10 +295,10 @@ function Poster({
                             >
                                 
                                             <planeGeometry args={[0.35,0.08,1]}/>
-                                            <meshStandardMaterial color={`hsl(0, 57.50%, 59.40%)`}/>
+                                            <meshStandardMaterial color={colourPalette.posterButton}/>
                             </mesh>
                             <Text 
-                    color={`hsl(${color}, 100%, 10%)`} 
+                    color={colourPalette.banner} 
                     anchorX="left" 
                     anchorY="top" 
                     fontSize="0.06" 
@@ -327,64 +329,23 @@ function Poster({
                         >
                             
                                         <planeGeometry args={[0.35,0.08,1]}/>
-                                        <meshStandardMaterial color={`hsl(133, 60%, 50%)`}/>
+                                        <meshStandardMaterial color={isPosterLoading?`hsl(132, 6.80%, 14.30%)`:`hsl(133, 60%, 50%)`}/>
                         </mesh>
                         <Text 
-                color={`hsl(${color}, 100%, 10%)`} 
+                color={isPosterLoading?`hsl(0, 0.00%, 94.10%)`:`hsl(${color}, 100%, 10%)`} 
                 anchorX="left" 
                 anchorY="top" 
-                fontSize="0.06" 
+                fontSize="0.06"
                 fontWeight="bold"
                 overflowWrap="normal"
                 maxWidth={0.5}
-                position={[-0.14,0.04,0.001]}
+                position={[-0.14,0.045,0.001]}
                 rotation={[0,0,0]}
                 >
-                    I'm Going!
+                    {isPosterLoading?" Loading!":"I'm Going!"}
                 </Text>
                     </group>
         )
-    }
-    function PosterLoading(){
-        if(isPosterLoading){
-
-            return (
-                <group 
-                position={[0-0,-0,0.04]}
-                rotation={[0,0,(Math.PI*0.1)]}
-                scale={[0.5,0.5,0.5]}
-                class="goingSticker" 
-                >
-                    <mesh  
-                    position={[0,0,0]}
-                    rotation={[0,0,0]}
-                    >
-                        
-                                    <planeGeometry args={[0.55,0.08,1]}/>
-                                    <meshStandardMaterial color={`hsl(0, 0.00%, 0.00%)`}/>
-                    </mesh>
-                    <Text 
-            color={"white"} 
-            anchorX="left" 
-            anchorY="top" 
-            fontSize="0.06" 
-            fontWeight="bold"
-            overflowWrap="normal"
-            maxWidth={0.5}
-            position={[-0.24,0.04,0.001]}
-            rotation={[0,0,0]}
-            >
-                LOADING FLYER
-            </Text>
-                </group>
-        )
-    }
-    else{
-        return (
-            <>
-            </>
-        )
-    }
     }
     async function handleSignUp(){
         setIsPosterLoading(true)
@@ -454,15 +415,25 @@ function Poster({
             description={`A flyer for an event called ${eventData.name.text} on ${date.toDateString()} at ${date.toLocaleTimeString("en-US",{hour:"2-digit", minute: "2-digit"})}`}
         >
             <A11y
-                disabled={targetedEvent.id?true:false}
+                disabled={isViewingPoster ?true:false}
                 role="button"
                 description={`Flyer for and event titled ${eventData.name.text}`}
                 activationMsg={`${eventData.name.text} flyer selected`}
                 actionCall={(event)=>{
+                    setIsViewingPoster(true)
                     
                     setTargetedEvent(eventData)
+                    setIsFocussedOnPoster(true)
                     
                     setIsClicked(true)
+                }}
+                onPointerEnter={(event)=>{
+                    event.stopPropagation()
+                }}
+                onPointerMissed={()=>{
+                    setIsClicked(false)
+                    setIsFocussedOnPoster(false)
+                    setIsViewingPoster(false)
                 }}
                 >
                 <PosterMesh/>

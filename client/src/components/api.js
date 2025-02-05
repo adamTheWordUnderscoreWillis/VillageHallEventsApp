@@ -1,4 +1,5 @@
 import axios from "axios"
+import { handleError } from "./errorHandling";
 
 const backEnd = axios.create({
     baseURL: `${import.meta.env.VITE_BACKEND_URL}`,
@@ -27,8 +28,6 @@ export const addAttendee = (event, profile)=> {
     const attendeeData = {
         [profile.email]: profile.name
       }
-      console.log(attendeeData)
-      console.log(event.id)
     return backEnd
     .patch(`/api/events/${event.id}/attendee`, attendeeData)
     .then(({data})=>{
@@ -91,7 +90,7 @@ export const removeEventFromUserCalendar = async(user, calendarEventId)=>{
           return request.data
     }
     catch(error){
-      console.log("This is the delete Error", error)
+      handleError(error)
     }
 }
 export const addEventToUserCalendar = async (user, event) => {
@@ -177,7 +176,6 @@ export const createNewEvent = async (formData, profile) => {
           authorization: profile.email 
         }
       })
-      console.log(request.data)
 
   }
   catch(err){
