@@ -120,6 +120,37 @@ export const handleError= (err)=>{
             
         )
     }
+    else if(err.response.status === 500){
+
+        return (
+            <group >
+                    <group position={[0,0,0.1]} rotation={[0,0, 0]}>
+                        <mesh>
+                            <boxGeometry args={[dimensions.boardWidth,dimensions.boardHeight,dimensions.boardDepth]}/>
+                            <meshStandardMaterial color={colorPalette.Loading}/>
+                        </mesh>
+                        <group>
+                <Text 
+                    color="black"
+                    anchorX="centre" 
+                    anchorY="middle" 
+                    fontSize="0.3" 
+                    position={[-1.3,0.05,0.11]}>
+                        SERVER ERROR
+                    </Text>
+                    <Text 
+                    color="black"
+                    anchorX="centre" 
+                    anchorY="middle" 
+                    fontSize="0.1" 
+                    position={[-0.8,-0.12,0.11]}>
+                        Give it a sec... and reload
+                    </Text>
+            </group>
+                    </group>
+            </group>
+        )
+    }
     else if(err.response.data.msg === 'There are no events in the database'){
 
         return (
