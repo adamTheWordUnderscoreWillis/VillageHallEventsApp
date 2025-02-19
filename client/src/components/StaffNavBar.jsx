@@ -256,7 +256,9 @@ export function StaffNavBar({targetedEvent, profile, setStaffAction, setTargeted
         }
         return (
             <>
-            <Navbar key="lg" expand="lg" fixed='top'  className="bg-body-tertiary">
+            <Navbar key="lg" expand="false"
+             fixed='top'  
+             className="bg-body-tertiary">
               <Container >
                 <Navbar.Brand>Staff Menu</Navbar.Brand>
               

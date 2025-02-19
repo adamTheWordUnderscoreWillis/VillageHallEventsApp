@@ -31,7 +31,7 @@ function Scene (){
           try{
             const staffResponse = await fetchStaffMember(profile.email)
             if(!staffResponse){
-              throw {rsponse: {msg: "Internal Server Error", status:500}}
+              throw {response: {msg: "Internal Server Error", status:500}}
             }
             else if(staffResponse.staffCheck){
               setIsStaff(true)

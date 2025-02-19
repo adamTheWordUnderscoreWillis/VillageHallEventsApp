@@ -22,15 +22,6 @@ export const handleError= (err)=>{
 
         return(
             <group >
-                    <mesh position={[0,0,0.05]} rotation={[0,0,0]} >
-                        <planeGeometry args={[dimensions.boardWidth,dimensions.boardHeight,dimensions.boardDepth]}/>
-                        <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
-                    </mesh>
-                    <group position={[0,0,0.1]} rotation={[0,0,(Math.PI*0.1)]}>
-                        <mesh>
-                            <boxGeometry args={[3,0.5,0.1]}/>
-                            <meshStandardMaterial color={colorPalette.Loading}/>
-                        </mesh>
                         <group>
                 <Text 
                     color="black"
@@ -49,7 +40,6 @@ export const handleError= (err)=>{
                         Please reload the page or try again later
                     </Text>
             </group>
-                    </group>
             </group>
            
         )
@@ -57,15 +47,6 @@ export const handleError= (err)=>{
     else if(err.message === "AxiosError: Request failed with status code 401"){
         return(
             <group >
-                    <mesh position={[0,0,0.05]} rotation={[0,0,0]} >
-                        <planeGeometry args={[dimensions.boardWidth,dimensions.boardHeight,dimensions.boardDepth]}/>
-                        <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
-                    </mesh>
-                    <group position={[0,0,0.1]} rotation={[0,0,(Math.PI*0.1)]}>
-                        <mesh>
-                            <boxGeometry args={[3,0.5,0.1]}/>
-                            <meshStandardMaterial color={colorPalette.Loading}/>
-                        </mesh>
                         <group>
                 <Text 
                     color="black"
@@ -84,47 +65,11 @@ export const handleError= (err)=>{
                         Please head back to the main page
                     </Text>
             </group>
-                    </group>
             </group>
             
         )
     }
-    else if(err.response.data.msg === "Internal Server Error"){
-        return(
-            <group >
-                    <mesh position={[0,0,0.05]} rotation={[0,0,0]} >
-                        <planeGeometry args={[dimensions.boardWidth,dimensions.boardHeight,dimensions.boardDepth]}/>
-                        <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
-                    </mesh>
-                    <group position={[0,0,0.1]} rotation={[0,0,(Math.PI*0.1)]}>
-                        <mesh>
-                            <boxGeometry args={[3,0.5,0.1]}/>
-                            <meshStandardMaterial color={colorPalette.Loading}/>
-                        </mesh>
-                        <group>
-                <Text 
-                    color="black"
-                    anchorX="centre" 
-                    anchorY="middle" 
-                    fontSize="0.3" 
-                    position={[-1.2,0.1,0.11]}>
-                        {"Server Error"}
-                    </Text>
-                <Text 
-                    color="black"
-                    anchorX="centre" 
-                    anchorY="middle" 
-                    fontSize="0.1" 
-                    position={[-0.9,-0.12,0.11]}>
-                        Please reload the page or try again later
-                    </Text>
-            </group>
-                    </group>
-            </group>
-           
-        )
-    }
-    else if(err.response.status === 500 || err.response.data.status){
+    else if( err.response.status === 500 || err.response.data.status === 500 || err.response.data.msg === "Internal Server Error"){
         return (
             <group >
                     <group position={[0,0,0]} rotation={[0,0, 0]}>
