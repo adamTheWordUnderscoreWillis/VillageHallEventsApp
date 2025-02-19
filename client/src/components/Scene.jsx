@@ -63,7 +63,8 @@ function Scene (){
               <Suspense 
                 fallback={<LoadingScreen/>}
               >
-        <Canvas 
+        <Canvas
+        
         shadows
         >
             <Sky 
@@ -111,10 +112,10 @@ function Scene (){
             <OrbitControls
               minAzimuthAngle={-Math.PI*0.1}
               maxAzimuthAngle={Math.PI*0.1}
-              minPolarAngle={Math.PI*0.47}
+              minPolarAngle={Math.PI*0.42}
               maxPolarAngle={0}
               enablePan={false}
-              maxDistance={5}
+              maxDistance={5.5}
               minDistance={4}
               />
         </Canvas>
