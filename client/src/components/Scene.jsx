@@ -114,8 +114,8 @@ function Scene (){
               minPolarAngle={Math.PI*0.47}
               maxPolarAngle={0}
               enablePan={false}
-              maxDistance={7}
-              minDistance={3}
+              maxDistance={5}
+              minDistance={4}
               />
         </Canvas>
         <A11yAnnouncer/>

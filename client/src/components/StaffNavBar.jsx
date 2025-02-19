@@ -14,11 +14,11 @@ import { createNewEvent, deleteEventById, removeAttendee } from './api';
 import { handleError } from './errorHandling.jsx';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 export function StaffNavBar({targetedEvent, profile, setStaffAction, setTargetedEvent, events}){
 
     const [form, setForm] = useState({})
     const [errors, setErrors] = useState({})
-    
     const handleSubmit = async (event)=>{
         event.preventDefault()
         const formErrors = validateForm()
@@ -31,7 +31,14 @@ export function StaffNavBar({targetedEvent, profile, setStaffAction, setTargeted
                 await createNewEvent(form, profile)
                 setStaffAction(`Event ${form.name} was succesfully created`)
                 console.log("form submitted")
-                setForm({})
+                setForm({
+                    name: "",
+                    description: "",
+                    start: "",
+                    end: "",
+                    price: ""
+                })
+                event.target.reset()
 
             }
             catch(err){
@@ -165,7 +172,6 @@ export function StaffNavBar({targetedEvent, profile, setStaffAction, setTargeted
                 <InputGroup.Text id="newEventSummary">£</InputGroup.Text>
                 <Form.Control
                 type='number'
-                  placeholder="5"
                   aria-label="price"
                   aria-describedby="basic-addon1"
                   value={form.price}
@@ -184,22 +190,24 @@ export function StaffNavBar({targetedEvent, profile, setStaffAction, setTargeted
         
     }
     function listAttendees (){
-        if(Object.keys(targetedEvent.attendees).length > 0){
-            for(const attendee in targetedEvent.attendees){
-                return(
-                    <NavItem>
-                        <Row>
+        const attendeesArray = Object.keys(targetedEvent.attendees)
+        if(attendeesArray.length > 0){
+            return(
+                <>
+                    {attendeesArray.map((attendee)=>{
+                        return(
+                            <Row>
                             <Col>
                                 <p>{targetedEvent.attendees[attendee]}</p>
                             </Col>
                             <Col>
                                 <Button size="sm" onClick={()=>{handleRemoveAttendee(attendee, targetedEvent.attendees)}} variant="danger">Remove</Button>
                             </Col>
-
                         </Row>
-                        </NavItem>
-                )
-            }
+                        )
+                    })}
+                </>
+            )
         }
         else{
             return(
@@ -217,13 +225,27 @@ export function StaffNavBar({targetedEvent, profile, setStaffAction, setTargeted
         return (
             <Nav
             >
-                    <NavDropdown className='navStyling' title="Event Details">
+                    <NavDropdown 
+                    className='navStyling' 
+                    title="Event Details">
                         <NavItem
-                            className='StaffBarItems'
-                        >{`Event ID: ${targetedEvent.id} `}</NavItem>
-                        <NavItem className='StaffBarItems' disabled={attendeeCount() <= 0 ?true:false} >
-                        {`Attendees: ${attendeeCount()}`}
+                        className='StaffBarItems'
+                        >
+                            {`Event ID: ${targetedEvent.id} `}</NavItem>
+                        <NavItem 
+                        className='StaffBarItems' 
+                        disabled={attendeeCount() <= 0 ?true:false} 
+                        >
+                            {`Attendees: ${attendeeCount()}`}
+                        </NavItem>
+                        <NavItem
+                        className='StaffBarItems' 
+                        >
                             {listAttendees()}
+                        </NavItem>
+                        <NavItem
+                        className='StaffBarItems' 
+                        >
                             <Button onClick={handledeleteEvent} variant="danger">
                                 Cancel Event
                             </Button>
@@ -231,32 +253,36 @@ export function StaffNavBar({targetedEvent, profile, setStaffAction, setTargeted
                     </NavDropdown>
                 </Nav>
           );
-    }
-    return (
-        <Navbar
-        >
-            <Container
-            
-            >
-                <Navbar.Brand
-                >Staff Menu</Navbar.Brand>
-                    {targetedEvent.id?eventDetails():null}
-                <Nav
-                >
-                    <NavDropdown
-                        className='navStyling'
-                        disabled={events.length<12?false:true} 
-                        title={events.length<12?"Create New Event": "Max 12 events"}>
-                        <NavItem
-                            className='StaffBarItems'          
-
-                        >
-                            {createEventForm()}
+        }
+        return (
+            <>
+            <Navbar key="lg" expand="lg" fixed='top'  className="bg-body-tertiary">
+              <Container >
+                <Navbar.Brand>Staff Menu</Navbar.Brand>
+              
+                <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`}>Create Event</Navbar.Toggle>
+                <Navbar.Offcanvas
+                  id={`offcanvasNavbar-expand-lg`}
+                  aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
+                  placement="end"
+                  >
+                  <Offcanvas.Header closeButton>
+                    <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
+                        Create New Event
+                    </Offcanvas.Title>
+                  </Offcanvas.Header>
+                  <Offcanvas.Body>
+                  <NavItem
+                    className='StaffBarItems'          
+                    >
+                        {createEventForm()}
                         </NavItem>
-                    </NavDropdown>
-                </Nav>
-            </Container>
-        </Navbar>
-       
-    )
-}
+                  </Offcanvas.Body>
+                </Navbar.Offcanvas>
+            
+            {targetedEvent.id?eventDetails():null}
+              </Container>
+            </Navbar>
+        </>
+      );
+    }

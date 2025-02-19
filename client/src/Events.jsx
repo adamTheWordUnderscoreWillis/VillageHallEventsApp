@@ -30,6 +30,9 @@ function Events({
         await setErrorText(null)
         try{
           const data = await fetchEvents()
+          if(!data){
+            throw {response: {msg: "Could not fetch data from Server", status: 500}}
+          }
           const eventsData = data.events
           if(Object.keys(user)>0){
             const calendarEventsData = await fetchUserCalendarEvents(user)
@@ -41,7 +44,7 @@ function Events({
         catch(err){
           const errorMessage = await handleError(err)
           await setErrorText(errorMessage)
-          setIsError(true)
+          await setIsError(true)
         }
       }
       getEvents()
@@ -72,7 +75,7 @@ function Events({
         for(let i=0; i<events.length; i++){
           let transformObject = {
             position: [
-              ((i%3)*1.4)-1.4,
+              ((i%3)*1)-1,
               ((-i%4)*1.2)+1.9,
               (Math.random()*0.04)+0.1
             ],

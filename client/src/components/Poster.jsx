@@ -231,6 +231,9 @@ function Poster({
             try{
                 setIsPosterLoading(true)
                 const newEvent = await addEventToUserCalendar(user,eventData)
+                if(!newEvent){
+                    throw {msg: "Could not get Events", Status: 404}
+                }
                 setCalendarId(newEvent.id)
                 setIsInUserCalendar(true)
                 
@@ -392,7 +395,7 @@ function Poster({
     },[profile])
 
     useFrame((state)=>{
-        isClicked? posterRef.current.position.z = state.camera.position.z - 1.5: posterRef.current.position.z= posterTransform.position[2];
+        isClicked? posterRef.current.position.z = state.camera.position.z - 1.3: posterRef.current.position.z= posterTransform.position[2];
         isClicked? posterRef.current.position.x = state.camera.position.x/1.4: posterRef.current.position.x= posterTransform.position[0];
         isClicked? posterRef.current.position.y = state.camera.position.y/1.1: posterRef.current.position.y= posterTransform.position[1];
         isClicked? posterRef.current.rotation.z = 0: posterRef.current.rotation.z= posterTransform.rotation[2];

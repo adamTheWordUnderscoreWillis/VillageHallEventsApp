@@ -1,7 +1,7 @@
 import { Text } from "@react-three/drei"
 import { useEffect, useRef, useState } from "react"
 import { Group, RepeatWrapping, TextureLoader } from "three"
-import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import { googleLogout, hasGrantedAllScopesGoogle, useGoogleLogin } from "@react-oauth/google";
 import { addEventToUserCalendar, getUsernfo } from "./api";
 import { useLoader } from "@react-three/fiber";
 import { A11y, useA11y } from "@react-three/a11y";
@@ -13,7 +13,7 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
     
     const dimensions = {
         boardHeight: 5,
-        boardWidth: 4,
+        boardWidth: 3,
         boardDepth: 1,
         plankWidth: 0.2
     }
@@ -46,7 +46,16 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
    },[user]);
 
     const login = useGoogleLogin({
-        onSuccess: tokenResponse => setUser(tokenResponse),
+        scope: "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events",
+        onSuccess: async tokenResponse => {
+            await hasGrantedAllScopesGoogle(
+                tokenResponse,
+               "https://www.googleapis.com/auth/calendar",
+               "https://www.googleapis.com/auth/calendar.events",
+               "https://www.googleapis.com/auth/userinfo.profile"
+            )
+            setUser(tokenResponse)
+        },
       });
     
         
@@ -179,7 +188,7 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
     function LoginSignPost (){
         return (
             <group
-                position={[1,-1.8,0.5]} 
+                position={[1.2,-2.3,0.5]} 
                 scale={[1,1,1]}
                 rotation={[0,0,0]}
                 ref={signOutButtonRef}
@@ -205,7 +214,7 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
 
     return(
         <>
-        {isError? errorText: null}
+        {/* {isError? errorText: null} */}
         
         <LoadingText/>
 
@@ -229,8 +238,16 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
           anchorX="centre" 
           anchorY="middle" 
           fontSize="0.15" 
-          position={[-1.6,(dimensions.boardHeight/2)+dimensions.plankWidth,0.11]}>
-            LITTLE TIDFORD VILLAGE HALL NOITCEBOARD
+          position={[-0.6,(dimensions.boardHeight/2)+dimensions.plankWidth,0.11]}>
+            LITTLE TIDFORD
+          </Text>
+                <Text 
+          color={colorPalette.titleText}  
+          anchorX="centre" 
+          anchorY="middle" 
+          fontSize="0.15" 
+          position={[-1.1,((dimensions.boardHeight/2)+dimensions.plankWidth -0.18),0.11]}>
+            VILLAGE HALL NOITCEBOARD
           </Text>
                 <mesh castShadow position={[0,(dimensions.boardHeight/2)+dimensions.plankWidth,-0.1]}>
                     <boxGeometry args={[dimensions.boardWidth-(dimensions.plankWidth*2),0.2,0.4]}/>
@@ -250,11 +267,11 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
                         dimensions.plankWidth]}/>
                     <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                 </mesh>
-                <mesh castShadow position={[2.1,0,0]} rotation={[0,0,(Math.PI * 0.5)]}>
+                <mesh castShadow position={[dimensions.boardWidth/2,0,0]} rotation={[0,0,(Math.PI * 0.5)]}>
                     <boxGeometry args={[dimensions.boardHeight+(dimensions.plankWidth),dimensions.plankWidth,dimensions.plankWidth]}/>
                     <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                 </mesh>
-                <mesh castShadow position={[-2.1,0,0]} rotation={[0,0,(Math.PI * 0.5)]}>
+                <mesh castShadow position={[-dimensions.boardWidth/2,0,0]} rotation={[0,0,(Math.PI * 0.5)]}>
                     <boxGeometry args={[dimensions.boardHeight+(dimensions.plankWidth),dimensions.plankWidth,dimensions.plankWidth]}/>
                     <meshStandardMaterial color={colorPalette.NoticeBoardWood}/>
                 </mesh>
