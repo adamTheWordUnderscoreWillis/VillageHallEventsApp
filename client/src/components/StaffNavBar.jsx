@@ -260,7 +260,7 @@ export function StaffNavBar({targetedEvent, profile, setStaffAction, setTargeted
               <Container >
                 <Navbar.Brand>Staff Menu</Navbar.Brand>
               
-                <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`}>Create Event</Navbar.Toggle>
+                <Navbar.Toggle hidden={events.length >10? true: false} aria-controls={`offcanvasNavbar-expand-lg`}>Create Event</Navbar.Toggle>
                 <Navbar.Offcanvas
                   id={`offcanvasNavbar-expand-lg`}
                   aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
