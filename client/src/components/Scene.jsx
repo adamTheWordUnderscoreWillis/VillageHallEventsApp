@@ -115,7 +115,7 @@ function Scene (){
             <OrbitControls
               minAzimuthAngle={-Math.PI*0.1}
               maxAzimuthAngle={Math.PI*0.1}
-              minPolarAngle={Math.PI*0.42}
+              minPolarAngle={Math.PI*0.47}
               maxPolarAngle={0}
               enablePan={false}
               maxDistance={5.5}

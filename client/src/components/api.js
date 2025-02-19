@@ -134,7 +134,6 @@ export const addEventToUserCalendar = async (user, event) => {
                   Accept: 'application/json'
               }
           })
-          console.log(request.data)
           return request.data
     }
     catch(error){

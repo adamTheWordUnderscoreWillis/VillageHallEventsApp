@@ -188,7 +188,7 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
     function LoginSignPost (){
         return (
             <group
-                position={[1.7,-1.8,0.6]} 
+                position={[(1+screen.width*0.0004),-1.5,0.6]} 
                 scale={[1,1,1]}
                 rotation={[0,-1,0]}
                 ref={signOutButtonRef}
