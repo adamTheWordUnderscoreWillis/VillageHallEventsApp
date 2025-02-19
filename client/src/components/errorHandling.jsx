@@ -124,7 +124,7 @@ export const handleError= (err)=>{
            
     //     )
     // }
-    else if(err.response.status === 500){
+    else if(err.response.status === 500 || err.response.data.status){
         return (
             <group >
                     <group position={[0,0,0]} rotation={[0,0, 0]}>
