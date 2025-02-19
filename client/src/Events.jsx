@@ -75,7 +75,7 @@ function Events({
         for(let i=0; i<events.length; i++){
           let transformObject = {
             position: [
-              ((i%3)*1)-1,
+              ((i%3)*(0.4+screen.width*0.0005))-(0.4+screen.width*0.0005),
               ((-i%4)*1.2)+1.9,
               (Math.random()*0.04)+0.1
             ],

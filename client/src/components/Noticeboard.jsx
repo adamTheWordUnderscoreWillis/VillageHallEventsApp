@@ -13,7 +13,7 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
     
     const dimensions = {
         boardHeight: 5,
-        boardWidth: 3,
+        boardWidth: 3 + screen.width*0.0005,
         boardDepth: 1,
         plankWidth: 0.2
     }
@@ -188,9 +188,9 @@ function NoticeBoard ({isError, errorText, isLoading, isSignedIn, setProfile, us
     function LoginSignPost (){
         return (
             <group
-                position={[1.2,-2.3,0.5]} 
+                position={[1.5,-2.3,0.6]} 
                 scale={[1,1,1]}
-                rotation={[0,0,0]}
+                rotation={[0,-0.8,0]}
                 ref={signOutButtonRef}
                 >   
                 <A11y
