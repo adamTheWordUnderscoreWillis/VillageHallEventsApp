@@ -117,6 +117,7 @@ export const addEventToUserCalendar = async (user, event) => {
           'dateTime': event.start.utc,
           'timeZone': event.start.timeZone,
         },
+        'organizer': "littleTidfordVillageHallapp@gmail.com",
         'end': {
           'dateTime': event.end.utc,
           'timeZone': event.start.timeZone,
