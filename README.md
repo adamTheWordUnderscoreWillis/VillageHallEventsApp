@@ -7,7 +7,7 @@ The Little Tidford Village Hall App is a noticeboard for the quaint and complete
 
 or watch me clumsily explain how it works here:
 
-**[YOUTUBE](https://www.youtube.com/watch?v=fYwZ8EtY4g4)**
+**[YOUTUBE](https://youtu.be/rhPSMPw9-Ts)**
 
 ## Contents
 - [User Experience](#user-experience)
