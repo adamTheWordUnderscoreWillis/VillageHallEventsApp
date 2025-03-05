@@ -250,25 +250,25 @@ function Poster({
             return(
                 <group 
                 class="Calendar Button"
-                position={[-0.2,-0.33,-0.001]}
-                scale={a11y.focus|| a11y.hover?[1,1.2,1]:[1,1,1]}        
+                position={[0.16,-0.1,-0.001]}
+                scale={a11y.focus|| a11y.hover?[1.2,1.2,1.2]:[1,1,1]}        
                 >
                     <mesh  
-                    position={[0.2,0,0]}>
-                                    <planeGeometry args={[0.6,0.04,1]}/>
-                                    <meshStandardMaterial color={isInUserCalendar?colourPalette.isGoing:colourPalette.posterButton }/>
+                    position={[0.01,-0.025,0]}>
+                                    <planeGeometry args={[0.26,0.1,1]}/>
+                                    <meshStandardMaterial color={isInUserCalendar?colourPalette.posterButton:colourPalette.posterButton }/>
                     </mesh>
                     <Text 
             color={colourPalette.banner} 
             anchorX="left" 
             anchorY="top" 
-            fontSize="0.04" 
+            fontSize="0.035" 
             fontWeight="bold"
             overflowWrap="normal"
             maxWidth={0.9}
-            position={[-0.09,0.03,0.001]}
+            position={[-0.11,0.03,0.001]}
             >
-                {isInUserCalendar? "Remove from calendar" :"Pop it in the calendar?"}
+                {isInUserCalendar? "Remove from\ncalendar?" :"Add to\ncalendar?"}
             </Text>
                 </group>
             )
@@ -319,7 +319,7 @@ function Poster({
     function GoingToEventSticker (){
         return(
             <group 
-                position={[0.2,-0.22,0.04]}
+                position={[0.2,-0.26,0.04]}
                 rotation={[0,0,-posterTransform.rotation[2]]}
                 scale={[1.3,1.3,1.3]}
                     class="goingSticker" 

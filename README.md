@@ -9,6 +9,14 @@ or watch me clumsily explain how it works here:
 
 **[YOUTUBE](https://youtu.be/rhPSMPw9-Ts)**
 
+To see staff features or to test the application without using your own google account feel free to use the following login details:
+
+Email:
+>littletidfordparishstaff@gmail.com
+
+Password:
+>3TeaAndCoffee
+
 ## Contents
 - [User Experience](#user-experience)
 - [Client](#client)
