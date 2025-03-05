@@ -28,7 +28,8 @@ function Poster({
         body: `hsl(${(color+180)%360}, 50%, 70%)`,
         bannerText: `hsl(${(color+180)%360}, 80%, 50%)`,
         bodyText: `hsl(${(color+180)%360}, 70%, 10%)`,
-        posterButton: `hsl(${(color+180)%360}, 40%, 50%)`,
+        buttonText: `hsl(${(color+180)%360}, 70%, 93%)`,
+        posterButton: `hsl(${(color)%360}, 100%, 30%)`,
         isGoing: `hsl(${(color+180)%360}, 40%, 50%)`
     }
 
@@ -200,7 +201,7 @@ function Poster({
                                 <meshStandardMaterial color={isGoing? `hsl(0, 100.00%, 60.40%)` :colourPalette.posterButton }/>
                 </mesh>
                 <Text 
-        color={isGoing?colourPalette.bodyText:colourPalette.banner} 
+        color={isGoing?colourPalette.buttonText:colourPalette.buttonText} 
         anchorX="left" 
         anchorY="top" 
         fontSize="0.04" 
@@ -259,7 +260,7 @@ function Poster({
                                     <meshStandardMaterial color={isInUserCalendar?colourPalette.posterButton:colourPalette.posterButton }/>
                     </mesh>
                     <Text 
-            color={colourPalette.banner} 
+            color={colourPalette.buttonText} 
             anchorX="left" 
             anchorY="top" 
             fontSize="0.035" 
@@ -299,7 +300,7 @@ function Poster({
                                             <meshStandardMaterial color={colourPalette.posterButton}/>
                             </mesh>
                             <Text 
-                    color={colourPalette.banner} 
+                    color={colourPalette.buttonText} 
                     anchorX="left" 
                     anchorY="top" 
                     fontSize="0.06" 
@@ -319,7 +320,7 @@ function Poster({
     function GoingToEventSticker (){
         return(
             <group 
-                position={[0.2,-0.26,0.04]}
+                position={[0.25,-0.29,0.04]}
                 rotation={[0,0,-posterTransform.rotation[2]]}
                 scale={[1.3,1.3,1.3]}
                     class="goingSticker" 
