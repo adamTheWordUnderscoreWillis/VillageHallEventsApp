@@ -34,7 +34,6 @@ function Events({
             throw {response: {msg: "Could not fetch data from Server", status: 500}}
           }
           const eventsData = data.events
-          console.log(Object.keys(user))
           if(Object.keys(user).length>0){
             const calendarEventsData = await fetchUserCalendarEvents(user)
             setcalendarEvents(calendarEventsData)
