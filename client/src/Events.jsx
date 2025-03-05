@@ -34,7 +34,8 @@ function Events({
             throw {response: {msg: "Could not fetch data from Server", status: 500}}
           }
           const eventsData = data.events
-          if(Object.keys(user)>0){
+          console.log(Object.keys(user))
+          if(Object.keys(user).length>0){
             const calendarEventsData = await fetchUserCalendarEvents(user)
             setcalendarEvents(calendarEventsData)
           }
@@ -130,7 +131,7 @@ function Events({
             {events.length >0?null: noEventsBanner()}
              {
              events.map((event, index)=>{
-              const calendarEntry = calendarEvents.filter((calendarEvent)=> calendarEvent.summary === event.name.text && event.start.utc === calendarEvent.start.dateTime)
+              const calendarEntry = calendarEvents.filter((calendarEvent)=> calendarEvent.summary === event.name.text && new Date(event.start.utc).toDateString === new Date(calendarEvent.start.dateTime).toDateString)
               let calendarEventId
               if(calendarEntry.length){
                 calendarEventId = calendarEntry[0].id

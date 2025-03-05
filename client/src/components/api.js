@@ -83,6 +83,7 @@ export const fetchUserCalendarEvents = async(user)=>{
                   Accept: 'application/json'
               }
           })
+          console.log(request.data.items)
           return request.data.items
     }
     catch(error){
@@ -123,10 +124,10 @@ export const addEventToUserCalendar = async (user, event) => {
           'timeZone': event.start.timeZone,
         },
         'organizer':{email:"littletidfordvillagehall@gmail.com"},
-        'attendees': [
-        ],
+        // 'attendees': [
+        // ],
       };
-      Object.keys(event.attendees).map((user)=> requestEvent.attendees.push({email: user}))
+      // Object.keys(event.attendees).map((user)=> requestEvent.attendees.push({email: user}))
 
       const request = await axios
           .post(`https://www.googleapis.com/calendar/v3/calendars/primary/events`,requestEvent, {
