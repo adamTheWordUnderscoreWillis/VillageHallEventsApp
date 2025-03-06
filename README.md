@@ -7,9 +7,11 @@ The Little Tidford Village Hall App is a noticeboard for the quaint and complete
 
 or watch me clumsily explain how it works here:
 
-**[YOUTUBE](https://youtu.be/rhPSMPw9-Ts)**
+**[YOUTUBE](https://youtu.be/gDOxtjKWX1U)**
 
-To see staff features or to test the application without using your own google account feel free to use the following login details:
+To see staff features or to test the application without using your own google account feel free to use the following staff login details.
+
+## Staff Login Details
 
 Email:
 >littletidfordparishstaff@gmail.com
@@ -128,9 +130,9 @@ Server is listening on [YOUR PORT NUMBER]
 13. At this point you could test the endpoints in app.js on postman, insomnia or in the browser. If you have errors, it may be worth checking the MONGODB URI. I found it quite finickety.
 
 #### Google cloud console
-15. Please log in to google cloud console with the same [password and email](#accountDetails) as above:
+15. It is possible to log into google cloud console with the same [password and email](#accountDetails) used for mongoDB above, although you will need my permission to do so. If you are cloning the project for your own use I reccomend following the [The google calendar API quickstart guide](https://developers.google.com/calendar/api/quickstart/js) with your own log in details here:
 
-**[GOOGLE CLOUD CONSOLE](https://accounts.google.com/InteractiveLogin)**
+**[GOOGLE CLOUD CONSOLE LOGIN](https://accounts.google.com/InteractiveLogin)**
 
 16. In google cloud console click the burger menu and go to apis & services and then head to the Oauth consent screen
 
@@ -138,7 +140,7 @@ Server is listening on [YOUR PORT NUMBER]
 
 18. Click on clients, in clients add the you localhost frontend URL (the project by default is set to http://localhost::5173) to the authorized javascript origins section as well as any domains you intend to host this app on.
 
-19. Currently, if the user clicks through the warning screens of it being an unverified app they can use the google calendar api. however, if you want to officailly add a test email go to the audience section and simply set it back to testing and add the email you want to test it with (The email listed above is registered in the test account as a staff member, so if you log in with that email you will get all the google api features).
+19. Currently, if the user clicks through the warning screens of it being an unverified app and allows all the scopes they can use the google calendar api. I suggest of you want to test the project with all its features you use the [Staff Login Details](#staff-login-details) at the top of the page.
 
 20. back in the project. You are now ready to run the front-end! change directory to the client folder and run the command.
 >npm run dev
@@ -158,7 +160,7 @@ in the root of the project and write .env in there so that you don't share any o
 To test the endpoints change directory to server and run this command:
 >npm test
 
-It will connect you to the test database in mongo db and it reseeds itself all by itself before each test.
+It will connect you to the test database in mongo Db and it reseeds itself all by itself before each test.
 
 ### Minimum requirements
 The project was built using the following versions of packages. It is recommended that these are the minimum versions.
